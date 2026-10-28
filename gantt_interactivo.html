@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Interactivo - Carnet-Can</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBg: '#F8F3ED',
+                        brandText: '#3E2A14',
+                        brandTextMuted: '#7A6855',
+                        brandBorder: '#E8DDD1',
+                        brandBorderDark: '#D4C4B5',
+                        brandPeach: '#F4DAC6',
+                        brandHeader: '#FDF9F5', 
+                        vane: '#D2734C',     
+                        vaneBg: 'rgba(210, 115, 76, 0.25)',
+                        jesus: '#58798C',    
+                        jesusBg: 'rgba(88, 121, 140, 0.25)',
+                        ambos: '#6C8E66',    
+                        ambosBg: 'rgba(108, 142, 102, 0.25)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        
+        .sticky-col { position: sticky; z-index: 20; background-color: #ffffff !important; }
+        .sticky-header { position: sticky; top: 0; z-index: 30; background-color: #FDF9F5 !important; }
+        .sticky-col-header { z-index: 40; background-color: #FDF9F5 !important; border-bottom: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); } 
+        
+        
+        .col-id { left: 0; min-width: 50px; max-width: 50px; }
+        .col-actividad { left: 50px; min-width: 380px; max-width: 380px; } 
+        .col-resp { left: 430px; min-width: 80px; max-width: 80px; }
+        .col-p { left: 510px; min-width: 50px; max-width: 50px; text-align: center; }
+        .col-r { left: 560px; min-width: 50px; max-width: 50px; text-align: center; border-right: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); box-shadow: 4px 0 10px -5px rgba(62,42,20,0.15); clip-path: inset(0 -15px 0 0); }
+        
+        ::-webkit-scrollbar { height: 14px; width: 14px; }
+        ::-webkit-scrollbar-track { background: #F8F3ED; border-top: 1px solid #E8DDD1; }
+        ::-webkit-scrollbar-thumb { background: #D2734C; border-radius: 8px; border: 3px solid #F8F3ED; }
+        ::-webkit-scrollbar-thumb:hover { background: #B35F3C; }
+    </style>
+</head>
+<body class="bg-brandBg text-brandText font-sans min-h-screen p-6">
+
+    <div class="max-w-[1700px] mx-auto">
+        <header class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-brandText">Proyecto <span class="text-vane">Carnet-Can</span></h1>
+                <p class="text-brandTextMuted mt-1 font-medium">Plan de Desarrollo • Inicio: Jueves 29 de Octubre, 2026</p>
+            </div>
+            
+            <div class="flex items-center gap-2 bg-white p-2 rounded-2xl border border-brandBorder shadow-sm">
+                <span class="text-sm font-bold text-brandTextMuted mr-2 uppercase tracking-wider ml-2">Filtro:</span>
+                <button onclick="filterTasks('all')" id="btn-all" class="filter-btn px-4 py-1.5 rounded-xl text-sm font-bold bg-brandText text-white transition-colors shadow-sm">Todos</button>
+                <button onclick="filterTasks('V')" id="btn-V" class="filter-btn px-4 py-1.5 rounded-xl text-sm font-bold text-brandTextMuted hover:bg-brandPeach transition-colors flex items-center gap-2 border border-transparent">
+                    <div class="w-3 h-3 rounded-full bg-vane"></div> Vane
+                </button>
+                <button onclick="filterTasks('J')" id="btn-J" class="filter-btn px-4 py-1.5 rounded-xl text-sm font-bold text-brandTextMuted hover:bg-brandPeach transition-colors flex items-center gap-2 border border-transparent">
+                    <div class="w-3 h-3 rounded-full bg-jesus"></div> Jesús
+                </button>
+                <button onclick="filterTasks('A')" id="btn-A" class="filter-btn px-4 py-1.5 rounded-xl text-sm font-bold text-brandTextMuted hover:bg-brandPeach transition-colors flex items-center gap-2 border border-transparent">
+                    <div class="w-3 h-3 rounded-full bg-ambos"></div> Conjuntas
+                </button>
+            </div>
+        </header>
+
+        <div class="bg-white border border-brandBorderDark rounded-2xl overflow-hidden shadow-[0_12px_40px_-10px_rgba(62,42,20,0.15)] relative">
+            <div class="overflow-x-auto" id="gantt-scroll">
+                <table class="w-full border-collapse text-sm" id="gantt-table">
+                    <thead id="gantt-head" class="text-brandText shadow-sm relative z-30"></thead>
+                    <tbody id="gantt-body" class="divide-y divide-brandBorder/60 bg-white"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tasksData = [
+            // Vane
+            { id: 'A01', name: 'Revisión y corrección funcionales del propietario', desc: 'Revisión funcional y corrección de errores en los módulos existentes del propietario: mascotas, historial médico, vacunas, desparasitación y carnet PDF.', dev: 'V', days: 1 },
+            { id: 'A02', name: 'Persistencia de sesión y autenticación', desc: 'Implementación de persistencia de sesión, recuperación de contraseña y renovación segura de tokens de autenticación.', dev: 'V', days: 1 },
+            { id: 'A03', name: 'Inicio de sesión con Google y Microsoft', desc: 'Integración del inicio de sesión con Google y Microsoft, incluyendo vinculación de cuentas y validación de acceso.', dev: 'V', days: 1 },
+            { id: 'A04', name: 'Notificaciones y registro de dispositivos', desc: 'Configuración de Firebase Cloud Messaging, solicitud de permisos y registro de dispositivos para recibir notificaciones.', dev: 'V', days: 1 },
+            { id: 'A05', name: 'Recordatorios automáticos (vacunas/desparasitación)', desc: 'Implementación de recordatorios automáticos de vacunación y desparasitación, considerando fechas programadas y preferencias de notificación.', dev: 'V', days: 1 },
+            { id: 'A06', name: 'Integración de pesos de referencia', desc: 'Incorporación de rangos de peso de referencia por especie, raza y etapa de crecimiento, con su visualización en el seguimiento de salud.', dev: 'V', days: 1 },
+            { id: 'A07', name: 'Módulo de mascotas extraviadas y carteles', desc: 'Desarrollo del módulo de mascotas extraviadas: registro, edición, gestión de alertas y generación y descarga de carteles digitales mediante plantillas.', dev: 'V', days: 1 },
+            { id: 'A08', name: 'Frontend del mapa veterinario y filtros', desc: 'Desarrollo de la interfaz del directorio veterinario con mapa, filtros de búsqueda y fichas informativas utilizando datos simulados.', dev: 'V', days: 1 },
+            { id: 'A09', name: 'Integración del mapa con datos reales', desc: 'Integración del directorio con ubicaciones, servicios y reseñas reales de veterinarios y clínicas, incluyendo búsqueda por proximidad.', dev: 'V', days: 1 },
+            { id: 'A10', name: 'Pruebas funcionales del ecosistema propietario', desc: 'Ejecución de pruebas funcionales y de regresión de los módulos del propietario, con corrección de incidencias detectadas.', dev: 'V', days: 1 },
+            { id: 'AD01', name: 'Estructura base del panel administrativo', desc: 'Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.', dev: 'V', days: 1 },
+            { id: 'AD02', name: 'Dashboard administrativo', desc: 'Implementación del dashboard administrativo con indicadores, estadísticas y gráficas obtenidas de los registros del sistema.', dev: 'V', days: 1 },
+            { id: 'AD03', name: 'Gestión de propietarios', desc: 'Desarrollo de la gestión de propietarios: listado, búsqueda, filtros, consulta de perfiles y acciones administrativas autorizadas.', dev: 'V', days: 2 },
+            { id: 'AD04', name: 'Configuraciones globales', desc: 'Implementación de configuraciones globales para administrar límites de mascotas, documentos y otros parámetros generales de la plataforma.', dev: 'V', days: 1 },
+            { id: 'AD05', name: 'Catálogo de especies y razas', desc: 'Desarrollo de catálogos de especies y razas, incluyendo registro, edición, consulta, desactivación y relaciones entre ambos.', dev: 'V', days: 1 },
+            { id: 'AD06', name: 'Catálogos sanitarios', desc: 'Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.', dev: 'V', days: 1 },
+            { id: 'AD07', name: 'Gestión de roles y permisos', desc: 'Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.', dev: 'V', days: 2 },
+            { id: 'AD08', name: 'Pruebas del panel administrativo', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.', dev: 'V', days: 1 },
+
+            // Jesus
+            { id: 'B01', name: 'Revisión de código y registros', desc: 'Revisión del código existente de veterinarios y clínicas, identificando formularios, endpoints, modelos y procesos de validación ya implementados.', dev: 'J', days: 1 },
+            { id: 'B02', name: 'Acceso y cambio de contraseña', desc: 'Implementación del acceso para cuentas profesionales aprobadas y del cambio de contraseña, con validación del estado de la cuenta.', dev: 'J', days: 1 },
+            { id: 'B03', name: 'Perfil veterinario', desc: 'Desarrollo del perfil veterinario, permitiendo consultar y actualizar credenciales profesionales, fotografía, información personal y datos de contacto.', dev: 'J', days: 1 },
+            { id: 'B04', name: 'Servicios y horarios del veterinario', desc: 'Implementación de especialidades, servicios ofrecidos y horarios de atención del veterinario, con selección desde catálogos y almacenamiento de cambios.', dev: 'J', days: 1 },
+            { id: 'B05', name: 'Perfil de clínica', desc: 'Desarrollo del perfil de clínica, incluyendo consulta y edición de información del establecimiento, documentación, fotografía y contacto.', dev: 'J', days: 1 },
+            { id: 'B06', name: 'Servicios y horarios de la clínica', desc: 'Implementación de especialidades, servicios y horarios de la clínica, incluyendo registro, vinculación y administración de médicos asociados.', dev: 'J', days: 1 },
+            { id: 'B07', name: 'Gestión de ubicación de veterinarios/clínicas', desc: 'Desarrollo de la gestión de ubicación de veterinarios y clínicas, incluyendo dirección, selección en mapa, coordenadas y consulta geográfica mediante API.', dev: 'J', days: 1 },
+            { id: 'B08', name: 'Reseñas y calificaciones', desc: 'Implementación del módulo de reseñas y calificaciones para veterinarios y clínicas, incluyendo publicación, consulta, reportes y endpoints públicos.', dev: 'J', days: 1 },
+            { id: 'B09', name: 'Pantallas de inicio (Home)', desc: 'Desarrollo de las pantallas de inicio de veterinarios y clínicas, con resúmenes, indicadores y accesos a sus funcionalidades principales.', dev: 'J', days: 1 },
+            { id: 'B10', name: 'Notificaciones y ajustes de cuenta', desc: 'Integración de notificaciones y ajustes de cuenta en ambos perfiles, reutilizando los servicios y componentes comunes disponibles.', dev: 'J', days: 1 },
+            { id: 'B11', name: 'Pruebas del ecosistema veterinarios', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos de veterinarios y clínicas.', dev: 'J', days: 1 },
+            { id: 'BD01', name: 'Módulo administrativo de veterinarios', desc: 'Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.', dev: 'J', days: 1 },
+            { id: 'BD02', name: 'Verificación documental', desc: 'Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.', dev: 'J', days: 2 },
+            { id: 'BD03', name: 'Módulo administrativo de clínicas', desc: 'Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.', dev: 'J', days: 1 },
+            { id: 'BD04', name: 'Moderación de reseñas', desc: 'Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.', dev: 'J', days: 1 },
+            { id: 'BD05', name: 'Apoyo en permisos profesionales', desc: 'Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.', dev: 'J', days: 2 },
+            { id: 'BD06', name: 'Pruebas módulos administrativos', desc: 'Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.', dev: 'J', days: 1 },
+            { id: 'BD07', name: 'Contraseñas de administrador/supervisor', desc: 'Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administrador y supervisor.', dev: 'J', days: 1 },
+
+            // Ambos
+            { id: 'C01', name: 'Definición de contratos API y reglas', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', days: 1 },
+            { id: 'C02', name: 'Migraciones y esquema BD', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', days: 1 },
+            { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', days: 1 },
+            { id: 'C04', name: 'Pruebas integrales de flujos', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles.', dev: 'A', days: 1 },
+            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', days: 1 },
+            { id: 'C06', name: 'Configuración productiva', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', days: 1 },
+            { id: 'C07', name: 'Validación de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', days: 1 },
+            { id: 'C08', name: 'Compilación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', days: 1 },
+            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', days: 1 },
+            { id: 'C10', name: 'Documentación técnica y manuales', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', days: 1 }
+        ];
+
+        const realTimeState = {}; 
+        let currentFilter = 'all';
+
+        let vIndex = 0, jIndex = 0;
+
+        tasksData.forEach(t => {
+            if (t.dev === 'V') { t.startDay = vIndex; t.endDay = vIndex + t.days - 1; vIndex += t.days; } 
+            else if (t.dev === 'J') { t.startDay = jIndex; t.endDay = jIndex + t.days - 1; jIndex += t.days; }
+        });
+
+        let aIndex = Math.max(vIndex, jIndex);
+        tasksData.forEach(t => {
+            if (t.dev === 'A') { t.startDay = aIndex; t.endDay = aIndex + t.days - 1; aIndex += t.days; }
+        });
+
+        const totalProjectDays = aIndex; 
+        const calendar = [];
+        let currentDate = new Date(2026, 9, 29); 
+        
+        while (calendar.length < totalProjectDays || (calendar.length > 0 && calendar[calendar.length - 1].getDay() !== 5)) {
+            const dayOfWeek = currentDate.getDay();
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) calendar.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        const weeks = [];
+        let currentWeekNum = 1, currentWeekCount = 0, lastDay = -1;
+
+        calendar.forEach(date => {
+            const day = date.getDay();
+            if (day < lastDay) { weeks.push({ week: currentWeekNum, days: currentWeekCount }); currentWeekNum++; currentWeekCount = 0; }
+            currentWeekCount++; lastDay = day;
+        });
+        if (currentWeekCount > 0) weeks.push({ week: currentWeekNum, days: currentWeekCount });
+
+        const esDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+        const esMonths = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+        function renderGantt() {
+            const thead = document.getElementById('gantt-head');
+            const tbody = document.getElementById('gantt-body');
+            
+            let headHTML = `
+                <tr class="text-xs uppercase tracking-wider">
+                    <th class="sticky-col sticky-header sticky-col-header col-id py-4 px-2 text-left font-bold align-bottom text-brandTextMuted">ID</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-actividad py-4 px-4 text-left font-bold align-bottom text-brandTextMuted">Actividad</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-resp py-4 px-2 text-center font-bold align-bottom text-brandTextMuted">Resp.</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-p py-4 px-2 text-center font-bold align-bottom text-brandTextMuted" title="Días Programados">P</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-r py-4 px-2 text-center font-bold align-bottom text-brandTextMuted" title="Días Reales">R</th>
+            `;
+
+            weeks.forEach(w => {
+                headHTML += `<th colspan="${w.days}" class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-3 text-center text-brandText font-black tracking-widest text-xs uppercase">Semana ${w.week}</th>`;
+            });
+            headHTML += `</tr><tr class="text-xs">`;
+            headHTML += `
+                <th class="sticky-col sticky-header sticky-col-header col-id h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-actividad h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-resp h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-p h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-r h-8"></th>
+            `;
+
+            calendar.forEach(date => {
+                const dayStr = `${esDays[date.getDay()]} ${date.getDate()} ${esMonths[date.getMonth()]}`;
+                headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-2 px-1 text-center font-semibold text-brandTextMuted min-w-[50px] whitespace-nowrap">${dayStr}</th>`;
+            });
+            headHTML += `</tr>`;
+            thead.innerHTML = headHTML;
+
+            let bodyHTML = '';
+            tasksData.forEach(task => {
+                if (currentFilter !== 'all' && task.dev !== currentFilter) return;
+
+                let reales = 0;
+                for (let d = 0; d < calendar.length; d++) if (realTimeState[`${task.id}-${d}`]) reales++;
+
+                let avatarHTML = task.dev === 'V' 
+                    ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-vane text-white flex items-center justify-center font-bold text-xs shadow-sm">V</div>`
+                    : task.dev === 'J' 
+                        ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-xs shadow-sm">J</div>`
+                        : `<div class="flex justify-center -space-x-2 mt-1"><div class="w-7 h-7 rounded-full bg-vane text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-10 border-2 border-white">V</div><div class="w-7 h-7 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-0 border-2 border-white">J</div></div>`;
+
+                bodyHTML += `
+                    <tr class="hover:bg-[#FFF9F5] transition-colors group">
+                        <td class="sticky-col col-id py-3 px-2 font-mono text-brandTextMuted border-b border-brandBorder/50 text-xs align-top pt-4">${task.id}</td>
+                        <td class="sticky-col col-actividad py-3 px-4 border-b border-brandBorder/50 align-top whitespace-normal">
+                            <div class="font-bold text-brandText text-sm leading-tight">${task.name}</div>
+                            <div class="text-[11px] text-brandTextMuted mt-1 leading-snug font-medium">${task.desc}</div>
+                        </td>
+                        <td class="sticky-col col-resp py-3 px-2 border-b border-brandBorder/50 align-top pt-3">${avatarHTML}</td>
+                        <td class="sticky-col col-p py-3 px-2 border-b border-brandBorder/50 text-center font-bold text-brandTextMuted align-top pt-4">${task.days}</td>
+                        <td class="sticky-col col-r py-3 px-2 border-b border-brandBorder/50 text-center font-extrabold ${reales > task.days ? 'text-red-500' : 'text-brandText'} align-top pt-4" id="real-${task.id}">${reales}</td>
+                `;
+
+                let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/30' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/30' : 'bg-ambosBg border-ambos/30');
+                let colorClassSolid = task.dev === 'V' ? 'bg-vane' : (task.dev === 'J' ? 'bg-jesus' : 'bg-ambos');
+
+                for (let d = 0; d < calendar.length; d++) {
+                    const isProgrammed = d >= task.startDay && d <= task.endDay;
+                    const isReal = !!realTimeState[`${task.id}-${d}`];
+                    
+                    let pBar = isProgrammed ? `<div class="w-full h-5 rounded-md border ${colorClassBg}"></div>` : `<div class="w-full h-5"></div>`;
+                    let rBar = isReal 
+                        ? `<div class="w-full h-7 rounded-md ${colorClassSolid} cursor-pointer shadow-sm transition-transform hover:scale-105" onclick="toggleReal('${task.id}', ${d})"></div>` 
+                        : `<div class="w-full h-7 rounded-md bg-[#E8DDD1]/60 cursor-pointer hover:bg-[#D4C1AF] transition-colors" onclick="toggleReal('${task.id}', ${d})"></div>`;
+
+                    bodyHTML += `<td class="border-b border-l border-brandBorder/50 p-1 min-w-[55px] align-top pt-4"><div class="flex flex-col gap-2 w-full px-1">${pBar}${rBar}</div></td>`;
+                }
+                bodyHTML += `</tr>`;
+            });
+            tbody.innerHTML = bodyHTML;
+        }
+
+        window.toggleReal = function(taskId, dayIndex) {
+            const key = `${taskId}-${dayIndex}`;
+            if (realTimeState[key]) delete realTimeState[key];
+            else realTimeState[key] = true;
+            renderGantt();
+        };
+
+        window.filterTasks = function(dev) {
+            currentFilter = dev;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brandText', 'text-white');
+                btn.classList.add('text-brandTextMuted', 'border-transparent');
+            });
+            const activeBtn = document.getElementById(`btn-${dev === 'all' ? 'all' : dev}`);
+            activeBtn.classList.remove('text-brandTextMuted', 'border-transparent');
+            activeBtn.classList.add('bg-brandText', 'text-white');
+            renderGantt();
+        };
+
+        renderGantt();
+    </script>
+</body>
+</html>
