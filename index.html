@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gantt Interactivo - Carnet-Can</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBg: '#F8F3ED',
+                        brandText: '#3E2A14',
+                        brandTextMuted: '#7A6855',
+                        brandBorder: '#E8DDD1',
+                        brandBorderDark: '#D4C4B5',
+                        brandPeach: '#F4DAC6',
+                        brandHeader: '#FDF9F5', 
+                        vane: '#D2734C',     
+                        vaneBg: 'rgba(210, 115, 76, 0.25)',
+                        jesus: '#58798C',    
+                        jesusBg: 'rgba(88, 121, 140, 0.25)',
+                        miguel: '#7B5294',
+                        miguelBg: 'rgba(123, 82, 148, 0.25)',
+                        ambos: '#6C8E66',    
+                        ambosBg: 'rgba(108, 142, 102, 0.25)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .sticky-col { position: sticky; z-index: 20; background-color: #ffffff !important; }
+        .sticky-header { position: sticky; top: 0; z-index: 30; background-color: #FDF9F5 !important; }
+        .sticky-col-header { z-index: 40; background-color: #FDF9F5 !important; border-bottom: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); } 
+        
+        .col-id { left: 0; min-width: 50px; max-width: 50px; }
+        .col-actividad { left: 50px; min-width: 380px; max-width: 380px; } 
+        .col-resp { left: 430px; min-width: 80px; max-width: 80px; }
+        .col-p { left: 510px; min-width: 50px; max-width: 50px; text-align: center; }
+        .col-r { left: 560px; min-width: 50px; max-width: 50px; text-align: center; border-right: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); box-shadow: 4px 0 10px -5px rgba(62,42,20,0.15); clip-path: inset(0 -15px 0 0); }
+        
+        ::-webkit-scrollbar { height: 10px; width: 10px; }
+        ::-webkit-scrollbar-track { background: #F8F3ED; border-top: 1px solid #E8DDD1; }
+        ::-webkit-scrollbar-thumb { background: #D2734C; border-radius: 8px; border: 2px solid #F8F3ED; }
+        ::-webkit-scrollbar-thumb:hover { background: #B35F3C; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Adaptación responsiva para teléfonos */
+        @media (max-width: 768px) {
+            .sticky-col { 
+                position: static !important; 
+            }
+            .sticky-col-header { 
+                position: sticky !important; 
+                top: 0; 
+                z-index: 25; 
+            }
+            .col-id { min-width: 44px !important; max-width: 44px !important; }
+            .col-actividad { min-width: 210px !important; max-width: 220px !important; } 
+            .col-resp { min-width: 55px !important; max-width: 55px !important; }
+            .col-p { min-width: 38px !important; max-width: 38px !important; }
+            .col-r { min-width: 38px !important; max-width: 38px !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-brandBg text-brandText font-sans min-h-screen p-3 sm:p-6 overflow-x-hidden">
+
+    <div class="max-w-[1700px] mx-auto">
+        <header class="mb-4 sm:mb-6 flex flex-col gap-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText">Proyecto <span class="text-vane">Carnet-Can</span></h1>
+                    <p class="text-brandTextMuted mt-0.5 sm:mt-1 text-xs sm:text-sm font-medium">Plan de Desarrollo e Infraestructura DevOps • 30 Días Laborables • Inicio: Jueves 29 de Octubre, 2026</p>
+                </div>
+                
+                <!-- Selector de Vista: Gantt o Tarjetas -->
+                <div class="flex items-center bg-white p-1 rounded-xl border border-brandBorder shadow-sm self-start sm:self-auto">
+                    <button onclick="switchView('gantt')" id="toggle-view-gantt" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                        <span>Gantt</span>
+                    </button>
+                    <button onclick="switchView('cards')" id="toggle-view-cards" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                        <span>Tarjetas (Móvil)</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Barra de Herramientas y Filtros Integral -->
+            <div class="bg-white p-2.5 sm:p-3.5 rounded-2xl border border-brandBorder shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                
+                <!-- Grupo Izquierdo: Filtros de Responsable y Estado -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- Filtros Responsable -->
+                    <div class="flex items-center bg-brandBg/80 p-1 rounded-xl border border-brandBorder overflow-x-auto max-w-full no-scrollbar">
+                        <button onclick="filterTasks('all')" id="btn-all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                            <span>Todos</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold" id="count-all">58</span>
+                        </button>
+                        <button onclick="filterTasks('V')" id="btn-V" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-vane"></div>
+                            <span>Vane (Dev A)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-V">18</span>
+                        </button>
+                        <button onclick="filterTasks('J')" id="btn-J" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-jesus"></div>
+                            <span>Jesús (Dev B)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-J">18</span>
+                        </button>
+                        <button onclick="filterTasks('M')" id="btn-M" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-miguel"></div>
+                            <span>Miguel (DevOps)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-M">12</span>
+                        </button>
+                        <button onclick="filterTasks('A')" id="btn-A" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-ambos"></div>
+                            <span>Conjuntas</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-A">10</span>
+                        </button>
+                    </div>
+
+                    <!-- Filtro de Estado personalizado con Iconos SVG -->
+                    <div class="relative" id="status-dropdown-wrapper">
+                        <button 
+                            type="button" 
+                            onclick="toggleStatusDropdown(event)" 
+                            id="status-dropdown-btn" 
+                            class="flex items-center gap-1.5 bg-brandBg/80 hover:bg-brandBg px-2.5 py-1.5 rounded-xl border border-brandBorder text-xs font-semibold text-brandText transition-colors cursor-pointer select-none"
+                        >
+                            <span class="text-brandTextMuted font-bold hidden sm:inline">Estado:</span>
+                            <span id="status-selected-icon" class="flex items-center">
+                                <svg class="w-3.5 h-3.5 text-brandTextMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                            </span>
+                            <span id="status-selected-label">Todos</span>
+                            <svg id="status-chevron" class="w-3.5 h-3.5 text-brandTextMuted transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+
+                        <!-- Menú Desplegable -->
+                        <div 
+                            id="status-dropdown-menu" 
+                            class="hidden absolute left-0 mt-1.5 w-44 bg-white border border-brandBorder rounded-xl shadow-xl py-1 z-50 text-xs divide-y divide-brandBorder/30"
+                        >
+                            <button type="button" onclick="selectStatus('all')" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brandBg text-brandText font-medium transition-colors">
+                                <svg class="w-4 h-4 text-brandTextMuted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                                <span>Todos los estados</span>
+                            </button>
+                            <button type="button" onclick="selectStatus('pending')" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brandBg text-brandText font-medium transition-colors">
+                                <svg class="w-4 h-4 text-amber-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Pendientes</span>
+                            </button>
+                            <button type="button" onclick="selectStatus('completed')" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brandBg text-brandText font-medium transition-colors">
+                                <svg class="w-4 h-4 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Completadas</span>
+                            </button>
+                            <button type="button" onclick="selectStatus('overdue')" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brandBg text-brandText font-medium transition-colors">
+                                <svg class="w-4 h-4 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                <span>Con días extra</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grupo Central: Buscador en tiempo real -->
+                <div class="relative flex-1 min-w-[200px] max-w-xl">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-brandTextMuted">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        oninput="handleSearch(this.value)" 
+                        placeholder="Buscar actividad, módulo o código (ej. A01, Firebase, mapa)..." 
+                        class="w-full pl-9 pr-8 py-2 text-xs font-medium bg-brandBg/60 focus:bg-white border border-brandBorder rounded-xl outline-none focus:border-brandBorderDark focus:ring-2 focus:ring-vane/20 transition-all placeholder:text-brandTextMuted/70"
+                    />
+                    <button 
+                        id="search-clear" 
+                        onclick="clearSearch()" 
+                        class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-brandTextMuted hover:text-brandText cursor-pointer"
+                        title="Limpiar búsqueda"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Grupo Derecho: Progreso Global y Métricas -->
+                <div class="flex items-center gap-3 self-stretch lg:self-auto justify-between lg:justify-end border-t lg:border-t-0 pt-2 lg:pt-0 border-brandBorder/60">
+                    <div class="flex flex-col min-w-[140px] sm:min-w-[170px]">
+                        <div class="flex items-center justify-between text-xs mb-1">
+                            <span class="text-brandTextMuted font-bold" id="global-progress-label">Progreso Global</span>
+                            <span class="font-extrabold text-brandText font-mono" id="global-progress-percent">0%</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-brandBg rounded-full overflow-hidden border border-brandBorder">
+                            <div id="global-progress-bar" class="h-full bg-gradient-to-r from-vane via-miguel to-ambos rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
+                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">58</span></div>
+                        <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Tareas terminadas</div>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- Contenedor Vista Gantt -->
+        <div id="gantt-view-container" class="bg-white border border-brandBorderDark rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_12px_40px_-10px_rgba(62,42,20,0.15)] relative">
+            <div class="md:hidden flex items-center justify-between px-3 py-2 bg-brandPeach/30 text-brandText text-xs font-medium border-b border-brandBorder">
+                <span class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-vane animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                    Desliza horizontalmente para ver el cronograma
+                </span>
+                <span class="text-[11px] text-brandTextMuted font-mono">P: Prog • R: Real</span>
+            </div>
+            <div class="overflow-x-auto -webkit-overflow-scrolling-touch" id="gantt-scroll">
+                <table class="w-full border-collapse text-sm" id="gantt-table">
+                    <thead id="gantt-head" class="text-brandText shadow-sm relative z-30"></thead>
+                    <tbody id="gantt-body" class="divide-y divide-brandBorder/60 bg-white"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Contenedor Vista Tarjetas Móvil -->
+        <div id="cards-view-container" class="hidden">
+            <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"></div>
+        </div>
+    </div>
+
+    <script>
+        const tasksData = [
+            // Vane - Desarrollo Propietario / Admin
+            { id: 'A01', name: 'Revisión y corrección funcionales del propietario', desc: 'Revisión funcional y corrección de errores en los módulos existentes del propietario: mascotas, historial médico, vacunas, desparasitación y carnet PDF.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A02', name: 'Persistencia de sesión y autenticación', desc: 'Implementación de persistencia de sesión, recuperación de contraseña y renovación segura de tokens de autenticación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A03', name: 'Inicio de sesión con Google y Microsoft', desc: 'Integración del inicio de sesión con Google y Microsoft, incluyendo vinculación de cuentas y validación de acceso.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A04', name: 'Notificaciones y registro de dispositivos', desc: 'Configuración de Firebase Cloud Messaging, solicitud de permisos y registro de dispositivos para recibir notificaciones.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A05', name: 'Recordatorios automáticos (vacunas/desparasitación)', desc: 'Implementación de recordatorios automáticos de vacunación y desparasitación, considerando fechas programadas y preferencias de notificación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A06', name: 'Integración de pesos de referencia', desc: 'Incorporación de rangos de peso de referencia por especie, raza y etapa de crecimiento, con su visualización en el seguimiento de salud.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A07', name: 'Módulo de mascotas extraviadas y carteles', desc: 'Desarrollo del módulo de mascotas extraviadas: registro, edición, gestión de alertas y generación y descarga de carteles digitales mediante plantillas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A08', name: 'Frontend del mapa veterinario y filtros', desc: 'Desarrollo de la interfaz del directorio veterinario con mapa, filtros de búsqueda y fichas informativas utilizando datos simulados.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A09', name: 'Integración del mapa con datos reales', desc: 'Integración del directorio con ubicaciones, servicios y reseñas reales de veterinarios y clínicas, incluyendo búsqueda por proximidad.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A10', name: 'Pruebas funcionales del ecosistema propietario', desc: 'Ejecución de pruebas funcionales y de regresión de los módulos del propietario, con corrección de incidencias detectadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD01', name: 'Estructura base del panel administrativo', desc: 'Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD02', name: 'Dashboard administrativo', desc: 'Implementación del dashboard administrativo con indicadores, estadísticas y gráficas obtenidas de los registros del sistema.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD03', name: 'Gestión de propietarios', desc: 'Desarrollo de la gestión de propietarios: listado, búsqueda, filtros, consulta de perfiles y acciones administrativas autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2 },
+            { id: 'AD04', name: 'Configuraciones globales', desc: 'Implementación de configuraciones globales para administrar límites de mascotas, documentos y otros parámetros generales de la plataforma.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD05', name: 'Catálogo de especies y razas', desc: 'Desarrollo de catálogos de especies y razas, incluyendo registro, edición, consulta, desactivación y relaciones entre ambos.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD06', name: 'Catálogos sanitarios', desc: 'Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD07', name: 'Gestión de roles y permisos', desc: 'Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2 },
+            { id: 'AD08', name: 'Pruebas del panel administrativo', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+
+            // Jesus - Desarrollo Veterinario / Clínicas
+            { id: 'B01', name: 'Revisión de código y registros', desc: 'Revisión del código existente de veterinarios y clínicas, identificando formularios, endpoints, modelos y procesos de validación ya implementados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B02', name: 'Acceso y cambio de contraseña', desc: 'Implementación del acceso para cuentas profesionales aprobadas y del cambio de contraseña, con validación del estado de la cuenta.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B03', name: 'Perfil veterinario', desc: 'Desarrollo del perfil veterinario, permitiendo consultar y actualizar credenciales profesionales, fotografía, información personal y datos de contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B04', name: 'Servicios y horarios del veterinario', desc: 'Implementación de especialidades, servicios ofrecidos y horarios de atención del veterinario, con selección desde catálogos y almacenamiento de cambios.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B05', name: 'Perfil de clínica', desc: 'Desarrollo del perfil de clínica, incluyendo consulta y edición de información del establecimiento, documentación, fotografía y contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B06', name: 'Servicios y horarios de la clínica', desc: 'Implementación de especialidades, servicios y horarios de la clínica, incluyendo registro, vinculación y administración de médicos asociados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B07', name: 'Gestión de ubicación de veterinarios/clínicas', desc: 'Desarrollo de la gestión de ubicación de veterinarios y clínicas, incluyendo dirección, selección en mapa, coordenadas y consulta geográfica mediante API.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B08', name: 'Reseñas y calificaciones', desc: 'Implementación del módulo de reseñas y calificaciones para veterinarios y clínicas, incluyendo publicación, consulta, reportes y endpoints públicos.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B09', name: 'Pantallas de inicio (Home)', desc: 'Desarrollo de las pantallas de inicio de veterinarios y clínicas, con resúmenes, indicadores y accesos a sus funcionalidades principales.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B10', name: 'Notificaciones y ajustes de cuenta', desc: 'Integración de notificaciones y ajustes de cuenta en ambos perfiles, reutilizando los servicios y componentes comunes disponibles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B11', name: 'Pruebas del ecosistema veterinarios', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos de veterinarios y clínicas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD01', name: 'Módulo administrativo de veterinarios', desc: 'Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD02', name: 'Verificación documental', desc: 'Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2 },
+            { id: 'BD03', name: 'Módulo administrativo de clínicas', desc: 'Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD04', name: 'Moderación de reseñas', desc: 'Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD05', name: 'Apoyo en permisos profesionales', desc: 'Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2 },
+            { id: 'BD06', name: 'Pruebas módulos administrativos', desc: 'Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD07', name: 'Contraseñas de administrador/supervisor', desc: 'Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administrador y supervisor.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+
+            // Miguel - Infraestructura y DevOps
+            { id: 'INF01', name: 'Diagnóstico de infraestructura y estado actual de QA', desc: 'Evaluación técnica de la infraestructura existente, revisión del estado del ambiente QA, recursos disponibles y requerimientos previos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 0, endDay: 1 },
+            { id: 'INF02', name: 'Confirmación de recursos, permisos y accesos', desc: 'Gestión y validación de credenciales, accesos a servidores, proveedores de nube, repositorios y asignación de cuotas de recursos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 1, endDay: 2 },
+            { id: 'INF03', name: 'Configuración y validación de Docker, PostgreSQL, MinIO y FastAPI', desc: 'Aprovisionamiento de contenedores base (FastAPI backend, PostgreSQL, almacenamiento MinIO) e integración de servicios externos incluyendo Mapbox.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 2, endDay: 4 },
+            { id: 'INF04', name: 'Preparación y validación del ambiente QA', desc: 'Despliegue y verificación funcional del ambiente de aseguramiento de calidad (QA), garantizando disponibilidad antes y durante las pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 5, endDay: 6 },
+            { id: 'INF05', name: 'Configuración y validación de GitLab CI/CD', desc: 'Diseño e implementación de pipelines automatizados de integración continua, pruebas y despliegue continuo (CI/CD) hacia QA.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 7, endDay: 9 },
+            { id: 'INF06', name: 'Preparación de infraestructura productiva', desc: 'Aprovisionamiento y configuración de servidores, base de datos y clúster para el entorno de producción con alta disponibilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 10, endDay: 14 },
+            { id: 'INF07', name: 'Configuración de dominios, DNS y HTTPS', desc: 'Configuración de registros DNS, enrutamiento de red, certificados SSL/TLS y terminación HTTPS segura para ambientes y servicios externos (Mapbox).', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 15, endDay: 17 },
+            { id: 'INF08', name: 'Configuración de persistencia, respaldos y recuperación', desc: 'Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración ante desastres.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 15, endDay: 17 },
+            { id: 'INF09', name: 'Configuración de seguridad y monitoreo', desc: 'Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 18, endDay: 19 },
+            { id: 'INF10', name: 'Validación integral de infraestructura y soporte a pruebas', desc: 'Soporte técnico directo durante las pruebas de integración cruzada, verificación de rendimiento de red y estabilidad bajo carga.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 20, endDay: 24 },
+            { id: 'INF11', name: 'Despliegue de la primera versión aprobada', desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.', dev: 'M', group: 'Infraestructura y DevOps', days: 4, startDay: 25, endDay: 28 },
+            { id: 'INF12', name: 'Documentación técnica y entrega de infraestructura', desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.', dev: 'M', group: 'Infraestructura y DevOps', days: 1, startDay: 29, endDay: 29 },
+
+            // Ambos - Integración, Pruebas y Despliegue
+            { id: 'C01', name: 'Definición de contratos API y reglas', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C02', name: 'Migraciones y esquema BD', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C04', name: 'Pruebas integrales de flujos', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C06', name: 'Configuración productiva', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C07', name: 'Validación de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C08', name: 'Compilación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C10', name: 'Documentación técnica y manuales', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 }
+        ];
+
+        const realTimeState = {}; 
+        let currentFilter = 'all';
+        let currentStatus = 'all';
+        let currentSearch = '';
+
+        function getTaskReales(task) {
+            let count = 0;
+            for (let d = 0; d < calendar.length; d++) {
+                if (realTimeState[`${task.id}-${d}`]) count++;
+            }
+            return count;
+        }
+
+        function matchesFilters(task) {
+            if (currentFilter !== 'all' && task.dev !== currentFilter) return false;
+            
+            const r = getTaskReales(task);
+            if (currentStatus === 'pending' && r >= task.days) return false;
+            if (currentStatus === 'completed' && r < task.days) return false;
+            if (currentStatus === 'overdue' && r <= task.days) return false;
+
+            if (currentSearch.trim()) {
+                const q = currentSearch.toLowerCase().trim();
+                const text = `${task.id} ${task.name} ${task.desc}`.toLowerCase();
+                if (!text.includes(q)) return false;
+            }
+
+            return true;
+        }
+
+        function updateMetrics() {
+            let completedTasksCount = 0;
+            let targetTasks = tasksData;
+            let scopeLabel = 'Progreso Global';
+
+            if (currentFilter !== 'all') {
+                targetTasks = tasksData.filter(t => t.dev === currentFilter);
+                if (currentFilter === 'V') scopeLabel = 'Progreso Vane (Dev A)';
+                else if (currentFilter === 'J') scopeLabel = 'Progreso Jesús (Dev B)';
+                else if (currentFilter === 'M') scopeLabel = 'Progreso Miguel (DevOps)';
+                else if (currentFilter === 'A') scopeLabel = 'Progreso Conjuntas';
+            }
+
+            const totalTasksCount = targetTasks.length;
+
+            targetTasks.forEach(task => {
+                const r = getTaskReales(task);
+                if (r >= task.days) {
+                    completedTasksCount++;
+                }
+            });
+
+            const percent = totalTasksCount > 0 ? Math.round((completedTasksCount / totalTasksCount) * 100) : 0;
+
+            const labelEl = document.getElementById('global-progress-label');
+            const percentEl = document.getElementById('global-progress-percent');
+            const barEl = document.getElementById('global-progress-bar');
+            const completedEl = document.getElementById('metric-completed-tasks');
+            const totalEl = document.getElementById('metric-total-tasks');
+
+            if (labelEl) labelEl.textContent = scopeLabel;
+            if (percentEl) percentEl.textContent = `${percent}%`;
+            if (barEl) barEl.style.width = `${percent}%`;
+            if (completedEl) completedEl.textContent = completedTasksCount;
+            if (totalEl) totalEl.textContent = totalTasksCount;
+        }
+
+        function updateCounts() {
+            let countAll = 0, countV = 0, countJ = 0, countM = 0, countA = 0;
+            tasksData.forEach(t => {
+                countAll++;
+                if (t.dev === 'V') countV++;
+                else if (t.dev === 'J') countJ++;
+                else if (t.dev === 'M') countM++;
+                else if (t.dev === 'A') countA++;
+            });
+            const cAll = document.getElementById('count-all');
+            const cV = document.getElementById('count-V');
+            const cJ = document.getElementById('count-J');
+            const cM = document.getElementById('count-M');
+            const cA = document.getElementById('count-A');
+            if (cAll) cAll.textContent = countAll;
+            if (cV) cV.textContent = countV;
+            if (cJ) cJ.textContent = countJ;
+            if (cM) cM.textContent = countM;
+            if (cA) cA.textContent = countA;
+        }
+
+        let vIndex = 0, jIndex = 0;
+
+        tasksData.forEach(t => {
+            if (t.startDay !== undefined && t.endDay !== undefined) return;
+            if (t.dev === 'V') { t.startDay = vIndex; t.endDay = vIndex + t.days - 1; vIndex += t.days; } 
+            else if (t.dev === 'J') { t.startDay = jIndex; t.endDay = jIndex + t.days - 1; jIndex += t.days; }
+        });
+
+        let aIndex = Math.max(vIndex, jIndex);
+        tasksData.forEach(t => {
+            if (t.startDay !== undefined && t.endDay !== undefined) return;
+            if (t.dev === 'A') { t.startDay = aIndex; t.endDay = aIndex + t.days - 1; aIndex += t.days; }
+        });
+
+        const totalProjectDays = Math.max(aIndex, ...tasksData.map(t => (t.endDay !== undefined ? t.endDay + 1 : 0)), 30); 
+        const calendar = [];
+        let currentDate = new Date(2026, 9, 29); 
+        
+        while (calendar.length < totalProjectDays || (calendar.length > 0 && calendar[calendar.length - 1].getDay() !== 5)) {
+            const dayOfWeek = currentDate.getDay();
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) calendar.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        const weeks = [];
+        let currentWeekNum = 1, currentWeekCount = 0, lastDay = -1;
+
+        calendar.forEach(date => {
+            const day = date.getDay();
+            if (day < lastDay) { weeks.push({ week: currentWeekNum, days: currentWeekCount }); currentWeekNum++; currentWeekCount = 0; }
+            currentWeekCount++; lastDay = day;
+        });
+        if (currentWeekCount > 0) weeks.push({ week: currentWeekNum, days: currentWeekCount });
+
+        const esDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+        const esMonths = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+        function renderGantt() {
+            const thead = document.getElementById('gantt-head');
+            const tbody = document.getElementById('gantt-body');
+            
+            let headHTML = `
+                <tr class="text-xs uppercase tracking-wider">
+                    <th class="sticky-col sticky-header sticky-col-header col-id py-4 px-2 text-left font-bold align-bottom text-brandTextMuted">ID</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-actividad py-4 px-4 text-left font-bold align-bottom text-brandTextMuted">Actividad</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-resp py-4 px-2 text-center font-bold align-bottom text-brandTextMuted">Resp.</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-p py-4 px-2 text-center font-bold align-bottom text-brandTextMuted" title="Días Programados">P</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-r py-4 px-2 text-center font-bold align-bottom text-brandTextMuted" title="Días Reales">R</th>
+            `;
+
+            weeks.forEach(w => {
+                headHTML += `<th colspan="${w.days}" class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-3 text-center text-brandText font-black tracking-widest text-xs uppercase">Semana ${w.week}</th>`;
+            });
+            headHTML += `</tr><tr class="text-xs">`;
+            headHTML += `
+                <th class="sticky-col sticky-header sticky-col-header col-id h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-actividad h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-resp h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-p h-8"></th>
+                <th class="sticky-col sticky-header sticky-col-header col-r h-8"></th>
+            `;
+
+            calendar.forEach(date => {
+                const dayStr = `${esDays[date.getDay()]} ${date.getDate()} ${esMonths[date.getMonth()]}`;
+                headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-2 px-1 text-center font-semibold text-brandTextMuted min-w-[50px] whitespace-nowrap">${dayStr}</th>`;
+            });
+            headHTML += `</tr>`;
+            thead.innerHTML = headHTML;
+
+            let bodyHTML = '';
+            let matchCount = 0;
+            tasksData.forEach(task => {
+                if (!matchesFilters(task)) return;
+                matchCount++;
+
+                let reales = getTaskReales(task);
+
+                let avatarHTML = task.dev === 'V' 
+                    ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-vane text-white flex items-center justify-center font-bold text-xs shadow-sm" title="Vane (Desarrolladora A)">V</div>`
+                    : task.dev === 'J' 
+                        ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-xs shadow-sm" title="Jesús (Desarrollador B)">J</div>`
+                        : task.dev === 'M'
+                            ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-miguel text-white flex items-center justify-center font-bold text-xs shadow-sm" title="Miguel (Infraestructura / DevOps)">M</div>`
+                            : `<div class="flex justify-center -space-x-2 mt-1" title="Equipo Conjuntas"><div class="w-7 h-7 rounded-full bg-vane text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-10 border-2 border-white">V</div><div class="w-7 h-7 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-0 border-2 border-white">J</div></div>`;
+
+                let rClass = 'text-brandTextMuted';
+                if (reales > task.days) rClass = 'text-red-500 font-black';
+                else if (reales >= task.days) rClass = 'text-emerald-600 font-extrabold';
+                else if (reales > 0) rClass = 'text-amber-600 font-bold';
+
+                let groupTagColor = task.dev === 'V' ? 'text-vane' : (task.dev === 'J' ? 'text-jesus' : (task.dev === 'M' ? 'text-miguel' : 'text-ambos'));
+
+                bodyHTML += `
+                    <tr class="hover:bg-[#FFF9F5] transition-colors group">
+                        <td class="sticky-col col-id py-3 px-2 font-mono text-brandTextMuted border-b border-brandBorder/50 text-xs align-top pt-4">${task.id}</td>
+                        <td class="sticky-col col-actividad py-3 px-4 border-b border-brandBorder/50 align-top whitespace-normal">
+                            ${task.group ? `<div class="text-[10px] font-bold ${groupTagColor} tracking-wider uppercase mb-0.5">${task.group}</div>` : ''}
+                            <div class="font-bold text-brandText text-sm leading-tight">${task.name}</div>
+                            <div class="text-[11px] text-brandTextMuted mt-1 leading-snug font-medium">${task.desc}</div>
+                        </td>
+                        <td class="sticky-col col-resp py-3 px-2 border-b border-brandBorder/50 align-top pt-3">${avatarHTML}</td>
+                        <td class="sticky-col col-p py-3 px-2 border-b border-brandBorder/50 text-center font-bold text-brandTextMuted align-top pt-4">${task.days}</td>
+                        <td class="sticky-col col-r py-3 px-2 border-b border-brandBorder/50 text-center font-extrabold ${rClass} align-top pt-4" id="real-${task.id}">${reales}</td>
+                `;
+
+                let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/30' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/30' : (task.dev === 'M' ? 'bg-miguelBg border-miguel/30' : 'bg-ambosBg border-ambos/30'));
+                let colorClassSolid = task.dev === 'V' ? 'bg-vane' : (task.dev === 'J' ? 'bg-jesus' : (task.dev === 'M' ? 'bg-miguel' : 'bg-ambos'));
+
+                for (let d = 0; d < calendar.length; d++) {
+                    const isProgrammed = d >= task.startDay && d <= task.endDay;
+                    const isReal = !!realTimeState[`${task.id}-${d}`];
+                    
+                    let pBar = isProgrammed ? `<div class="w-full h-5 rounded-md border ${colorClassBg}"></div>` : `<div class="w-full h-5"></div>`;
+                    let rBar = isReal 
+                        ? `<div class="w-full h-7 rounded-md ${colorClassSolid} cursor-pointer shadow-sm transition-transform hover:scale-105" onclick="toggleReal('${task.id}', ${d})"></div>` 
+                        : `<div class="w-full h-7 rounded-md bg-[#E8DDD1]/60 cursor-pointer hover:bg-[#D4C1AF] transition-colors" onclick="toggleReal('${task.id}', ${d})"></div>`;
+
+                    bodyHTML += `<td class="border-b border-l border-brandBorder/50 p-1 min-w-[55px] align-top pt-4"><div class="flex flex-col gap-2 w-full px-1">${pBar}${rBar}</div></td>`;
+                }
+                bodyHTML += `</tr>`;
+            });
+
+            if (matchCount === 0) {
+                bodyHTML = `<tr><td colspan="${5 + calendar.length}" class="py-14 text-center text-brandTextMuted font-medium"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</td></tr>`;
+            }
+
+            tbody.innerHTML = bodyHTML;
+            updateMetrics();
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cards-grid');
+            if (!grid) return;
+            
+            let html = '';
+            let matchCount = 0;
+            tasksData.forEach(task => {
+                if (!matchesFilters(task)) return;
+                matchCount++;
+
+                let reales = getTaskReales(task);
+
+                const startDate = calendar[task.startDay];
+                const endDate = calendar[task.endDay];
+                const dateRangeStr = startDate && endDate 
+                    ? `${esDays[startDate.getDay()]} ${startDate.getDate()} ${esMonths[startDate.getMonth()]} - ${esDays[endDate.getDay()]} ${endDate.getDate()} ${esMonths[endDate.getMonth()]}`
+                    : '';
+
+                let badgeDev = '';
+                let colorSolid = 'bg-vane';
+                if (task.dev === 'V') {
+                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-vane/15 text-vane"><span class="w-2 h-2 rounded-full bg-vane"></span> Vane</span>`;
+                    colorSolid = 'bg-vane';
+                } else if (task.dev === 'J') {
+                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-jesus/15 text-jesus"><span class="w-2 h-2 rounded-full bg-jesus"></span> Jesús</span>`;
+                    colorSolid = 'bg-jesus';
+                } else if (task.dev === 'M') {
+                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-miguel/15 text-miguel"><span class="w-2 h-2 rounded-full bg-miguel"></span> Miguel</span>`;
+                    colorSolid = 'bg-miguel';
+                } else {
+                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-ambos/15 text-ambos"><span class="w-2 h-2 rounded-full bg-ambos"></span> Ambos</span>`;
+                    colorSolid = 'bg-ambos';
+                }
+
+                let daysChipsHTML = '';
+                for (let d = task.startDay; d <= task.endDay; d++) {
+                    const date = calendar[d];
+                    if (!date) continue;
+                    const isReal = !!realTimeState[`${task.id}-${d}`];
+                    const dateLabel = `${esDays[date.getDay()]} ${date.getDate()}`;
+                    
+                    if (isReal) {
+                        daysChipsHTML += `
+                            <button type="button" onclick="toggleReal('${task.id}', ${d})" class="px-2.5 py-1 rounded-lg text-xs font-bold text-white ${colorSolid} flex items-center gap-1 shadow-sm transition-transform active:scale-95" title="Click para desmarcar">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                ${dateLabel}
+                            </button>
+                        `;
+                    } else {
+                        daysChipsHTML += `
+                            <button type="button" onclick="toggleReal('${task.id}', ${d})" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-brandBg hover:bg-brandPeach/60 text-brandText border border-brandBorderDark/40 flex items-center gap-1 transition-colors active:scale-95" title="Click para marcar realizado">
+                                <span class="w-2 h-2 rounded-full border border-brandTextMuted"></span>
+                                ${dateLabel}
+                            </button>
+                        `;
+                    }
+                }
+
+                html += `
+                    <div class="bg-white border border-brandBorderDark/70 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span class="font-mono font-bold text-xs bg-brandBg px-2 py-0.5 rounded border border-brandBorderDark/40 text-brandTextMuted">${task.id}</span>
+                                <div class="flex items-center gap-2">
+                                    ${badgeDev}
+                                    <span class="text-xs font-bold px-2 py-0.5 rounded-md ${reales > task.days ? 'bg-red-100 text-red-700' : (reales >= task.days ? 'bg-emerald-100 text-emerald-700' : (reales > 0 ? 'bg-amber-100 text-amber-800' : 'bg-brandBg text-brandText'))}">
+                                        P: ${task.days}d • R: <strong class="font-extrabold">${reales}d</strong> ${reales > task.days ? `(+${reales - task.days}d)` : (reales >= task.days ? '✓' : (reales > 0 ? `(${reales}/${task.days}d)` : ''))}
+                                    </span>
+                                </div>
+                            </div>
+                            ${task.group ? `<div class="text-[10px] font-bold ${task.dev === 'V' ? 'text-vane' : (task.dev === 'J' ? 'text-jesus' : (task.dev === 'M' ? 'text-miguel' : 'text-ambos'))} tracking-wider uppercase mb-1">${task.group}</div>` : ''}
+                            <h3 class="font-bold text-brandText text-sm sm:text-base leading-snug">${task.name}</h3>
+                            <p class="text-xs text-brandTextMuted mt-1 leading-relaxed">${task.desc}</p>
+                        </div>
+
+                        <div class="mt-3 pt-3 border-t border-brandBorder/60">
+                            <div class="flex items-center justify-between text-xs text-brandTextMuted mb-2">
+                                <span class="font-medium flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 text-brandTextMuted inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    ${dateRangeStr}
+                                </span>
+                                <span class="text-[11px] font-bold text-brandTextMuted">${task.days} día${task.days > 1 ? 's' : ''}</span>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <span class="text-[11px] font-bold text-brandTextMuted mr-1">Días:</span>
+                                ${daysChipsHTML}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (matchCount === 0) {
+                html = `<div class="col-span-full py-14 text-center text-brandTextMuted font-medium bg-white rounded-xl border border-brandBorder"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</div>`;
+            }
+
+            grid.innerHTML = html;
+            updateMetrics();
+        }
+
+        const statusConfig = {
+            all: {
+                label: 'Todos los estados',
+                icon: '<svg class="w-3.5 h-3.5 text-brandTextMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>'
+            },
+            pending: {
+                label: 'Pendientes',
+                icon: '<svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            },
+            completed: {
+                label: 'Completadas',
+                icon: '<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+            },
+            overdue: {
+                label: 'Con días extra',
+                icon: '<svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>'
+            }
+        };
+
+        window.toggleStatusDropdown = function(e) {
+            if (e) e.stopPropagation();
+            const menu = document.getElementById('status-dropdown-menu');
+            const chevron = document.getElementById('status-chevron');
+            if (menu) {
+                const isOpen = !menu.classList.contains('hidden');
+                if (isOpen) {
+                    menu.classList.add('hidden');
+                    if (chevron) chevron.classList.remove('rotate-180');
+                } else {
+                    menu.classList.remove('hidden');
+                    if (chevron) chevron.classList.add('rotate-180');
+                }
+            }
+        };
+
+        window.selectStatus = function(val) {
+            currentStatus = val;
+            const menu = document.getElementById('status-dropdown-menu');
+            const chevron = document.getElementById('status-chevron');
+            const iconEl = document.getElementById('status-selected-icon');
+            const labelEl = document.getElementById('status-selected-label');
+
+            if (menu) menu.classList.add('hidden');
+            if (chevron) chevron.classList.remove('rotate-180');
+
+            if (statusConfig[val]) {
+                if (iconEl) iconEl.innerHTML = statusConfig[val].icon;
+                if (labelEl) labelEl.textContent = statusConfig[val].label;
+            }
+
+            renderGantt();
+            renderCards();
+        };
+
+        document.addEventListener('click', function(e) {
+            const wrapper = document.getElementById('status-dropdown-wrapper');
+            const menu = document.getElementById('status-dropdown-menu');
+            const chevron = document.getElementById('status-chevron');
+            if (wrapper && !wrapper.contains(e.target) && menu && !menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        });
+
+        window.toggleReal = function(taskId, dayIndex) {
+            const key = `${taskId}-${dayIndex}`;
+            if (realTimeState[key]) delete realTimeState[key];
+            else realTimeState[key] = true;
+            renderGantt();
+            renderCards();
+        };
+
+        window.handleSearch = function(val) {
+            currentSearch = val;
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) {
+                if (val && val.trim().length > 0) clearBtn.classList.remove('hidden');
+                else clearBtn.classList.add('hidden');
+            }
+            renderGantt();
+            renderCards();
+        };
+
+        window.clearSearch = function() {
+            const input = document.getElementById('search-input');
+            if (input) input.value = '';
+            handleSearch('');
+        };
+
+        window.filterTasks = function(dev) {
+            currentFilter = dev;
+            ['all', 'V', 'J', 'M', 'A'].forEach(k => {
+                const btn = document.getElementById(`btn-${k}`);
+                if (!btn) return;
+                const countBadge = document.getElementById(`count-${k}`);
+                if (k === dev) {
+                    btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap';
+                    if (countBadge) countBadge.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold';
+                } else {
+                    btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap';
+                    if (countBadge) countBadge.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold';
+                }
+            });
+            renderGantt();
+            renderCards();
+        };
+
+        window.switchView = function(view) {
+            currentView = view;
+            const ganttContainer = document.getElementById('gantt-view-container');
+            const cardsContainer = document.getElementById('cards-view-container');
+            const btnGantt = document.getElementById('toggle-view-gantt');
+            const btnCards = document.getElementById('toggle-view-cards');
+
+            if (view === 'gantt') {
+                ganttContainer.classList.remove('hidden');
+                cardsContainer.classList.add('hidden');
+                btnGantt.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm';
+                btnCards.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5';
+                renderGantt();
+            } else {
+                ganttContainer.classList.add('hidden');
+                cardsContainer.classList.remove('hidden');
+                btnCards.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm';
+                btnGantt.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5';
+                renderCards();
+            }
+        };
+
+        updateCounts();
+        let currentView = window.innerWidth < 768 ? 'cards' : 'gantt';
+        switchView(currentView);
+    </script>
+</body>
+</html>
