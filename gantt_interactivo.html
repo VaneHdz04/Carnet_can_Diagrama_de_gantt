@@ -91,19 +91,87 @@
                 </div>
             </div>
             
-            <!-- Barra de Filtros -->
-            <div class="flex items-center gap-1.5 sm:gap-2 bg-white p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-brandBorder shadow-sm overflow-x-auto max-w-full no-scrollbar">
-                <span class="text-xs font-bold text-brandTextMuted uppercase tracking-wider px-1 hidden sm:inline">Filtro:</span>
-                <button onclick="filterTasks('all')" id="btn-all" class="filter-btn px-3 sm:px-4 py-1.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold bg-brandText text-white transition-colors shadow-sm whitespace-nowrap">Todos</button>
-                <button onclick="filterTasks('V')" id="btn-V" class="filter-btn px-2.5 sm:px-4 py-1.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold text-brandTextMuted hover:bg-brandPeach transition-colors flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-                    <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-vane"></div> Vane
-                </button>
-                <button onclick="filterTasks('J')" id="btn-J" class="filter-btn px-2.5 sm:px-4 py-1.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold text-brandTextMuted hover:bg-brandPeach transition-colors flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-                    <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-jesus"></div> Jesús
-                </button>
-                <button onclick="filterTasks('A')" id="btn-A" class="filter-btn px-2.5 sm:px-4 py-1.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold text-brandTextMuted hover:bg-brandPeach transition-colors flex items-center gap-1.5 border border-transparent whitespace-nowrap">
-                    <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-ambos"></div> Conjuntas
-                </button>
+            <!-- Barra de Herramientas y Filtros Integral -->
+            <div class="bg-white p-2.5 sm:p-3.5 rounded-2xl border border-brandBorder shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                
+                <!-- Grupo Izquierdo: Filtros de Responsable y Estado -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- Filtros Responsable -->
+                    <div class="flex items-center bg-brandBg/80 p-1 rounded-xl border border-brandBorder overflow-x-auto max-w-full no-scrollbar">
+                        <button onclick="filterTasks('all')" id="btn-all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
+                            <span>Todos</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold" id="count-all">46</span>
+                        </button>
+                        <button onclick="filterTasks('V')" id="btn-V" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-vane"></div>
+                            <span>Vane</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-V">18</span>
+                        </button>
+                        <button onclick="filterTasks('J')" id="btn-J" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-jesus"></div>
+                            <span>Jesús</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-J">18</span>
+                        </button>
+                        <button onclick="filterTasks('A')" id="btn-A" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-ambos"></div>
+                            <span>Conjuntas</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-A">10</span>
+                        </button>
+                    </div>
+
+                    <!-- Filtro de Estado -->
+                    <div class="flex items-center bg-brandBg/80 px-2.5 py-1.5 rounded-xl border border-brandBorder text-xs">
+                        <span class="text-brandTextMuted font-bold mr-1.5 hidden sm:inline">Estado:</span>
+                        <select id="status-filter" onchange="handleStatusFilter(this.value)" class="bg-transparent font-semibold text-brandText outline-none cursor-pointer">
+                            <option value="all">Todos los estados</option>
+                            <option value="pending">⏳ Pendientes</option>
+                            <option value="progress">⚡ En progreso</option>
+                            <option value="completed">✅ Completadas</option>
+                            <option value="overdue">⚠️ Con días extra</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Grupo Central: Buscador en tiempo real -->
+                <div class="relative flex-1 min-w-[200px] max-w-xl">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-brandTextMuted">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        oninput="handleSearch(this.value)" 
+                        placeholder="Buscar actividad, módulo o código (ej. A01, Firebase, mapa)..." 
+                        class="w-full pl-9 pr-8 py-2 text-xs font-medium bg-brandBg/60 focus:bg-white border border-brandBorder rounded-xl outline-none focus:border-brandBorderDark focus:ring-2 focus:ring-vane/20 transition-all placeholder:text-brandTextMuted/70"
+                    />
+                    <button 
+                        id="search-clear" 
+                        onclick="clearSearch()" 
+                        class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-brandTextMuted hover:text-brandText cursor-pointer"
+                        title="Limpiar búsqueda"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Grupo Derecho: Progreso Global y Métricas -->
+                <div class="flex items-center gap-3 self-stretch lg:self-auto justify-between lg:justify-end border-t lg:border-t-0 pt-2 lg:pt-0 border-brandBorder/60">
+                    <div class="flex flex-col min-w-[140px] sm:min-w-[170px]">
+                        <div class="flex items-center justify-between text-xs mb-1">
+                            <span class="text-brandTextMuted font-bold">Progreso Global</span>
+                            <span class="font-extrabold text-brandText font-mono" id="global-progress-percent">0%</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-brandBg rounded-full overflow-hidden border border-brandBorder">
+                            <div id="global-progress-bar" class="h-full bg-gradient-to-r from-vane via-jesus to-ambos rounded-full transition-all duration-300" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
+                        <div class="text-brandTextMuted font-medium"><span id="metric-real-days" class="font-black text-brandText">0</span> / <span id="metric-total-days" class="font-bold">50</span> d</div>
+                        <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Completados</div>
+                    </div>
+                </div>
+
             </div>
         </header>
 
@@ -187,6 +255,74 @@
 
         const realTimeState = {}; 
         let currentFilter = 'all';
+        let currentStatus = 'all';
+        let currentSearch = '';
+
+        function getTaskReales(task) {
+            let count = 0;
+            for (let d = 0; d < calendar.length; d++) {
+                if (realTimeState[`${task.id}-${d}`]) count++;
+            }
+            return count;
+        }
+
+        function matchesFilters(task) {
+            if (currentFilter !== 'all' && task.dev !== currentFilter) return false;
+            
+            const r = getTaskReales(task);
+            if (currentStatus === 'pending' && r > 0) return false;
+            if (currentStatus === 'progress' && (r === 0 || r >= task.days)) return false;
+            if (currentStatus === 'completed' && r < task.days) return false;
+            if (currentStatus === 'overdue' && r <= task.days) return false;
+
+            if (currentSearch.trim()) {
+                const q = currentSearch.toLowerCase().trim();
+                const text = `${task.id} ${task.name} ${task.desc}`.toLowerCase();
+                if (!text.includes(q)) return false;
+            }
+
+            return true;
+        }
+
+        function updateMetrics() {
+            let totalProgrammed = 0;
+            let totalReal = 0;
+
+            tasksData.forEach(task => {
+                totalProgrammed += task.days;
+                totalReal += getTaskReales(task);
+            });
+
+            const percent = totalProgrammed > 0 ? Math.min(100, Math.round((totalReal / totalProgrammed) * 100)) : 0;
+
+            const percentEl = document.getElementById('global-progress-percent');
+            const barEl = document.getElementById('global-progress-bar');
+            const realDaysEl = document.getElementById('metric-real-days');
+            const totalDaysEl = document.getElementById('metric-total-days');
+
+            if (percentEl) percentEl.textContent = `${percent}%`;
+            if (barEl) barEl.style.width = `${percent}%`;
+            if (realDaysEl) realDaysEl.textContent = totalReal;
+            if (totalDaysEl) totalDaysEl.textContent = totalProgrammed;
+        }
+
+        function updateCounts() {
+            let countAll = 0, countV = 0, countJ = 0, countA = 0;
+            tasksData.forEach(t => {
+                countAll++;
+                if (t.dev === 'V') countV++;
+                else if (t.dev === 'J') countJ++;
+                else if (t.dev === 'A') countA++;
+            });
+            const cAll = document.getElementById('count-all');
+            const cV = document.getElementById('count-V');
+            const cJ = document.getElementById('count-J');
+            const cA = document.getElementById('count-A');
+            if (cAll) cAll.textContent = countAll;
+            if (cV) cV.textContent = countV;
+            if (cJ) cJ.textContent = countJ;
+            if (cA) cA.textContent = countA;
+        }
 
         let vIndex = 0, jIndex = 0;
 
@@ -256,11 +392,12 @@
             thead.innerHTML = headHTML;
 
             let bodyHTML = '';
+            let matchCount = 0;
             tasksData.forEach(task => {
-                if (currentFilter !== 'all' && task.dev !== currentFilter) return;
+                if (!matchesFilters(task)) return;
+                matchCount++;
 
-                let reales = 0;
-                for (let d = 0; d < calendar.length; d++) if (realTimeState[`${task.id}-${d}`]) reales++;
+                let reales = getTaskReales(task);
 
                 let avatarHTML = task.dev === 'V' 
                     ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-vane text-white flex items-center justify-center font-bold text-xs shadow-sm">V</div>`
@@ -296,7 +433,13 @@
                 }
                 bodyHTML += `</tr>`;
             });
+
+            if (matchCount === 0) {
+                bodyHTML = `<tr><td colspan="${5 + calendar.length}" class="py-14 text-center text-brandTextMuted font-medium"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</td></tr>`;
+            }
+
             tbody.innerHTML = bodyHTML;
+            updateMetrics();
         }
 
         function renderCards() {
@@ -304,13 +447,12 @@
             if (!grid) return;
             
             let html = '';
+            let matchCount = 0;
             tasksData.forEach(task => {
-                if (currentFilter !== 'all' && task.dev !== currentFilter) return;
+                if (!matchesFilters(task)) return;
+                matchCount++;
 
-                let reales = 0;
-                for (let d = 0; d < calendar.length; d++) {
-                    if (realTimeState[`${task.id}-${d}`]) reales++;
-                }
+                let reales = getTaskReales(task);
 
                 const startDate = calendar[task.startDay];
                 const endDate = calendar[task.endDay];
@@ -385,7 +527,12 @@
                 `;
             });
 
+            if (matchCount === 0) {
+                html = `<div class="col-span-full py-14 text-center text-brandTextMuted font-medium bg-white rounded-xl border border-brandBorder"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</div>`;
+            }
+
             grid.innerHTML = html;
+            updateMetrics();
         }
 
         window.toggleReal = function(taskId, dayIndex) {
@@ -396,17 +543,43 @@
             renderCards();
         };
 
+        window.handleSearch = function(val) {
+            currentSearch = val;
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) {
+                if (val && val.trim().length > 0) clearBtn.classList.remove('hidden');
+                else clearBtn.classList.add('hidden');
+            }
+            renderGantt();
+            renderCards();
+        };
+
+        window.clearSearch = function() {
+            const input = document.getElementById('search-input');
+            if (input) input.value = '';
+            handleSearch('');
+        };
+
+        window.handleStatusFilter = function(val) {
+            currentStatus = val;
+            renderGantt();
+            renderCards();
+        };
+
         window.filterTasks = function(dev) {
             currentFilter = dev;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-brandText', 'text-white');
-                btn.classList.add('text-brandTextMuted', 'border-transparent');
+            ['all', 'V', 'J', 'A'].forEach(k => {
+                const btn = document.getElementById(`btn-${k}`);
+                if (!btn) return;
+                const countBadge = document.getElementById(`count-${k}`);
+                if (k === dev) {
+                    btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap';
+                    if (countBadge) countBadge.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold';
+                } else {
+                    btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap';
+                    if (countBadge) countBadge.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold';
+                }
             });
-            const activeBtn = document.getElementById(`btn-${dev === 'all' ? 'all' : dev}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('text-brandTextMuted', 'border-transparent');
-                activeBtn.classList.add('bg-brandText', 'text-white');
-            }
             renderGantt();
             renderCards();
         };
@@ -433,6 +606,7 @@
             }
         };
 
+        updateCounts();
         let currentView = window.innerWidth < 768 ? 'cards' : 'gantt';
         switchView(currentView);
     </script>
