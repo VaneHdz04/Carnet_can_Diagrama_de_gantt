@@ -21,6 +21,8 @@
                         vaneBg: 'rgba(210, 115, 76, 0.25)',
                         jesus: '#58798C',    
                         jesusBg: 'rgba(88, 121, 140, 0.25)',
+                        miguel: '#7B5294',
+                        miguelBg: 'rgba(123, 82, 148, 0.25)',
                         ambos: '#6C8E66',    
                         ambosBg: 'rgba(108, 142, 102, 0.25)',
                     },
@@ -75,7 +77,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                     <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText">Proyecto <span class="text-vane">Carnet-Can</span></h1>
-                    <p class="text-brandTextMuted mt-0.5 sm:mt-1 text-xs sm:text-sm font-medium">Plan de Desarrollo • Inicio: Jueves 29 de Octubre, 2026</p>
+                    <p class="text-brandTextMuted mt-0.5 sm:mt-1 text-xs sm:text-sm font-medium">Plan de Desarrollo e Infraestructura DevOps • 30 Días Laborables • Inicio: Jueves 29 de Octubre, 2026</p>
                 </div>
                 
                 <!-- Selector de Vista: Gantt o Tarjetas -->
@@ -100,17 +102,22 @@
                     <div class="flex items-center bg-brandBg/80 p-1 rounded-xl border border-brandBorder overflow-x-auto max-w-full no-scrollbar">
                         <button onclick="filterTasks('all')" id="btn-all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
                             <span>Todos</span>
-                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold" id="count-all">46</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold" id="count-all">58</span>
                         </button>
                         <button onclick="filterTasks('V')" id="btn-V" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-vane"></div>
-                            <span>Vane</span>
+                            <span>Vane (Dev A)</span>
                             <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-V">18</span>
                         </button>
                         <button onclick="filterTasks('J')" id="btn-J" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-jesus"></div>
-                            <span>Jesús</span>
+                            <span>Jesús (Dev B)</span>
                             <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-J">18</span>
+                        </button>
+                        <button onclick="filterTasks('M')" id="btn-M" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
+                            <div class="w-2.5 h-2.5 rounded-full bg-miguel"></div>
+                            <span>Miguel (DevOps)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-M">12</span>
                         </button>
                         <button onclick="filterTasks('A')" id="btn-A" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-ambos"></div>
@@ -186,16 +193,16 @@
                 <div class="flex items-center gap-3 self-stretch lg:self-auto justify-between lg:justify-end border-t lg:border-t-0 pt-2 lg:pt-0 border-brandBorder/60">
                     <div class="flex flex-col min-w-[140px] sm:min-w-[170px]">
                         <div class="flex items-center justify-between text-xs mb-1">
-                            <span class="text-brandTextMuted font-bold">Progreso Global</span>
+                            <span class="text-brandTextMuted font-bold" id="global-progress-label">Progreso Global</span>
                             <span class="font-extrabold text-brandText font-mono" id="global-progress-percent">0%</span>
                         </div>
                         <div class="w-full h-2.5 bg-brandBg rounded-full overflow-hidden border border-brandBorder">
-                            <div id="global-progress-bar" class="h-full bg-gradient-to-r from-vane via-jesus to-ambos rounded-full transition-all duration-300" style="width: 0%"></div>
+                            <div id="global-progress-bar" class="h-full bg-gradient-to-r from-vane via-miguel to-ambos rounded-full transition-all duration-300" style="width: 0%"></div>
                         </div>
                     </div>
 
                     <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
-                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">46</span></div>
+                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">58</span></div>
                         <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Tareas terminadas</div>
                     </div>
                 </div>
@@ -228,57 +235,71 @@
 
     <script>
         const tasksData = [
-            // Vane
-            { id: 'A01', name: 'Revisión y corrección funcionales del propietario', desc: 'Revisión funcional y corrección de errores en los módulos existentes del propietario: mascotas, historial médico, vacunas, desparasitación y carnet PDF.', dev: 'V', days: 1 },
-            { id: 'A02', name: 'Persistencia de sesión y autenticación', desc: 'Implementación de persistencia de sesión, recuperación de contraseña y renovación segura de tokens de autenticación.', dev: 'V', days: 1 },
-            { id: 'A03', name: 'Inicio de sesión con Google y Microsoft', desc: 'Integración del inicio de sesión con Google y Microsoft, incluyendo vinculación de cuentas y validación de acceso.', dev: 'V', days: 1 },
-            { id: 'A04', name: 'Notificaciones y registro de dispositivos', desc: 'Configuración de Firebase Cloud Messaging, solicitud de permisos y registro de dispositivos para recibir notificaciones.', dev: 'V', days: 1 },
-            { id: 'A05', name: 'Recordatorios automáticos (vacunas/desparasitación)', desc: 'Implementación de recordatorios automáticos de vacunación y desparasitación, considerando fechas programadas y preferencias de notificación.', dev: 'V', days: 1 },
-            { id: 'A06', name: 'Integración de pesos de referencia', desc: 'Incorporación de rangos de peso de referencia por especie, raza y etapa de crecimiento, con su visualización en el seguimiento de salud.', dev: 'V', days: 1 },
-            { id: 'A07', name: 'Módulo de mascotas extraviadas y carteles', desc: 'Desarrollo del módulo de mascotas extraviadas: registro, edición, gestión de alertas y generación y descarga de carteles digitales mediante plantillas.', dev: 'V', days: 1 },
-            { id: 'A08', name: 'Frontend del mapa veterinario y filtros', desc: 'Desarrollo de la interfaz del directorio veterinario con mapa, filtros de búsqueda y fichas informativas utilizando datos simulados.', dev: 'V', days: 1 },
-            { id: 'A09', name: 'Integración del mapa con datos reales', desc: 'Integración del directorio con ubicaciones, servicios y reseñas reales de veterinarios y clínicas, incluyendo búsqueda por proximidad.', dev: 'V', days: 1 },
-            { id: 'A10', name: 'Pruebas funcionales del ecosistema propietario', desc: 'Ejecución de pruebas funcionales y de regresión de los módulos del propietario, con corrección de incidencias detectadas.', dev: 'V', days: 1 },
-            { id: 'AD01', name: 'Estructura base del panel administrativo', desc: 'Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.', dev: 'V', days: 1 },
-            { id: 'AD02', name: 'Dashboard administrativo', desc: 'Implementación del dashboard administrativo con indicadores, estadísticas y gráficas obtenidas de los registros del sistema.', dev: 'V', days: 1 },
-            { id: 'AD03', name: 'Gestión de propietarios', desc: 'Desarrollo de la gestión de propietarios: listado, búsqueda, filtros, consulta de perfiles y acciones administrativas autorizadas.', dev: 'V', days: 2 },
-            { id: 'AD04', name: 'Configuraciones globales', desc: 'Implementación de configuraciones globales para administrar límites de mascotas, documentos y otros parámetros generales de la plataforma.', dev: 'V', days: 1 },
-            { id: 'AD05', name: 'Catálogo de especies y razas', desc: 'Desarrollo de catálogos de especies y razas, incluyendo registro, edición, consulta, desactivación y relaciones entre ambos.', dev: 'V', days: 1 },
-            { id: 'AD06', name: 'Catálogos sanitarios', desc: 'Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.', dev: 'V', days: 1 },
-            { id: 'AD07', name: 'Gestión de roles y permisos', desc: 'Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.', dev: 'V', days: 2 },
-            { id: 'AD08', name: 'Pruebas del panel administrativo', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.', dev: 'V', days: 1 },
+            // Vane - Desarrollo Propietario / Admin
+            { id: 'A01', name: 'Revisión y corrección funcionales del propietario', desc: 'Revisión funcional y corrección de errores en los módulos existentes del propietario: mascotas, historial médico, vacunas, desparasitación y carnet PDF.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A02', name: 'Persistencia de sesión y autenticación', desc: 'Implementación de persistencia de sesión, recuperación de contraseña y renovación segura de tokens de autenticación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A03', name: 'Inicio de sesión con Google y Microsoft', desc: 'Integración del inicio de sesión con Google y Microsoft, incluyendo vinculación de cuentas y validación de acceso.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A04', name: 'Notificaciones y registro de dispositivos', desc: 'Configuración de Firebase Cloud Messaging, solicitud de permisos y registro de dispositivos para recibir notificaciones.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A05', name: 'Recordatorios automáticos (vacunas/desparasitación)', desc: 'Implementación de recordatorios automáticos de vacunación y desparasitación, considerando fechas programadas y preferencias de notificación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A06', name: 'Integración de pesos de referencia', desc: 'Incorporación de rangos de peso de referencia por especie, raza y etapa de crecimiento, con su visualización en el seguimiento de salud.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A07', name: 'Módulo de mascotas extraviadas y carteles', desc: 'Desarrollo del módulo de mascotas extraviadas: registro, edición, gestión de alertas y generación y descarga de carteles digitales mediante plantillas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A08', name: 'Frontend del mapa veterinario y filtros', desc: 'Desarrollo de la interfaz del directorio veterinario con mapa, filtros de búsqueda y fichas informativas utilizando datos simulados.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A09', name: 'Integración del mapa con datos reales', desc: 'Integración del directorio con ubicaciones, servicios y reseñas reales de veterinarios y clínicas, incluyendo búsqueda por proximidad.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'A10', name: 'Pruebas funcionales del ecosistema propietario', desc: 'Ejecución de pruebas funcionales y de regresión de los módulos del propietario, con corrección de incidencias detectadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD01', name: 'Estructura base del panel administrativo', desc: 'Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD02', name: 'Dashboard administrativo', desc: 'Implementación del dashboard administrativo con indicadores, estadísticas y gráficas obtenidas de los registros del sistema.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD03', name: 'Gestión de propietarios', desc: 'Desarrollo de la gestión de propietarios: listado, búsqueda, filtros, consulta de perfiles y acciones administrativas autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2 },
+            { id: 'AD04', name: 'Configuraciones globales', desc: 'Implementación de configuraciones globales para administrar límites de mascotas, documentos y otros parámetros generales de la plataforma.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD05', name: 'Catálogo de especies y razas', desc: 'Desarrollo de catálogos de especies y razas, incluyendo registro, edición, consulta, desactivación y relaciones entre ambos.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD06', name: 'Catálogos sanitarios', desc: 'Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            { id: 'AD07', name: 'Gestión de roles y permisos', desc: 'Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2 },
+            { id: 'AD08', name: 'Pruebas del panel administrativo', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
 
-            // Jesus
-            { id: 'B01', name: 'Revisión de código y registros', desc: 'Revisión del código existente de veterinarios y clínicas, identificando formularios, endpoints, modelos y procesos de validación ya implementados.', dev: 'J', days: 1 },
-            { id: 'B02', name: 'Acceso y cambio de contraseña', desc: 'Implementación del acceso para cuentas profesionales aprobadas y del cambio de contraseña, con validación del estado de la cuenta.', dev: 'J', days: 1 },
-            { id: 'B03', name: 'Perfil veterinario', desc: 'Desarrollo del perfil veterinario, permitiendo consultar y actualizar credenciales profesionales, fotografía, información personal y datos de contacto.', dev: 'J', days: 1 },
-            { id: 'B04', name: 'Servicios y horarios del veterinario', desc: 'Implementación de especialidades, servicios ofrecidos y horarios de atención del veterinario, con selección desde catálogos y almacenamiento de cambios.', dev: 'J', days: 1 },
-            { id: 'B05', name: 'Perfil de clínica', desc: 'Desarrollo del perfil de clínica, incluyendo consulta y edición de información del establecimiento, documentación, fotografía y contacto.', dev: 'J', days: 1 },
-            { id: 'B06', name: 'Servicios y horarios de la clínica', desc: 'Implementación de especialidades, servicios y horarios de la clínica, incluyendo registro, vinculación y administración de médicos asociados.', dev: 'J', days: 1 },
-            { id: 'B07', name: 'Gestión de ubicación de veterinarios/clínicas', desc: 'Desarrollo de la gestión de ubicación de veterinarios y clínicas, incluyendo dirección, selección en mapa, coordenadas y consulta geográfica mediante API.', dev: 'J', days: 1 },
-            { id: 'B08', name: 'Reseñas y calificaciones', desc: 'Implementación del módulo de reseñas y calificaciones para veterinarios y clínicas, incluyendo publicación, consulta, reportes y endpoints públicos.', dev: 'J', days: 1 },
-            { id: 'B09', name: 'Pantallas de inicio (Home)', desc: 'Desarrollo de las pantallas de inicio de veterinarios y clínicas, con resúmenes, indicadores y accesos a sus funcionalidades principales.', dev: 'J', days: 1 },
-            { id: 'B10', name: 'Notificaciones y ajustes de cuenta', desc: 'Integración de notificaciones y ajustes de cuenta en ambos perfiles, reutilizando los servicios y componentes comunes disponibles.', dev: 'J', days: 1 },
-            { id: 'B11', name: 'Pruebas del ecosistema veterinarios', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos de veterinarios y clínicas.', dev: 'J', days: 1 },
-            { id: 'BD01', name: 'Módulo administrativo de veterinarios', desc: 'Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.', dev: 'J', days: 1 },
-            { id: 'BD02', name: 'Verificación documental', desc: 'Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.', dev: 'J', days: 2 },
-            { id: 'BD03', name: 'Módulo administrativo de clínicas', desc: 'Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.', dev: 'J', days: 1 },
-            { id: 'BD04', name: 'Moderación de reseñas', desc: 'Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.', dev: 'J', days: 1 },
-            { id: 'BD05', name: 'Apoyo en permisos profesionales', desc: 'Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.', dev: 'J', days: 2 },
-            { id: 'BD06', name: 'Pruebas módulos administrativos', desc: 'Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.', dev: 'J', days: 1 },
-            { id: 'BD07', name: 'Contraseñas de administrador/supervisor', desc: 'Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administrador y supervisor.', dev: 'J', days: 1 },
+            // Jesus - Desarrollo Veterinario / Clínicas
+            { id: 'B01', name: 'Revisión de código y registros', desc: 'Revisión del código existente de veterinarios y clínicas, identificando formularios, endpoints, modelos y procesos de validación ya implementados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B02', name: 'Acceso y cambio de contraseña', desc: 'Implementación del acceso para cuentas profesionales aprobadas y del cambio de contraseña, con validación del estado de la cuenta.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B03', name: 'Perfil veterinario', desc: 'Desarrollo del perfil veterinario, permitiendo consultar y actualizar credenciales profesionales, fotografía, información personal y datos de contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B04', name: 'Servicios y horarios del veterinario', desc: 'Implementación de especialidades, servicios ofrecidos y horarios de atención del veterinario, con selección desde catálogos y almacenamiento de cambios.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B05', name: 'Perfil de clínica', desc: 'Desarrollo del perfil de clínica, incluyendo consulta y edición de información del establecimiento, documentación, fotografía y contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B06', name: 'Servicios y horarios de la clínica', desc: 'Implementación de especialidades, servicios y horarios de la clínica, incluyendo registro, vinculación y administración de médicos asociados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B07', name: 'Gestión de ubicación de veterinarios/clínicas', desc: 'Desarrollo de la gestión de ubicación de veterinarios y clínicas, incluyendo dirección, selección en mapa, coordenadas y consulta geográfica mediante API.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B08', name: 'Reseñas y calificaciones', desc: 'Implementación del módulo de reseñas y calificaciones para veterinarios y clínicas, incluyendo publicación, consulta, reportes y endpoints públicos.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B09', name: 'Pantallas de inicio (Home)', desc: 'Desarrollo de las pantallas de inicio de veterinarios y clínicas, con resúmenes, indicadores y accesos a sus funcionalidades principales.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B10', name: 'Notificaciones y ajustes de cuenta', desc: 'Integración de notificaciones y ajustes de cuenta en ambos perfiles, reutilizando los servicios y componentes comunes disponibles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'B11', name: 'Pruebas del ecosistema veterinarios', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos de veterinarios y clínicas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD01', name: 'Módulo administrativo de veterinarios', desc: 'Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD02', name: 'Verificación documental', desc: 'Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2 },
+            { id: 'BD03', name: 'Módulo administrativo de clínicas', desc: 'Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD04', name: 'Moderación de reseñas', desc: 'Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD05', name: 'Apoyo en permisos profesionales', desc: 'Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2 },
+            { id: 'BD06', name: 'Pruebas módulos administrativos', desc: 'Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            { id: 'BD07', name: 'Contraseñas de administrador/supervisor', desc: 'Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administrador y supervisor.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
 
-            // Ambos
-            { id: 'C01', name: 'Definición de contratos API y reglas', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', days: 1 },
-            { id: 'C02', name: 'Migraciones y esquema BD', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', days: 1 },
-            { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', days: 1 },
-            { id: 'C04', name: 'Pruebas integrales de flujos', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles.', dev: 'A', days: 1 },
-            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', days: 1 },
-            { id: 'C06', name: 'Configuración productiva', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', days: 1 },
-            { id: 'C07', name: 'Validación de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', days: 1 },
-            { id: 'C08', name: 'Compilación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', days: 1 },
-            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', days: 1 },
-            { id: 'C10', name: 'Documentación técnica y manuales', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', days: 1 }
+            // Miguel - Infraestructura y DevOps
+            { id: 'INF01', name: 'Diagnóstico de infraestructura y estado actual de QA', desc: 'Evaluación técnica de la infraestructura existente, revisión del estado del ambiente QA, recursos disponibles y requerimientos previos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 0, endDay: 1 },
+            { id: 'INF02', name: 'Confirmación de recursos, permisos y accesos', desc: 'Gestión y validación de credenciales, accesos a servidores, proveedores de nube, repositorios y asignación de cuotas de recursos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 1, endDay: 2 },
+            { id: 'INF03', name: 'Configuración y validación de Docker, PostgreSQL, MinIO y FastAPI', desc: 'Aprovisionamiento de contenedores base (FastAPI backend, PostgreSQL, almacenamiento MinIO) e integración de servicios externos incluyendo Mapbox.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 2, endDay: 4 },
+            { id: 'INF04', name: 'Preparación y validación del ambiente QA', desc: 'Despliegue y verificación funcional del ambiente de aseguramiento de calidad (QA), garantizando disponibilidad antes y durante las pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 5, endDay: 6 },
+            { id: 'INF05', name: 'Configuración y validación de GitLab CI/CD', desc: 'Diseño e implementación de pipelines automatizados de integración continua, pruebas y despliegue continuo (CI/CD) hacia QA.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 7, endDay: 9 },
+            { id: 'INF06', name: 'Preparación de infraestructura productiva', desc: 'Aprovisionamiento y configuración de servidores, base de datos y clúster para el entorno de producción con alta disponibilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 10, endDay: 14 },
+            { id: 'INF07', name: 'Configuración de dominios, DNS y HTTPS', desc: 'Configuración de registros DNS, enrutamiento de red, certificados SSL/TLS y terminación HTTPS segura para ambientes y servicios externos (Mapbox).', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 15, endDay: 17 },
+            { id: 'INF08', name: 'Configuración de persistencia, respaldos y recuperación', desc: 'Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración ante desastres.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 15, endDay: 17 },
+            { id: 'INF09', name: 'Configuración de seguridad y monitoreo', desc: 'Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 18, endDay: 19 },
+            { id: 'INF10', name: 'Validación integral de infraestructura y soporte a pruebas', desc: 'Soporte técnico directo durante las pruebas de integración cruzada, verificación de rendimiento de red y estabilidad bajo carga.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 20, endDay: 24 },
+            { id: 'INF11', name: 'Despliegue de la primera versión aprobada', desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.', dev: 'M', group: 'Infraestructura y DevOps', days: 4, startDay: 25, endDay: 28 },
+            { id: 'INF12', name: 'Documentación técnica y entrega de infraestructura', desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.', dev: 'M', group: 'Infraestructura y DevOps', days: 1, startDay: 29, endDay: 29 },
+
+            // Ambos - Integración, Pruebas y Despliegue
+            { id: 'C01', name: 'Definición de contratos API y reglas', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C02', name: 'Migraciones y esquema BD', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C04', name: 'Pruebas integrales de flujos', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C06', name: 'Configuración productiva', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C07', name: 'Validación de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C08', name: 'Compilación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
+            { id: 'C10', name: 'Documentación técnica y manuales', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 }
         ];
 
         const realTimeState = {}; 
@@ -313,9 +334,20 @@
 
         function updateMetrics() {
             let completedTasksCount = 0;
-            const totalTasksCount = tasksData.length;
+            let targetTasks = tasksData;
+            let scopeLabel = 'Progreso Global';
 
-            tasksData.forEach(task => {
+            if (currentFilter !== 'all') {
+                targetTasks = tasksData.filter(t => t.dev === currentFilter);
+                if (currentFilter === 'V') scopeLabel = 'Progreso Vane (Dev A)';
+                else if (currentFilter === 'J') scopeLabel = 'Progreso Jesús (Dev B)';
+                else if (currentFilter === 'M') scopeLabel = 'Progreso Miguel (DevOps)';
+                else if (currentFilter === 'A') scopeLabel = 'Progreso Conjuntas';
+            }
+
+            const totalTasksCount = targetTasks.length;
+
+            targetTasks.forEach(task => {
                 const r = getTaskReales(task);
                 if (r >= task.days) {
                     completedTasksCount++;
@@ -324,11 +356,13 @@
 
             const percent = totalTasksCount > 0 ? Math.round((completedTasksCount / totalTasksCount) * 100) : 0;
 
+            const labelEl = document.getElementById('global-progress-label');
             const percentEl = document.getElementById('global-progress-percent');
             const barEl = document.getElementById('global-progress-bar');
             const completedEl = document.getElementById('metric-completed-tasks');
             const totalEl = document.getElementById('metric-total-tasks');
 
+            if (labelEl) labelEl.textContent = scopeLabel;
             if (percentEl) percentEl.textContent = `${percent}%`;
             if (barEl) barEl.style.width = `${percent}%`;
             if (completedEl) completedEl.textContent = completedTasksCount;
@@ -336,36 +370,41 @@
         }
 
         function updateCounts() {
-            let countAll = 0, countV = 0, countJ = 0, countA = 0;
+            let countAll = 0, countV = 0, countJ = 0, countM = 0, countA = 0;
             tasksData.forEach(t => {
                 countAll++;
                 if (t.dev === 'V') countV++;
                 else if (t.dev === 'J') countJ++;
+                else if (t.dev === 'M') countM++;
                 else if (t.dev === 'A') countA++;
             });
             const cAll = document.getElementById('count-all');
             const cV = document.getElementById('count-V');
             const cJ = document.getElementById('count-J');
+            const cM = document.getElementById('count-M');
             const cA = document.getElementById('count-A');
             if (cAll) cAll.textContent = countAll;
             if (cV) cV.textContent = countV;
             if (cJ) cJ.textContent = countJ;
+            if (cM) cM.textContent = countM;
             if (cA) cA.textContent = countA;
         }
 
         let vIndex = 0, jIndex = 0;
 
         tasksData.forEach(t => {
+            if (t.startDay !== undefined && t.endDay !== undefined) return;
             if (t.dev === 'V') { t.startDay = vIndex; t.endDay = vIndex + t.days - 1; vIndex += t.days; } 
             else if (t.dev === 'J') { t.startDay = jIndex; t.endDay = jIndex + t.days - 1; jIndex += t.days; }
         });
 
         let aIndex = Math.max(vIndex, jIndex);
         tasksData.forEach(t => {
+            if (t.startDay !== undefined && t.endDay !== undefined) return;
             if (t.dev === 'A') { t.startDay = aIndex; t.endDay = aIndex + t.days - 1; aIndex += t.days; }
         });
 
-        const totalProjectDays = aIndex; 
+        const totalProjectDays = Math.max(aIndex, ...tasksData.map(t => (t.endDay !== undefined ? t.endDay + 1 : 0)), 30); 
         const calendar = [];
         let currentDate = new Date(2026, 9, 29); 
         
@@ -429,20 +468,25 @@
                 let reales = getTaskReales(task);
 
                 let avatarHTML = task.dev === 'V' 
-                    ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-vane text-white flex items-center justify-center font-bold text-xs shadow-sm">V</div>`
+                    ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-vane text-white flex items-center justify-center font-bold text-xs shadow-sm" title="Vane (Desarrolladora A)">V</div>`
                     : task.dev === 'J' 
-                        ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-xs shadow-sm">J</div>`
-                        : `<div class="flex justify-center -space-x-2 mt-1"><div class="w-7 h-7 rounded-full bg-vane text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-10 border-2 border-white">V</div><div class="w-7 h-7 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-0 border-2 border-white">J</div></div>`;
+                        ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-xs shadow-sm" title="Jesús (Desarrollador B)">J</div>`
+                        : task.dev === 'M'
+                            ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-miguel text-white flex items-center justify-center font-bold text-xs shadow-sm" title="Miguel (Infraestructura / DevOps)">M</div>`
+                            : `<div class="flex justify-center -space-x-2 mt-1" title="Equipo Conjuntas"><div class="w-7 h-7 rounded-full bg-vane text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-10 border-2 border-white">V</div><div class="w-7 h-7 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-0 border-2 border-white">J</div></div>`;
 
                 let rClass = 'text-brandTextMuted';
                 if (reales > task.days) rClass = 'text-red-500 font-black';
                 else if (reales >= task.days) rClass = 'text-emerald-600 font-extrabold';
                 else if (reales > 0) rClass = 'text-amber-600 font-bold';
 
+                let groupTagColor = task.dev === 'V' ? 'text-vane' : (task.dev === 'J' ? 'text-jesus' : (task.dev === 'M' ? 'text-miguel' : 'text-ambos'));
+
                 bodyHTML += `
                     <tr class="hover:bg-[#FFF9F5] transition-colors group">
                         <td class="sticky-col col-id py-3 px-2 font-mono text-brandTextMuted border-b border-brandBorder/50 text-xs align-top pt-4">${task.id}</td>
                         <td class="sticky-col col-actividad py-3 px-4 border-b border-brandBorder/50 align-top whitespace-normal">
+                            ${task.group ? `<div class="text-[10px] font-bold ${groupTagColor} tracking-wider uppercase mb-0.5">${task.group}</div>` : ''}
                             <div class="font-bold text-brandText text-sm leading-tight">${task.name}</div>
                             <div class="text-[11px] text-brandTextMuted mt-1 leading-snug font-medium">${task.desc}</div>
                         </td>
@@ -451,8 +495,8 @@
                         <td class="sticky-col col-r py-3 px-2 border-b border-brandBorder/50 text-center font-extrabold ${rClass} align-top pt-4" id="real-${task.id}">${reales}</td>
                 `;
 
-                let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/30' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/30' : 'bg-ambosBg border-ambos/30');
-                let colorClassSolid = task.dev === 'V' ? 'bg-vane' : (task.dev === 'J' ? 'bg-jesus' : 'bg-ambos');
+                let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/30' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/30' : (task.dev === 'M' ? 'bg-miguelBg border-miguel/30' : 'bg-ambosBg border-ambos/30'));
+                let colorClassSolid = task.dev === 'V' ? 'bg-vane' : (task.dev === 'J' ? 'bg-jesus' : (task.dev === 'M' ? 'bg-miguel' : 'bg-ambos'));
 
                 for (let d = 0; d < calendar.length; d++) {
                     const isProgrammed = d >= task.startDay && d <= task.endDay;
@@ -502,6 +546,9 @@
                 } else if (task.dev === 'J') {
                     badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-jesus/15 text-jesus"><span class="w-2 h-2 rounded-full bg-jesus"></span> Jesús</span>`;
                     colorSolid = 'bg-jesus';
+                } else if (task.dev === 'M') {
+                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-miguel/15 text-miguel"><span class="w-2 h-2 rounded-full bg-miguel"></span> Miguel</span>`;
+                    colorSolid = 'bg-miguel';
                 } else {
                     badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-ambos/15 text-ambos"><span class="w-2 h-2 rounded-full bg-ambos"></span> Ambos</span>`;
                     colorSolid = 'bg-ambos';
@@ -543,6 +590,7 @@
                                     </span>
                                 </div>
                             </div>
+                            ${task.group ? `<div class="text-[10px] font-bold ${task.dev === 'V' ? 'text-vane' : (task.dev === 'J' ? 'text-jesus' : (task.dev === 'M' ? 'text-miguel' : 'text-ambos'))} tracking-wider uppercase mb-1">${task.group}</div>` : ''}
                             <h3 class="font-bold text-brandText text-sm sm:text-base leading-snug">${task.name}</h3>
                             <p class="text-xs text-brandTextMuted mt-1 leading-relaxed">${task.desc}</p>
                         </div>
@@ -663,7 +711,7 @@
 
         window.filterTasks = function(dev) {
             currentFilter = dev;
-            ['all', 'V', 'J', 'A'].forEach(k => {
+            ['all', 'V', 'J', 'M', 'A'].forEach(k => {
                 const btn = document.getElementById(`btn-${k}`);
                 if (!btn) return;
                 const countBadge = document.getElementById(`count-${k}`);
