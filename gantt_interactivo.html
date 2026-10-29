@@ -195,8 +195,8 @@
                     </div>
 
                     <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
-                        <div class="text-brandTextMuted font-medium"><span id="metric-real-days" class="font-black text-brandText">0</span> / <span id="metric-total-days" class="font-bold">50</span> d</div>
-                        <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Completados</div>
+                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">46</span></div>
+                        <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Tareas terminadas</div>
                     </div>
                 </div>
 
@@ -298,7 +298,7 @@
             if (currentFilter !== 'all' && task.dev !== currentFilter) return false;
             
             const r = getTaskReales(task);
-            if (currentStatus === 'pending' && r > 0) return false;
+            if (currentStatus === 'pending' && r >= task.days) return false;
             if (currentStatus === 'completed' && r < task.days) return false;
             if (currentStatus === 'overdue' && r <= task.days) return false;
 
@@ -312,25 +312,27 @@
         }
 
         function updateMetrics() {
-            let totalProgrammed = 0;
-            let totalReal = 0;
+            let completedTasksCount = 0;
+            const totalTasksCount = tasksData.length;
 
             tasksData.forEach(task => {
-                totalProgrammed += task.days;
-                totalReal += getTaskReales(task);
+                const r = getTaskReales(task);
+                if (r >= task.days) {
+                    completedTasksCount++;
+                }
             });
 
-            const percent = totalProgrammed > 0 ? Math.min(100, Math.round((totalReal / totalProgrammed) * 100)) : 0;
+            const percent = totalTasksCount > 0 ? Math.round((completedTasksCount / totalTasksCount) * 100) : 0;
 
             const percentEl = document.getElementById('global-progress-percent');
             const barEl = document.getElementById('global-progress-bar');
-            const realDaysEl = document.getElementById('metric-real-days');
-            const totalDaysEl = document.getElementById('metric-total-days');
+            const completedEl = document.getElementById('metric-completed-tasks');
+            const totalEl = document.getElementById('metric-total-tasks');
 
             if (percentEl) percentEl.textContent = `${percent}%`;
             if (barEl) barEl.style.width = `${percent}%`;
-            if (realDaysEl) realDaysEl.textContent = totalReal;
-            if (totalDaysEl) totalDaysEl.textContent = totalProgrammed;
+            if (completedEl) completedEl.textContent = completedTasksCount;
+            if (totalEl) totalEl.textContent = totalTasksCount;
         }
 
         function updateCounts() {
@@ -432,6 +434,11 @@
                         ? `<div class="w-7 h-7 mx-auto mt-1 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-xs shadow-sm">J</div>`
                         : `<div class="flex justify-center -space-x-2 mt-1"><div class="w-7 h-7 rounded-full bg-vane text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-10 border-2 border-white">V</div><div class="w-7 h-7 rounded-full bg-jesus text-white flex items-center justify-center font-bold text-[10px] shadow-sm z-0 border-2 border-white">J</div></div>`;
 
+                let rClass = 'text-brandTextMuted';
+                if (reales > task.days) rClass = 'text-red-500 font-black';
+                else if (reales >= task.days) rClass = 'text-emerald-600 font-extrabold';
+                else if (reales > 0) rClass = 'text-amber-600 font-bold';
+
                 bodyHTML += `
                     <tr class="hover:bg-[#FFF9F5] transition-colors group">
                         <td class="sticky-col col-id py-3 px-2 font-mono text-brandTextMuted border-b border-brandBorder/50 text-xs align-top pt-4">${task.id}</td>
@@ -441,7 +448,7 @@
                         </td>
                         <td class="sticky-col col-resp py-3 px-2 border-b border-brandBorder/50 align-top pt-3">${avatarHTML}</td>
                         <td class="sticky-col col-p py-3 px-2 border-b border-brandBorder/50 text-center font-bold text-brandTextMuted align-top pt-4">${task.days}</td>
-                        <td class="sticky-col col-r py-3 px-2 border-b border-brandBorder/50 text-center font-extrabold ${reales > task.days ? 'text-red-500' : 'text-brandText'} align-top pt-4" id="real-${task.id}">${reales}</td>
+                        <td class="sticky-col col-r py-3 px-2 border-b border-brandBorder/50 text-center font-extrabold ${rClass} align-top pt-4" id="real-${task.id}">${reales}</td>
                 `;
 
                 let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/30' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/30' : 'bg-ambosBg border-ambos/30');
@@ -531,8 +538,8 @@
                                 <span class="font-mono font-bold text-xs bg-brandBg px-2 py-0.5 rounded border border-brandBorderDark/40 text-brandTextMuted">${task.id}</span>
                                 <div class="flex items-center gap-2">
                                     ${badgeDev}
-                                    <span class="text-xs font-bold px-2 py-0.5 rounded-md ${reales > task.days ? 'bg-red-100 text-red-600' : 'bg-brandBg text-brandText'}">
-                                        P: ${task.days}d • R: <strong class="${reales > task.days ? 'text-red-600' : 'text-brandText'}">${reales}d</strong>
+                                    <span class="text-xs font-bold px-2 py-0.5 rounded-md ${reales > task.days ? 'bg-red-100 text-red-700' : (reales >= task.days ? 'bg-emerald-100 text-emerald-700' : (reales > 0 ? 'bg-amber-100 text-amber-800' : 'bg-brandBg text-brandText'))}">
+                                        P: ${task.days}d • R: <strong class="font-extrabold">${reales}d</strong> ${reales > task.days ? `(+${reales - task.days}d)` : (reales >= task.days ? '✓' : (reales > 0 ? `(${reales}/${task.days}d)` : ''))}
                                     </span>
                                 </div>
                             </div>
