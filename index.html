@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gantt Interactivo - Carnet-Can</title>
+    <title>Gantt Fases Funcionales - Carnet-Can</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,13 +18,13 @@
                         brandPeach: '#F4DAC6',
                         brandHeader: '#FDF9F5', 
                         vane: '#D2734C',     
-                        vaneBg: 'rgba(210, 115, 76, 0.25)',
+                        vaneBg: 'rgba(210, 115, 76, 0.22)',
                         jesus: '#58798C',    
-                        jesusBg: 'rgba(88, 121, 140, 0.25)',
+                        jesusBg: 'rgba(88, 121, 140, 0.22)',
                         miguel: '#7B5294',
-                        miguelBg: 'rgba(123, 82, 148, 0.25)',
+                        miguelBg: 'rgba(123, 82, 148, 0.22)',
                         ambos: '#6C8E66',    
-                        ambosBg: 'rgba(108, 142, 102, 0.25)',
+                        ambosBg: 'rgba(108, 142, 102, 0.22)',
                     },
                     fontFamily: {
                         sans: ['Inter', 'system-ui', 'sans-serif'],
@@ -38,11 +38,11 @@
         .sticky-header { position: sticky; top: 0; z-index: 30; background-color: #FDF9F5 !important; }
         .sticky-col-header { z-index: 40; background-color: #FDF9F5 !important; border-bottom: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); } 
         
-        .col-id { left: 0; min-width: 50px; max-width: 50px; }
-        .col-actividad { left: 50px; min-width: 380px; max-width: 380px; } 
-        .col-resp { left: 430px; min-width: 80px; max-width: 80px; }
-        .col-p { left: 510px; min-width: 50px; max-width: 50px; text-align: center; }
-        .col-r { left: 560px; min-width: 50px; max-width: 50px; text-align: center; border-right: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); box-shadow: 4px 0 10px -5px rgba(62,42,20,0.15); clip-path: inset(0 -15px 0 0); }
+        .col-id { left: 0; min-width: 65px; max-width: 65px; }
+        .col-actividad { left: 65px; min-width: 390px; max-width: 410px; } 
+        .col-resp { left: 475px; min-width: 75px; max-width: 75px; }
+        .col-p { left: 550px; min-width: 48px; max-width: 48px; text-align: center; }
+        .col-r { left: 598px; min-width: 48px; max-width: 48px; text-align: center; border-right: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); box-shadow: 4px 0 10px -5px rgba(62,42,20,0.15); clip-path: inset(0 -15px 0 0); }
         
         ::-webkit-scrollbar { height: 10px; width: 10px; }
         ::-webkit-scrollbar-track { background: #F8F3ED; border-top: 1px solid #E8DDD1; }
@@ -52,7 +52,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Adaptación responsiva para teléfonos */
         @media (max-width: 768px) {
             .sticky-col { 
                 position: static !important; 
@@ -62,8 +61,8 @@
                 top: 0; 
                 z-index: 25; 
             }
-            .col-id { min-width: 44px !important; max-width: 44px !important; }
-            .col-actividad { min-width: 210px !important; max-width: 220px !important; } 
+            .col-id { min-width: 50px !important; max-width: 50px !important; }
+            .col-actividad { min-width: 220px !important; max-width: 240px !important; } 
             .col-resp { min-width: 55px !important; max-width: 55px !important; }
             .col-p { min-width: 38px !important; max-width: 38px !important; }
             .col-r { min-width: 38px !important; max-width: 38px !important; box-shadow: none !important; }
@@ -72,24 +71,40 @@
 </head>
 <body class="bg-brandBg text-brandText font-sans min-h-screen p-3 sm:p-6 overflow-x-hidden">
 
-    <div class="max-w-[1700px] mx-auto">
+    <div class="max-w-[1750px] mx-auto">
+        <!-- Encabezado Principal -->
         <header class="mb-4 sm:mb-6 flex flex-col gap-3">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText">Proyecto <span class="text-vane">Carnet-Can</span></h1>
-                    <p class="text-brandTextMuted mt-0.5 sm:mt-1 text-xs sm:text-sm font-medium">Plan de Desarrollo e Infraestructura DevOps • 30 Días Laborables • Inicio: Jueves 29 de Octubre, 2026</p>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText tracking-tight">Proyecto <span class="text-vane">Carnet-Can</span></h1>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-vane/15 text-vane border border-vane/30">Fases Funcionales 1 a 5</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-miguel/15 text-miguel border border-miguel/30">DevOps en Paralelo</span>
+                    </div>
+                    <p class="text-brandTextMuted mt-1 text-xs sm:text-sm font-medium">
+                        Cierre Sincronizado de Desarrollo (Día 13) • 2 Días de Pruebas Conjuntas (Días 14-15) • Inicio: Jueves 29 de Octubre, 2026
+                    </p>
                 </div>
                 
-                <!-- Selector de Vista: Gantt o Tarjetas -->
-                <div class="flex items-center bg-white p-1 rounded-xl border border-brandBorder shadow-sm self-start sm:self-auto">
-                    <button onclick="switchView('gantt')" id="toggle-view-gantt" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
-                        <span>Gantt</span>
-                    </button>
-                    <button onclick="switchView('cards')" id="toggle-view-cards" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                        <span>Tarjetas (Móvil)</span>
-                    </button>
+                <!-- Acciones Rápidas: Alternar Vista y Enlace al Plan Base -->
+                <div class="flex items-center gap-2 flex-wrap self-start sm:self-auto">
+                    <!-- Enlace al Plan Base de 30 días -->
+                    <a href="gantt_interactivo.html" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-brandTextMuted hover:text-brandText border border-brandBorder shadow-sm hover:bg-brandPeach/40 transition-all flex items-center gap-1.5" title="Ver cronograma general de 30 días">
+                        <svg class="w-3.5 h-3.5 text-brandTextMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        <span>Ver Plan Base (30d)</span>
+                    </a>
+
+                    <!-- Selector de Vista: Gantt o Tarjetas -->
+                    <div class="flex items-center bg-white p-1 rounded-xl border border-brandBorder shadow-sm">
+                        <button onclick="switchView('gantt')" id="toggle-view-gantt" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                            <span>Gantt</span>
+                        </button>
+                        <button onclick="switchView('cards')" id="toggle-view-cards" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                            <span>Tarjetas (Móvil)</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             
@@ -102,17 +117,17 @@
                     <div class="flex items-center bg-brandBg/80 p-1 rounded-xl border border-brandBorder overflow-x-auto max-w-full no-scrollbar">
                         <button onclick="filterTasks('all')" id="btn-all" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap">
                             <span>Todos</span>
-                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold" id="count-all">58</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold" id="count-all">37</span>
                         </button>
                         <button onclick="filterTasks('V')" id="btn-V" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-vane"></div>
-                            <span>Vane (Dev A)</span>
-                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-V">18</span>
+                            <span>Vane (13d)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-V">13</span>
                         </button>
                         <button onclick="filterTasks('J')" id="btn-J" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-jesus"></div>
-                            <span>Jesús (Dev B)</span>
-                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-J">18</span>
+                            <span>Jesús (13d)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-J">10</span>
                         </button>
                         <button onclick="filterTasks('M')" id="btn-M" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-miguel"></div>
@@ -121,12 +136,12 @@
                         </button>
                         <button onclick="filterTasks('A')" id="btn-A" class="filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap">
                             <div class="w-2.5 h-2.5 rounded-full bg-ambos"></div>
-                            <span>Conjuntas</span>
-                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-A">10</span>
+                            <span>Conjuntas (2d)</span>
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold" id="count-A">2</span>
                         </button>
                     </div>
 
-                    <!-- Filtro de Estado personalizado con Iconos SVG -->
+                    <!-- Filtro de Estado personalizado con Iconos SVG (SIN EMOJIS) -->
                     <div class="relative" id="status-dropdown-wrapper">
                         <button 
                             type="button" 
@@ -142,10 +157,10 @@
                             <svg id="status-chevron" class="w-3.5 h-3.5 text-brandTextMuted transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                         </button>
 
-                        <!-- Menú Desplegable -->
+                        <!-- Menú Desplegable de Estados -->
                         <div 
                             id="status-dropdown-menu" 
-                            class="hidden absolute left-0 mt-1.5 w-44 bg-white border border-brandBorder rounded-xl shadow-xl py-1 z-50 text-xs divide-y divide-brandBorder/30"
+                            class="hidden absolute left-0 mt-1.5 w-48 bg-white border border-brandBorder rounded-xl shadow-xl py-1 z-50 text-xs divide-y divide-brandBorder/30"
                         >
                             <button type="button" onclick="selectStatus('all')" class="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-brandBg text-brandText font-medium transition-colors">
                                 <svg class="w-4 h-4 text-brandTextMuted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
@@ -176,7 +191,7 @@
                         type="text" 
                         id="search-input" 
                         oninput="handleSearch(this.value)" 
-                        placeholder="Buscar actividad, módulo o código (ej. A01, Firebase, mapa)..." 
+                        placeholder="Buscar actividad, fase, capa o código (ej. SOAP, QR, e-Prescription, MinIO)..." 
                         class="w-full pl-9 pr-8 py-2 text-xs font-medium bg-brandBg/60 focus:bg-white border border-brandBorder rounded-xl outline-none focus:border-brandBorderDark focus:ring-2 focus:ring-vane/20 transition-all placeholder:text-brandTextMuted/70"
                     />
                     <button 
@@ -189,7 +204,7 @@
                     </button>
                 </div>
 
-                <!-- Grupo Derecho: Progreso Global y Métricas -->
+                <!-- Grupo Derecho: Progreso Global y Métricas Exactas -->
                 <div class="flex items-center gap-3 self-stretch lg:self-auto justify-between lg:justify-end border-t lg:border-t-0 pt-2 lg:pt-0 border-brandBorder/60">
                     <div class="flex flex-col min-w-[140px] sm:min-w-[170px]">
                         <div class="flex items-center justify-between text-xs mb-1">
@@ -202,7 +217,7 @@
                     </div>
 
                     <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
-                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">58</span></div>
+                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">37</span></div>
                         <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Tareas terminadas</div>
                     </div>
                 </div>
@@ -231,82 +246,496 @@
         <div id="cards-view-container" class="hidden">
             <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"></div>
         </div>
+
+        <!-- Pie de Página Informativo -->
+        <footer class="mt-6 text-center text-xs text-brandTextMuted border-t border-brandBorder/60 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div>
+                <span class="font-bold text-brandText">Carnet-Can:</span> Fases 1 a 5 (Vane 13d, Jesús 13d, Pruebas 2d, Miguel DevOps 15d).
+            </div>
+            <div class="flex items-center gap-4 text-[11px]">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-vane inline-block"></span> Vane (Dev A)</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-jesus inline-block"></span> Jesús (Dev B)</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-miguel inline-block"></span> Miguel (DevOps)</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-ambos inline-block"></span> Conjuntas</span>
+            </div>
+        </footer>
     </div>
 
     <script>
         const tasksData = [
-            // Vane - Desarrollo Propietario / Admin
-            { id: 'A01', name: 'Revisión y corrección funcionales del propietario', desc: 'Revisión funcional y corrección de errores en los módulos existentes del propietario: mascotas, historial médico, vacunas, desparasitación y carnet PDF.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A02', name: 'Persistencia de sesión y autenticación', desc: 'Implementación de persistencia de sesión, recuperación de contraseña y renovación segura de tokens de autenticación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A03', name: 'Inicio de sesión con Google y Microsoft', desc: 'Integración del inicio de sesión con Google y Microsoft, incluyendo vinculación de cuentas y validación de acceso.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A04', name: 'Notificaciones y registro de dispositivos', desc: 'Configuración de Firebase Cloud Messaging, solicitud de permisos y registro de dispositivos para recibir notificaciones.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A05', name: 'Recordatorios automáticos (vacunas/desparasitación)', desc: 'Implementación de recordatorios automáticos de vacunación y desparasitación, considerando fechas programadas y preferencias de notificación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A06', name: 'Integración de pesos de referencia', desc: 'Incorporación de rangos de peso de referencia por especie, raza y etapa de crecimiento, con su visualización en el seguimiento de salud.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A07', name: 'Módulo de mascotas extraviadas y carteles', desc: 'Desarrollo del módulo de mascotas extraviadas: registro, edición, gestión de alertas y generación y descarga de carteles digitales mediante plantillas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A08', name: 'Frontend del mapa veterinario y filtros', desc: 'Desarrollo de la interfaz del directorio veterinario con mapa, filtros de búsqueda y fichas informativas utilizando datos simulados.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A09', name: 'Integración del mapa con datos reales', desc: 'Integración del directorio con ubicaciones, servicios y reseñas reales de veterinarios y clínicas, incluyendo búsqueda por proximidad.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'A10', name: 'Pruebas funcionales del ecosistema propietario', desc: 'Ejecución de pruebas funcionales y de regresión de los módulos del propietario, con corrección de incidencias detectadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'AD01', name: 'Estructura base del panel administrativo', desc: 'Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'AD02', name: 'Dashboard administrativo', desc: 'Implementación del dashboard administrativo con indicadores, estadísticas y gráficas obtenidas de los registros del sistema.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'AD03', name: 'Gestión de propietarios', desc: 'Desarrollo de la gestión de propietarios: listado, búsqueda, filtros, consulta de perfiles y acciones administrativas autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2 },
-            { id: 'AD04', name: 'Configuraciones globales', desc: 'Implementación de configuraciones globales para administrar límites de mascotas, documentos y otros parámetros generales de la plataforma.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'AD05', name: 'Catálogo de especies y razas', desc: 'Desarrollo de catálogos de especies y razas, incluyendo registro, edición, consulta, desactivación y relaciones entre ambos.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'AD06', name: 'Catálogos sanitarios', desc: 'Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
-            { id: 'AD07', name: 'Gestión de roles y permisos', desc: 'Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2 },
-            { id: 'AD08', name: 'Pruebas del panel administrativo', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1 },
+            // ==========================================
+            // FASE 1: Smart Booking, Agenda y Candado de Reputación (Vane - 6 días)
+            // ==========================================
+            { 
+                id: 'F1-01', 
+                order: 1, 
+                name: 'Configuración de Disponibilidad y Horarios Laborales', 
+                desc: 'Crear modelos/endpoints de horarios laborales y bloqueos, y construir la pantalla de Configuración de Disponibilidad (días, duración de consulta y descansos).', 
+                layer: 'Backend + Veterinario (B2B)', 
+                dev: 'V', 
+                group: 'Fase 1: Smart Booking, Agenda y Candado de Reputación', 
+                days: 1,
+                startDay: 0,
+                endDay: 0
+            },
+            { 
+                id: 'F1-02', 
+                order: 2, 
+                name: 'Red de Confianza (Médicos Favoritos)', 
+                desc: 'Implementar Red de Confianza (Médicos Favoritos) para guardar clínicas de cabecera desde el mapa o perfil.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'V', 
+                group: 'Fase 1: Smart Booking, Agenda y Candado de Reputación', 
+                days: 1,
+                startDay: 1,
+                endDay: 1
+            },
+            { 
+                id: 'F1-03', 
+                order: 3, 
+                name: 'Motor de Reservaciones (Booking) en Perfil de Clínica', 
+                desc: 'Desarrollar endpoints de reservaciones y el Motor de Reservaciones (Booking) en el perfil de la clínica (selección de mascota, motivo y horario disponible en 3 clics).', 
+                layer: 'Backend + Dueño (B2C)', 
+                dev: 'V', 
+                group: 'Fase 1: Smart Booking, Agenda y Candado de Reputación', 
+                days: 1,
+                startDay: 2,
+                endDay: 2
+            },
+            { 
+                id: 'F1-04', 
+                order: 4, 
+                name: 'Dashboard Operativo de Agenda y Gestor de Solicitudes', 
+                desc: 'Crear el Dashboard Operativo de Agenda (vistas lista, día, semana, mes) y el Gestor de Solicitudes (Aceptar, Rechazar o Proponer nuevo horario).', 
+                layer: 'Veterinario (B2B)', 
+                dev: 'V', 
+                group: 'Fase 1: Smart Booking, Agenda y Candado de Reputación', 
+                days: 1,
+                startDay: 3,
+                endDay: 3
+            },
+            { 
+                id: 'F1-05', 
+                order: 5, 
+                name: 'Flujo de Estados y Trazabilidad del Paciente en Tiempo Real', 
+                desc: 'Implementar el flujo de estados (Solicitada ➔ Programada ➔ En Sala ➔ En Consulta ➔ Finalizada) y los controles de Trazabilidad del Paciente en tiempo real.', 
+                layer: 'Backend + Veterinario (B2B)', 
+                dev: 'V', 
+                group: 'Fase 1: Smart Booking, Agenda y Candado de Reputación', 
+                days: 1,
+                startDay: 4,
+                endDay: 4
+            },
+            { 
+                id: 'F1-06', 
+                order: 6, 
+                name: 'Centro de Control de Citas y Candado de Reputación', 
+                desc: 'Construir el Centro de Control de Citas (Próximas/Pasadas con semáforo de estatus y push FCM) e integrar el Candado de Reputación (Anti-Spam) para habilitar reseñas únicamente al finalizar una cita.', 
+                layer: 'Backend + Dueño (B2C)', 
+                dev: 'V', 
+                group: 'Fase 1: Smart Booking, Agenda y Candado de Reputación', 
+                days: 1,
+                startDay: 5,
+                endDay: 5
+            },
 
-            // Jesus - Desarrollo Veterinario / Clínicas
-            { id: 'B01', name: 'Revisión de código y registros', desc: 'Revisión del código existente de veterinarios y clínicas, identificando formularios, endpoints, modelos y procesos de validación ya implementados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B02', name: 'Acceso y cambio de contraseña', desc: 'Implementación del acceso para cuentas profesionales aprobadas y del cambio de contraseña, con validación del estado de la cuenta.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B03', name: 'Perfil veterinario', desc: 'Desarrollo del perfil veterinario, permitiendo consultar y actualizar credenciales profesionales, fotografía, información personal y datos de contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B04', name: 'Servicios y horarios del veterinario', desc: 'Implementación de especialidades, servicios ofrecidos y horarios de atención del veterinario, con selección desde catálogos y almacenamiento de cambios.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B05', name: 'Perfil de clínica', desc: 'Desarrollo del perfil de clínica, incluyendo consulta y edición de información del establecimiento, documentación, fotografía y contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B06', name: 'Servicios y horarios de la clínica', desc: 'Implementación de especialidades, servicios y horarios de la clínica, incluyendo registro, vinculación y administración de médicos asociados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B07', name: 'Gestión de ubicación de veterinarios/clínicas', desc: 'Desarrollo de la gestión de ubicación de veterinarios y clínicas, incluyendo dirección, selección en mapa, coordenadas y consulta geográfica mediante API.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B08', name: 'Reseñas y calificaciones', desc: 'Implementación del módulo de reseñas y calificaciones para veterinarios y clínicas, incluyendo publicación, consulta, reportes y endpoints públicos.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B09', name: 'Pantallas de inicio (Home)', desc: 'Desarrollo de las pantallas de inicio de veterinarios y clínicas, con resúmenes, indicadores y accesos a sus funcionalidades principales.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B10', name: 'Notificaciones y ajustes de cuenta', desc: 'Integración de notificaciones y ajustes de cuenta en ambos perfiles, reutilizando los servicios y componentes comunes disponibles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'B11', name: 'Pruebas del ecosistema veterinarios', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos de veterinarios y clínicas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'BD01', name: 'Módulo administrativo de veterinarios', desc: 'Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'BD02', name: 'Verificación documental', desc: 'Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2 },
-            { id: 'BD03', name: 'Módulo administrativo de clínicas', desc: 'Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'BD04', name: 'Moderación de reseñas', desc: 'Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'BD05', name: 'Apoyo en permisos profesionales', desc: 'Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2 },
-            { id: 'BD06', name: 'Pruebas módulos administrativos', desc: 'Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
-            { id: 'BD07', name: 'Contraseñas de administrador/supervisor', desc: 'Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administrador y supervisor.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1 },
+            // ==========================================
+            // FASE 2: Check-In QR, Expediente Clínico (ECE) y Peso Clínico (Jesús - 5 días)
+            // ==========================================
+            { 
+                id: 'F2-07', 
+                order: 7, 
+                name: 'Credencialización Inteligente (QR Dinámico por Mascota)', 
+                desc: 'Implementar Credencialización Inteligente (QR): generador de código QR dinámico por mascota en la pantalla principal.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'J', 
+                group: 'Fase 2: Check-In QR, Expediente Clínico (ECE) y Peso', 
+                days: 1,
+                startDay: 0,
+                endDay: 0
+            },
+            { 
+                id: 'F2-08', 
+                order: 8, 
+                name: 'Escáner QR (Ingreso Cero Fricción)', 
+                desc: 'Integrar el Escáner QR (Ingreso Cero Fricción) para leer el carnet del tutor y abrir el expediente de la mascota al instante.', 
+                layer: 'Veterinario (B2B)', 
+                dev: 'J', 
+                group: 'Fase 2: Check-In QR, Expediente Clínico (ECE) y Peso', 
+                days: 1,
+                startDay: 1,
+                endDay: 1
+            },
+            { 
+                id: 'F2-09', 
+                order: 9, 
+                name: 'Consulta SOAP, Sellado Digital Inmutable y Peso Clínico', 
+                desc: 'Desarrollar los endpoints y la pantalla de consulta con Estructura SOAP (Subjetivo, Objetivo, Análisis, Plan), lógica de Sellado Digital Inmutable (bloqueo + cédula) y Peso Clínico con alerta automática de variación brusca (>10%).', 
+                layer: 'Backend + Veterinario (B2B)', 
+                dev: 'J', 
+                group: 'Fase 2: Check-In QR, Expediente Clínico (ECE) y Peso', 
+                days: 2,
+                startDay: 2,
+                endDay: 3
+            },
+            { 
+                id: 'F2-10', 
+                order: 10, 
+                name: 'Visor de Historial Médico Verificado y Gráfica de Peso', 
+                desc: 'Actualizar el Visor de Historial Médico: añadir insignias "Verificado por Profesional" (solo lectura) para diferenciar registros oficiales de los caseros, y distinguir el peso clínico en la gráfica histórica.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'J', 
+                group: 'Fase 2: Check-In QR, Expediente Clínico (ECE) y Peso', 
+                days: 1,
+                startDay: 4,
+                endDay: 4
+            },
 
-            // Miguel - Infraestructura y DevOps
-            { id: 'INF01', name: 'Diagnóstico de infraestructura y estado actual de QA', desc: 'Evaluación técnica de la infraestructura existente, revisión del estado del ambiente QA, recursos disponibles y requerimientos previos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 0, endDay: 1 },
-            { id: 'INF02', name: 'Confirmación de recursos, permisos y accesos', desc: 'Gestión y validación de credenciales, accesos a servidores, proveedores de nube, repositorios y asignación de cuotas de recursos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 1, endDay: 2 },
-            { id: 'INF03', name: 'Configuración y validación de Docker, PostgreSQL, MinIO y FastAPI', desc: 'Aprovisionamiento de contenedores base (FastAPI backend, PostgreSQL, almacenamiento MinIO) e integración de servicios externos incluyendo Mapbox.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 2, endDay: 4 },
-            { id: 'INF04', name: 'Preparación y validación del ambiente QA', desc: 'Despliegue y verificación funcional del ambiente de aseguramiento de calidad (QA), garantizando disponibilidad antes y durante las pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 5, endDay: 6 },
-            { id: 'INF05', name: 'Configuración y validación de GitLab CI/CD', desc: 'Diseño e implementación de pipelines automatizados de integración continua, pruebas y despliegue continuo (CI/CD) hacia QA.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 7, endDay: 9 },
-            { id: 'INF06', name: 'Preparación de infraestructura productiva', desc: 'Aprovisionamiento y configuración de servidores, base de datos y clúster para el entorno de producción con alta disponibilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 10, endDay: 14 },
-            { id: 'INF07', name: 'Configuración de dominios, DNS y HTTPS', desc: 'Configuración de registros DNS, enrutamiento de red, certificados SSL/TLS y terminación HTTPS segura para ambientes y servicios externos (Mapbox).', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 15, endDay: 17 },
-            { id: 'INF08', name: 'Configuración de persistencia, respaldos y recuperación', desc: 'Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración ante desastres.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 15, endDay: 17 },
-            { id: 'INF09', name: 'Configuración de seguridad y monitoreo', desc: 'Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 18, endDay: 19 },
-            { id: 'INF10', name: 'Validación integral de infraestructura y soporte a pruebas', desc: 'Soporte técnico directo durante las pruebas de integración cruzada, verificación de rendimiento de red y estabilidad bajo carga.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 20, endDay: 24 },
-            { id: 'INF11', name: 'Despliegue de la primera versión aprobada', desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.', dev: 'M', group: 'Infraestructura y DevOps', days: 4, startDay: 25, endDay: 28 },
-            { id: 'INF12', name: 'Documentación técnica y entrega de infraestructura', desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.', dev: 'M', group: 'Infraestructura y DevOps', days: 1, startDay: 29, endDay: 29 },
+            // ==========================================
+            // FASE 3: Gabinete Digital, Recetas (e-Prescription) y Alarmas (Vane - 4 días)
+            // ==========================================
+            { 
+                id: 'F3-11', 
+                order: 11, 
+                name: 'Generación PDF e-Prescription y Endpoints MinIO PACS', 
+                desc: 'Crear el motor de generación de PDF para e-Prescription (membrete, firma, medicamentos y posología estructurada) y endpoints de MinIO para almacenamiento PACS.', 
+                layer: 'Backend', 
+                dev: 'V', 
+                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
+                days: 1,
+                startDay: 6,
+                endDay: 6
+            },
+            { 
+                id: 'F3-12', 
+                order: 12, 
+                name: 'Módulo de Receta Electrónica y Carga de Adjuntos PACS', 
+                desc: 'Integrar el módulo de Receta Electrónica (captura de medicamento, dosis, frecuencia y días) y carga de adjuntos PACS (radiografías, ecografías, laboratorios) dentro de la consulta.', 
+                layer: 'Veterinario (B2B)', 
+                dev: 'V', 
+                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
+                days: 1,
+                startDay: 7,
+                endDay: 7
+            },
+            { 
+                id: 'F3-13', 
+                order: 13, 
+                name: 'Bandeja de Documentos Clínicos y Compartir Estudios', 
+                desc: 'Construir la Bandeja de Documentos Clínicos en el expediente para visualizar, descargar o compartir recetas PDF y estudios por WhatsApp/Correo.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'V', 
+                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
+                days: 1,
+                startDay: 8,
+                endDay: 8
+            },
+            { 
+                id: 'F3-14', 
+                order: 14, 
+                name: 'Alarmas Automáticas de Medicamentos (Notificaciones Locales)', 
+                desc: 'Programar las Alarmas Automáticas de Medicamentos: botón "Activar recordatorios" que lee la posología de la receta y configura notificaciones locales en el dispositivo.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'V', 
+                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
+                days: 1,
+                startDay: 9,
+                endDay: 9
+            },
 
-            // Ambos - Integración, Pruebas y Despliegue
-            { id: 'C01', name: 'Definición de contratos API y reglas', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C02', name: 'Migraciones y esquema BD', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C04', name: 'Pruebas integrales de flujos', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C06', name: 'Configuración productiva', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C07', name: 'Validación de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C08', name: 'Compilación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 },
-            { id: 'C10', name: 'Documentación técnica y manuales', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1 }
+            // ==========================================
+            // FASE 4: Gestión Sanitaria Oficial, CRM y Galería de Instalaciones (Jesús - 5 días)
+            // ==========================================
+            { 
+                id: 'F4-15', 
+                order: 15, 
+                name: 'Registro Clínico Validado de Vacunas/Desparasitantes y Cronjob', 
+                desc: 'Actualizar endpoints de vacunas y desparasitantes (exigiendo Laboratorio y Lote), construir el formulario de Registro Clínico Validado con cálculo de próxima dosis y configurar el cronjob de Alertas Push de Retención.', 
+                layer: 'Backend + Veterinario (B2B)', 
+                dev: 'J', 
+                group: 'Fase 4: Gestión Sanitaria Oficial, CRM y Galería', 
+                days: 1,
+                startDay: 5,
+                endDay: 5
+            },
+            { 
+                id: 'F4-16', 
+                order: 16, 
+                name: 'Sincronización del Calendario Sanitario Oficial', 
+                desc: 'Sincronizar el calendario sanitario para mostrar vacunas/desparasitaciones selladas oficialmente por el médico.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'J', 
+                group: 'Fase 4: Gestión Sanitaria Oficial, CRM y Galería', 
+                days: 1,
+                startDay: 6,
+                endDay: 6
+            },
+            { 
+                id: 'F4-17', 
+                order: 17, 
+                name: 'CRM Veterinario (Directorio de Pacientes y Ficha de Tutores)', 
+                desc: 'Desarrollar el CRM Veterinario: Directorio de Pacientes (filtrable por especie) y Ficha de Tutores con acceso rápido a datos de contacto.', 
+                layer: 'Veterinario (B2B)', 
+                dev: 'J', 
+                group: 'Fase 4: Gestión Sanitaria Oficial, CRM y Galería', 
+                days: 1,
+                startDay: 7,
+                endDay: 7
+            },
+            { 
+                id: 'F4-18', 
+                order: 18, 
+                name: 'Gestión de Galería de Instalaciones y Equipamiento (MinIO)', 
+                desc: 'Crear el apartado de Galería de Instalaciones y Equipamiento para subir fotos del consultorio, quirófano o equipo médico a MinIO.', 
+                layer: 'Veterinario (B2B)', 
+                dev: 'J', 
+                group: 'Fase 4: Gestión Sanitaria Oficial, CRM y Galería', 
+                days: 1,
+                startDay: 8,
+                endDay: 8
+            },
+            { 
+                id: 'F4-19', 
+                order: 19, 
+                name: 'Carrusel de Galería de Instalaciones en Perfil Público', 
+                desc: 'Integrar el carrusel de la Galería de Instalaciones dentro del perfil público de cada clínica.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'J', 
+                group: 'Fase 4: Gestión Sanitaria Oficial, CRM y Galería', 
+                days: 1,
+                startDay: 9,
+                endDay: 9
+            },
+
+            // ==========================================
+            // FASE 5: Radar Comunitario y Clínico de Alertas SOS (Vane - 3 días)
+            // ==========================================
+            { 
+                id: 'F5-20', 
+                order: 20, 
+                name: 'PostGIS: Consultas Geoespaciales 5 km y Endpoints SOS', 
+                desc: 'Implementar consultas geoespaciales (PostGIS) para disparar notificaciones push en un radio de 5 km al activar una alerta SOS, más endpoints para registrar avistamientos.', 
+                layer: 'Backend', 
+                dev: 'V', 
+                group: 'Fase 5: Radar Comunitario y Alertas SOS', 
+                days: 1,
+                startDay: 10,
+                endDay: 10
+            },
+            { 
+                id: 'F5-21', 
+                order: 21, 
+                name: 'Red de Avistamientos con Pin en Mapa, Foto y Hora', 
+                desc: 'Agregar la Red de Avistamientos: botón "Reportar avistamiento" en alertas cercanas para colocar un pin en el mapa con foto y hora.', 
+                layer: 'Dueño (B2C)', 
+                dev: 'V', 
+                group: 'Fase 5: Radar Comunitario y Alertas SOS', 
+                days: 1,
+                startDay: 11,
+                endDay: 11
+            },
+            { 
+                id: 'F5-22', 
+                order: 22, 
+                name: 'Tablero de Extraviados ("Mascotas en mi Zona")', 
+                desc: 'Construir el Tablero de Extraviados ("Mascotas Extraviadas en mi Zona") para cotejar animales rescatados que lleguen al consultorio.', 
+                layer: 'Veterinario (B2B)', 
+                dev: 'V', 
+                group: 'Fase 5: Radar Comunitario y Alertas SOS', 
+                days: 1,
+                startDay: 12,
+                endDay: 12
+            },
+
+            // ==========================================
+            // JESÚS: Integración y Pruebas Cruzadas (Paralelo a Fase 5 de Vane - 3 días)
+            // Ambos finalizan desarrollo exactamente en el Día 12 (13 días totales de dev)
+            // ==========================================
+            { 
+                id: 'J-INT', 
+                order: 23, 
+                name: 'Integración y Pruebas Cruzadas (Flujo Completo, RBAC y UI)', 
+                desc: 'Conectar el flujo completo (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña), validar permisos RBAC y pulir UI. Permite que ambos desarrolladores culminen desarrollo al mismo tiempo.', 
+                layer: 'Fullstack + Control de Calidad', 
+                dev: 'J', 
+                group: 'Integración Cruzada y Cierre de Desarrollo', 
+                days: 3,
+                startDay: 10,
+                endDay: 12
+            },
+
+            // ==========================================
+            // PRUEBAS EN CONJUNTO (Ambos Desarrolladores - 2 días finales)
+            // ==========================================
+            { 
+                id: 'CJ-01', 
+                order: 24, 
+                name: 'Pruebas de Integración End-to-End y Validación Cruzada', 
+                desc: 'Pruebas conjuntas de todo el ciclo operativo (tutor, clínica y veterinario), verificación de alertas SOS, prescripciones y validación de estrés en QA.', 
+                layer: 'Equipo Completo (Ambos)', 
+                dev: 'A', 
+                group: 'Pruebas en Conjunto y Validación Final', 
+                days: 1,
+                startDay: 13,
+                endDay: 13
+            },
+            { 
+                id: 'CJ-02', 
+                order: 25, 
+                name: 'Pruebas de Cierre, Despliegue Conjunto y Validación Final', 
+                desc: 'Pruebas de aceptación final, verificación de artefactos (APK y Web), validación de variables con DevOps y cierre formal del ciclo de desarrollo.', 
+                layer: 'Equipo Completo (Ambos)', 
+                dev: 'A', 
+                group: 'Pruebas en Conjunto y Validación Final', 
+                days: 1,
+                startDay: 14,
+                endDay: 14
+            },
+
+            // ==========================================
+            // MIGUEL: Infraestructura y DevOps (En paralelo al desarrollo - 15 días)
+            // ==========================================
+            { 
+                id: 'INF01', 
+                name: 'Diagnóstico de infraestructura y estado actual de QA', 
+                desc: 'Evaluación técnica de infraestructura existente, revisión del estado de QA, recursos y dependencias base.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 0, 
+                endDay: 1 
+            },
+            { 
+                id: 'INF02', 
+                name: 'Confirmación de recursos, permisos y accesos', 
+                desc: 'Gestión y validación de credenciales, accesos a servidores de nube, bases de datos y repositorios de código.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 1, 
+                endDay: 2 
+            },
+            { 
+                id: 'INF03', 
+                name: 'Configuración y validación de Docker, PostgreSQL, MinIO y FastAPI', 
+                desc: 'Aprovisionamiento de contenedores base (FastAPI backend, PostgreSQL, almacenamiento MinIO) e integración de Mapbox.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 3, 
+                startDay: 2, 
+                endDay: 4 
+            },
+            { 
+                id: 'INF04', 
+                name: 'Preparación y validación del ambiente QA', 
+                desc: 'Despliegue y verificación funcional del ambiente QA, garantizando total disponibilidad durante el desarrollo y pruebas.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 4, 
+                endDay: 5 
+            },
+            { 
+                id: 'INF05', 
+                name: 'Configuración y validación de GitLab CI/CD', 
+                desc: 'Diseño e implementación de pipelines automatizados de integración continua, pruebas y despliegue hacia QA.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 3, 
+                startDay: 5, 
+                endDay: 7 
+            },
+            { 
+                id: 'INF06', 
+                name: 'Preparación de infraestructura productiva', 
+                desc: 'Aprovisionamiento y configuración de servidores, réplica de base de datos y clúster productivo con alta disponibilidad.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 3, 
+                startDay: 7, 
+                endDay: 9 
+            },
+            { 
+                id: 'INF07', 
+                name: 'Configuración de dominios, DNS y HTTPS', 
+                desc: 'Configuración de registros DNS, enrutamiento seguro, certificados SSL/TLS y terminación HTTPS (incluye Mapbox).', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 9, 
+                endDay: 10 
+            },
+            { 
+                id: 'INF08', 
+                name: 'Configuración de persistencia, respaldos y recuperación', 
+                desc: 'Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 3, 
+                startDay: 9, 
+                endDay: 11 
+            },
+            { 
+                id: 'INF09', 
+                name: 'Configuración de seguridad y monitoreo', 
+                desc: 'Reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento previo a pruebas.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 11, 
+                endDay: 12 
+            },
+            { 
+                id: 'INF10', 
+                name: 'Validación integral de infraestructura y soporte a pruebas', 
+                desc: 'Soporte técnico directo durante las pruebas de integración cruzada y pruebas en conjunto, verificando rendimiento de red.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 12, 
+                endDay: 13 
+            },
+            { 
+                id: 'INF11', 
+                name: 'Despliegue de la primera versión aprobada', 
+                desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y smoke tests.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 2, 
+                startDay: 13, 
+                endDay: 14 
+            },
+            { 
+                id: 'INF12', 
+                name: 'Documentación técnica y entrega de infraestructura', 
+                desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia y entrega formal de llaves y credenciales.', 
+                layer: 'Infraestructura / DevOps', 
+                dev: 'M', 
+                group: 'Infraestructura y DevOps', 
+                days: 1, 
+                startDay: 14, 
+                endDay: 14 
+            }
         ];
 
+        // Estado interactivo de checkboxes / celdas reales
         const realTimeState = {}; 
         let currentFilter = 'all';
         let currentStatus = 'all';
         let currentSearch = '';
 
+        // Contar días reales completados para una tarea (sin duplicar días)
         function getTaskReales(task) {
             let count = 0;
             for (let d = 0; d < calendar.length; d++) {
@@ -315,23 +744,28 @@
             return count;
         }
 
+        // Filtro unificado (Responsable, Estado sin emojis, Búsqueda en tiempo real)
         function matchesFilters(task) {
+            // Filtro por responsable
             if (currentFilter !== 'all' && task.dev !== currentFilter) return false;
             
+            // Filtro por estado
             const r = getTaskReales(task);
             if (currentStatus === 'pending' && r >= task.days) return false;
             if (currentStatus === 'completed' && r < task.days) return false;
             if (currentStatus === 'overdue' && r <= task.days) return false;
 
+            // Filtro por búsqueda
             if (currentSearch.trim()) {
                 const q = currentSearch.toLowerCase().trim();
-                const text = `${task.id} ${task.name} ${task.desc}`.toLowerCase();
+                const text = `${task.id} ${task.name} ${task.desc} ${task.layer || ''} ${task.group || ''}`.toLowerCase();
                 if (!text.includes(q)) return false;
             }
 
             return true;
         }
 
+        // Actualización de Métricas de Progreso y Tareas Terminadas
         function updateMetrics() {
             let completedTasksCount = 0;
             let targetTasks = tasksData;
@@ -339,16 +773,17 @@
 
             if (currentFilter !== 'all') {
                 targetTasks = tasksData.filter(t => t.dev === currentFilter);
-                if (currentFilter === 'V') scopeLabel = 'Progreso Vane (Dev A)';
-                else if (currentFilter === 'J') scopeLabel = 'Progreso Jesús (Dev B)';
+                if (currentFilter === 'V') scopeLabel = 'Progreso Vane (Fases 1, 3, 5)';
+                else if (currentFilter === 'J') scopeLabel = 'Progreso Jesús (Fases 2, 4, Int)';
                 else if (currentFilter === 'M') scopeLabel = 'Progreso Miguel (DevOps)';
-                else if (currentFilter === 'A') scopeLabel = 'Progreso Conjuntas';
+                else if (currentFilter === 'A') scopeLabel = 'Progreso Conjuntas (Pruebas)';
             }
 
             const totalTasksCount = targetTasks.length;
 
             targetTasks.forEach(task => {
                 const r = getTaskReales(task);
+                // Una tarea se cuenta como terminada si y solo si se han cubierto sus días planificados
                 if (r >= task.days) {
                     completedTasksCount++;
                 }
@@ -369,6 +804,7 @@
             if (totalEl) totalEl.textContent = totalTasksCount;
         }
 
+        // Actualizar contadores numéricos en los botones de filtro
         function updateCounts() {
             let countAll = 0, countV = 0, countJ = 0, countM = 0, countA = 0;
             tasksData.forEach(t => {
@@ -390,43 +826,40 @@
             if (cA) cA.textContent = countA;
         }
 
-        let vIndex = 0, jIndex = 0;
-
-        tasksData.forEach(t => {
-            if (t.startDay !== undefined && t.endDay !== undefined) return;
-            if (t.dev === 'V') { t.startDay = vIndex; t.endDay = vIndex + t.days - 1; vIndex += t.days; } 
-            else if (t.dev === 'J') { t.startDay = jIndex; t.endDay = jIndex + t.days - 1; jIndex += t.days; }
-        });
-
-        let aIndex = Math.max(vIndex, jIndex);
-        tasksData.forEach(t => {
-            if (t.startDay !== undefined && t.endDay !== undefined) return;
-            if (t.dev === 'A') { t.startDay = aIndex; t.endDay = aIndex + t.days - 1; aIndex += t.days; }
-        });
-
-        const totalProjectDays = Math.max(aIndex, ...tasksData.map(t => (t.endDay !== undefined ? t.endDay + 1 : 0)), 30); 
+        // Configuración de Calendario de 15 Días Laborables
+        // Inicio: Jueves 29 de Octubre, 2026
+        const totalProjectDays = 15;
         const calendar = [];
-        let currentDate = new Date(2026, 9, 29); 
+        let currentDate = new Date(2026, 9, 29); // 29 de Octubre de 2026 (Jueves)
         
-        while (calendar.length < totalProjectDays || (calendar.length > 0 && calendar[calendar.length - 1].getDay() !== 5)) {
+        while (calendar.length < totalProjectDays) {
             const dayOfWeek = currentDate.getDay();
-            if (dayOfWeek !== 0 && dayOfWeek !== 6) calendar.push(new Date(currentDate));
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Solo lunes a viernes
+                calendar.push(new Date(currentDate));
+            }
             currentDate.setDate(currentDate.getDate() + 1);
         }
 
+        // Agrupación en semanas
         const weeks = [];
         let currentWeekNum = 1, currentWeekCount = 0, lastDay = -1;
 
         calendar.forEach(date => {
             const day = date.getDay();
-            if (day < lastDay) { weeks.push({ week: currentWeekNum, days: currentWeekCount }); currentWeekNum++; currentWeekCount = 0; }
-            currentWeekCount++; lastDay = day;
+            if (day < lastDay) { 
+                weeks.push({ week: currentWeekNum, days: currentWeekCount }); 
+                currentWeekNum++; 
+                currentWeekCount = 0; 
+            }
+            currentWeekCount++; 
+            lastDay = day;
         });
         if (currentWeekCount > 0) weeks.push({ week: currentWeekNum, days: currentWeekCount });
 
         const esDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
         const esMonths = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 
+        // Renderizado del Gantt
         function renderGantt() {
             const thead = document.getElementById('gantt-head');
             const tbody = document.getElementById('gantt-body');
@@ -434,14 +867,14 @@
             let headHTML = `
                 <tr class="text-xs uppercase tracking-wider">
                     <th class="sticky-col sticky-header sticky-col-header col-id py-4 px-2 text-left font-bold align-bottom text-brandTextMuted">ID</th>
-                    <th class="sticky-col sticky-header sticky-col-header col-actividad py-4 px-4 text-left font-bold align-bottom text-brandTextMuted">Actividad</th>
+                    <th class="sticky-col sticky-header sticky-col-header col-actividad py-4 px-4 text-left font-bold align-bottom text-brandTextMuted">Fase / Actividad Funcional</th>
                     <th class="sticky-col sticky-header sticky-col-header col-resp py-4 px-2 text-center font-bold align-bottom text-brandTextMuted">Resp.</th>
                     <th class="sticky-col sticky-header sticky-col-header col-p py-4 px-2 text-center font-bold align-bottom text-brandTextMuted" title="Días Programados">P</th>
                     <th class="sticky-col sticky-header sticky-col-header col-r py-4 px-2 text-center font-bold align-bottom text-brandTextMuted" title="Días Reales">R</th>
             `;
 
             weeks.forEach(w => {
-                headHTML += `<th colspan="${w.days}" class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-3 text-center text-brandText font-black tracking-widest text-xs uppercase">Semana ${w.week}</th>`;
+                headHTML += `<th colspan="${w.days}" class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-3 text-center text-brandText font-black tracking-widest text-xs uppercase bg-[#FDF9F5]">Semana ${w.week}</th>`;
             });
             headHTML += `</tr><tr class="text-xs">`;
             headHTML += `
@@ -452,15 +885,23 @@
                 <th class="sticky-col sticky-header sticky-col-header col-r h-8"></th>
             `;
 
-            calendar.forEach(date => {
+            calendar.forEach((date, idx) => {
                 const dayStr = `${esDays[date.getDay()]} ${date.getDate()} ${esMonths[date.getMonth()]}`;
-                headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-2 px-1 text-center font-semibold text-brandTextMuted min-w-[50px] whitespace-nowrap">${dayStr}</th>`;
+                const isMilestone = idx === 12; // Día 13 (Cierre desarrollo)
+                const isFinal = idx === 14; // Día 15 (Cierre proyecto)
+                const milestoneBadge = isMilestone ? 'border-b-2 border-b-vane text-vane font-black' : (isFinal ? 'border-b-2 border-b-ambos text-ambos font-black' : 'font-semibold text-brandTextMuted');
+                headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-2 px-1 text-center ${milestoneBadge} min-w-[55px] whitespace-nowrap bg-[#FDF9F5]">
+                    <div>${dayStr}</div>
+                    <div class="text-[9px] text-brandTextMuted/70 font-mono">Día ${idx + 1}</div>
+                </th>`;
             });
             headHTML += `</tr>`;
             thead.innerHTML = headHTML;
 
             let bodyHTML = '';
             let matchCount = 0;
+            let currentGroup = '';
+
             tasksData.forEach(task => {
                 if (!matchesFilters(task)) return;
                 matchCount++;
@@ -488,6 +929,7 @@
                         <td class="sticky-col col-actividad py-3 px-4 border-b border-brandBorder/50 align-top whitespace-normal">
                             ${task.group ? `<div class="text-[10px] font-bold ${groupTagColor} tracking-wider uppercase mb-0.5">${task.group}</div>` : ''}
                             <div class="font-bold text-brandText text-sm leading-tight">${task.name}</div>
+                            ${task.layer ? `<div class="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-brandBg text-brandTextMuted border border-brandBorder">${task.layer}</div>` : ''}
                             <div class="text-[11px] text-brandTextMuted mt-1 leading-snug font-medium">${task.desc}</div>
                         </td>
                         <td class="sticky-col col-resp py-3 px-2 border-b border-brandBorder/50 align-top pt-3">${avatarHTML}</td>
@@ -495,7 +937,7 @@
                         <td class="sticky-col col-r py-3 px-2 border-b border-brandBorder/50 text-center font-extrabold ${rClass} align-top pt-4" id="real-${task.id}">${reales}</td>
                 `;
 
-                let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/30' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/30' : (task.dev === 'M' ? 'bg-miguelBg border-miguel/30' : 'bg-ambosBg border-ambos/30'));
+                let colorClassBg = task.dev === 'V' ? 'bg-vaneBg border-vane/40' : (task.dev === 'J' ? 'bg-jesusBg border-jesus/40' : (task.dev === 'M' ? 'bg-miguelBg border-miguel/40' : 'bg-ambosBg border-ambos/40'));
                 let colorClassSolid = task.dev === 'V' ? 'bg-vane' : (task.dev === 'J' ? 'bg-jesus' : (task.dev === 'M' ? 'bg-miguel' : 'bg-ambos'));
 
                 for (let d = 0; d < calendar.length; d++) {
@@ -520,6 +962,7 @@
             updateMetrics();
         }
 
+        // Renderizado de Vista Tarjetas para Móviles
         function renderCards() {
             const grid = document.getElementById('cards-grid');
             if (!grid) return;
@@ -550,62 +993,75 @@
                     badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-miguel/15 text-miguel"><span class="w-2 h-2 rounded-full bg-miguel"></span> Miguel</span>`;
                     colorSolid = 'bg-miguel';
                 } else {
-                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-ambos/15 text-ambos"><span class="w-2 h-2 rounded-full bg-ambos"></span> Ambos</span>`;
+                    badgeDev = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-ambos/15 text-ambos"><span class="w-2 h-2 rounded-full bg-ambos"></span> Conjuntas</span>`;
                     colorSolid = 'bg-ambos';
                 }
 
-                let daysChipsHTML = '';
-                for (let d = task.startDay; d <= task.endDay; d++) {
-                    const date = calendar[d];
-                    if (!date) continue;
+                let statusBadge = '';
+                if (reales > task.days) {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-100 text-red-700">Con días extra</span>`;
+                } else if (reales >= task.days) {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Completada</span>`;
+                } else {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">Pendiente</span>`;
+                }
+
+                let dayButtonsHTML = '';
+                for (let d = 0; d < calendar.length; d++) {
+                    const isProgrammed = d >= task.startDay && d <= task.endDay;
                     const isReal = !!realTimeState[`${task.id}-${d}`];
-                    const dateLabel = `${esDays[date.getDay()]} ${date.getDate()}`;
-                    
-                    if (isReal) {
-                        daysChipsHTML += `
-                            <button type="button" onclick="toggleReal('${task.id}', ${d})" class="px-2.5 py-1 rounded-lg text-xs font-bold text-white ${colorSolid} flex items-center gap-1 shadow-sm transition-transform active:scale-95" title="Click para desmarcar">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                                ${dateLabel}
-                            </button>
-                        `;
-                    } else {
-                        daysChipsHTML += `
-                            <button type="button" onclick="toggleReal('${task.id}', ${d})" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-brandBg hover:bg-brandPeach/60 text-brandText border border-brandBorderDark/40 flex items-center gap-1 transition-colors active:scale-95" title="Click para marcar realizado">
-                                <span class="w-2 h-2 rounded-full border border-brandTextMuted"></span>
-                                ${dateLabel}
-                            </button>
-                        `;
-                    }
+                    const dateObj = calendar[d];
+                    const dayLabel = `${esDays[dateObj.getDay()]} ${dateObj.getDate()}`;
+
+                    let btnClass = isReal 
+                        ? `${colorSolid} text-white font-bold shadow-sm ring-2 ring-brandText/20` 
+                        : (isProgrammed ? 'bg-brandBg border border-brandBorderDark text-brandText hover:bg-brandPeach/60' : 'bg-gray-100 text-gray-400 hover:bg-gray-200');
+
+                    dayButtonsHTML += `
+                        <button 
+                            type="button" 
+                            onclick="toggleReal('${task.id}', ${d})" 
+                            title="${dayLabel} - Clic para marcar/desmarcar" 
+                            class="px-2 py-1 rounded-md text-[10px] transition-all flex flex-col items-center justify-center min-w-[36px] ${btnClass}"
+                        >
+                            <span class="font-mono text-[9px]">${dateObj.getDate()}</span>
+                            <span class="text-[8px] uppercase font-semibold">${esDays[dateObj.getDay()]}</span>
+                        </button>
+                    `;
                 }
 
                 html += `
-                    <div class="bg-white border border-brandBorderDark/70 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div class="bg-white rounded-2xl border border-brandBorder p-4 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-3">
                         <div>
                             <div class="flex items-center justify-between gap-2 mb-2">
-                                <span class="font-mono font-bold text-xs bg-brandBg px-2 py-0.5 rounded border border-brandBorderDark/40 text-brandTextMuted">${task.id}</span>
-                                <div class="flex items-center gap-2">
+                                <span class="font-mono font-bold text-xs text-brandTextMuted">${task.id}</span>
+                                <div class="flex items-center gap-1.5 flex-wrap justify-end">
                                     ${badgeDev}
-                                    <span class="text-xs font-bold px-2 py-0.5 rounded-md ${reales > task.days ? 'bg-red-100 text-red-700' : (reales >= task.days ? 'bg-emerald-100 text-emerald-700' : (reales > 0 ? 'bg-amber-100 text-amber-800' : 'bg-brandBg text-brandText'))}">
-                                        P: ${task.days}d • R: <strong class="font-extrabold">${reales}d</strong> ${reales > task.days ? `(+${reales - task.days}d)` : (reales >= task.days ? '✓' : (reales > 0 ? `(${reales}/${task.days}d)` : ''))}
-                                    </span>
+                                    ${statusBadge}
                                 </div>
                             </div>
-                            ${task.group ? `<div class="text-[10px] font-bold ${task.dev === 'V' ? 'text-vane' : (task.dev === 'J' ? 'text-jesus' : (task.dev === 'M' ? 'text-miguel' : 'text-ambos'))} tracking-wider uppercase mb-1">${task.group}</div>` : ''}
-                            <h3 class="font-bold text-brandText text-sm sm:text-base leading-snug">${task.name}</h3>
-                            <p class="text-xs text-brandTextMuted mt-1 leading-relaxed">${task.desc}</p>
+                            ${task.group ? `<div class="text-[10px] font-bold text-brandTextMuted uppercase tracking-wider mb-1">${task.group}</div>` : ''}
+                            <h3 class="font-extrabold text-brandText text-sm leading-tight mb-1">${task.name}</h3>
+                            ${task.layer ? `<div class="inline-block mb-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-brandBg text-brandTextMuted border border-brandBorder">${task.layer}</div>` : ''}
+                            <p class="text-xs text-brandTextMuted leading-relaxed">${task.desc}</p>
                         </div>
 
-                        <div class="mt-3 pt-3 border-t border-brandBorder/60">
-                            <div class="flex items-center justify-between text-xs text-brandTextMuted mb-2">
-                                <span class="font-medium flex items-center gap-1.5">
-                                    <svg class="w-3.5 h-3.5 text-brandTextMuted inline flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    ${dateRangeStr}
-                                </span>
-                                <span class="text-[11px] font-bold text-brandTextMuted">${task.days} día${task.days > 1 ? 's' : ''}</span>
+                        <div class="border-t border-brandBorder/60 pt-3 flex flex-col gap-2">
+                            <div class="flex items-center justify-between text-xs font-semibold">
+                                <span class="text-brandTextMuted">Fechas objetivo:</span>
+                                <span class="text-brandText font-mono">${dateRangeStr}</span>
                             </div>
-                            <div class="flex flex-wrap items-center gap-1.5">
-                                <span class="text-[11px] font-bold text-brandTextMuted mr-1">Días:</span>
-                                ${daysChipsHTML}
+                            <div class="flex items-center justify-between text-xs font-semibold">
+                                <span class="text-brandTextMuted">Progreso días:</span>
+                                <span class="font-mono ${reales >= task.days ? 'text-emerald-600 font-black' : 'text-brandText'}">${reales} de ${task.days} días</span>
+                            </div>
+
+                            <!-- Selector interactivo de días -->
+                            <div class="mt-1">
+                                <div class="text-[10px] font-bold text-brandTextMuted uppercase tracking-wider mb-1">Marcar días trabajados:</div>
+                                <div class="flex flex-wrap gap-1 max-h-24 overflow-y-auto no-scrollbar p-1 bg-brandBg/50 rounded-xl border border-brandBorder/60">
+                                    ${dayButtonsHTML}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -613,68 +1069,142 @@
             });
 
             if (matchCount === 0) {
-                html = `<div class="col-span-full py-14 text-center text-brandTextMuted font-medium bg-white rounded-xl border border-brandBorder"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</div>`;
+                html = `<div class="col-span-full py-12 text-center text-brandTextMuted font-medium"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Ajusta los filtros de responsable o búsqueda.</div>`;
             }
 
             grid.innerHTML = html;
-            updateMetrics();
         }
 
-        const statusConfig = {
-            all: {
-                label: 'Todos los estados',
-                icon: '<svg class="w-3.5 h-3.5 text-brandTextMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>'
-            },
-            pending: {
-                label: 'Pendientes',
-                icon: '<svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
-            },
-            completed: {
-                label: 'Completadas',
-                icon: '<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
-            },
-            overdue: {
-                label: 'Con días extra',
-                icon: '<svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>'
+        // Alternar día real
+        function toggleReal(taskId, dayIndex) {
+            const key = `${taskId}-${dayIndex}`;
+            if (realTimeState[key]) {
+                delete realTimeState[key];
+            } else {
+                realTimeState[key] = true;
             }
-        };
+            renderGantt();
+            renderCards();
+        }
 
-        window.toggleStatusDropdown = function(e) {
-            if (e) e.stopPropagation();
-            const menu = document.getElementById('status-dropdown-menu');
-            const chevron = document.getElementById('status-chevron');
-            if (menu) {
-                const isOpen = !menu.classList.contains('hidden');
-                if (isOpen) {
-                    menu.classList.add('hidden');
-                    if (chevron) chevron.classList.remove('rotate-180');
-                } else {
-                    menu.classList.remove('hidden');
-                    if (chevron) chevron.classList.add('rotate-180');
+        // Filtro por responsable
+        function filterTasks(dev) {
+            currentFilter = dev;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brandText', 'text-white', 'shadow-sm');
+                btn.classList.add('text-brandTextMuted');
+                const badge = btn.querySelector('span:last-child');
+                if (badge) {
+                    badge.classList.remove('bg-white/20', 'text-white');
+                    badge.classList.add('bg-brandBorderDark/30', 'text-brandText');
                 }
-            }
-        };
+            });
 
-        window.selectStatus = function(val) {
-            currentStatus = val;
-            const menu = document.getElementById('status-dropdown-menu');
-            const chevron = document.getElementById('status-chevron');
-            const iconEl = document.getElementById('status-selected-icon');
-            const labelEl = document.getElementById('status-selected-label');
-
-            if (menu) menu.classList.add('hidden');
-            if (chevron) chevron.classList.remove('rotate-180');
-
-            if (statusConfig[val]) {
-                if (iconEl) iconEl.innerHTML = statusConfig[val].icon;
-                if (labelEl) labelEl.textContent = statusConfig[val].label;
+            const activeBtn = document.getElementById(`btn-${dev}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-brandTextMuted');
+                activeBtn.classList.add('bg-brandText', 'text-white', 'shadow-sm');
+                const badge = activeBtn.querySelector('span:last-child');
+                if (badge) {
+                    badge.classList.remove('bg-brandBorderDark/30', 'text-brandText');
+                    badge.classList.add('bg-white/20', 'text-white');
+                }
             }
 
             renderGantt();
             renderCards();
-        };
+        }
 
-        document.addEventListener('click', function(e) {
+        // Búsqueda en tiempo real
+        function handleSearch(val) {
+            currentSearch = val;
+            const clearBtn = document.getElementById('search-clear');
+            if (clearBtn) {
+                if (val.trim()) clearBtn.classList.remove('hidden');
+                else clearBtn.classList.add('hidden');
+            }
+            renderGantt();
+            renderCards();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('search-input');
+            if (input) input.value = '';
+            handleSearch('');
+        }
+
+        // Menú desplegable de estados (con SVG, sin emojis)
+        function toggleStatusDropdown(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('status-dropdown-menu');
+            const chevron = document.getElementById('status-chevron');
+            if (menu) {
+                const isHidden = menu.classList.contains('hidden');
+                if (isHidden) {
+                    menu.classList.remove('hidden');
+                    if (chevron) chevron.classList.add('rotate-180');
+                } else {
+                    menu.classList.add('hidden');
+                    if (chevron) chevron.classList.remove('rotate-180');
+                }
+            }
+        }
+
+        function selectStatus(status) {
+            currentStatus = status;
+            const menu = document.getElementById('status-dropdown-menu');
+            const chevron = document.getElementById('status-chevron');
+            const labelEl = document.getElementById('status-selected-label');
+            const iconEl = document.getElementById('status-selected-icon');
+
+            if (menu) menu.classList.add('hidden');
+            if (chevron) chevron.classList.remove('rotate-180');
+
+            if (status === 'all') {
+                if (labelEl) labelEl.textContent = 'Todos';
+                if (iconEl) iconEl.innerHTML = `<svg class="w-3.5 h-3.5 text-brandTextMuted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>`;
+            } else if (status === 'pending') {
+                if (labelEl) labelEl.textContent = 'Pendientes';
+                if (iconEl) iconEl.innerHTML = `<svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+            } else if (status === 'completed') {
+                if (labelEl) labelEl.textContent = 'Completadas';
+                if (iconEl) iconEl.innerHTML = `<svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+            } else if (status === 'overdue') {
+                if (labelEl) labelEl.textContent = 'Con días extra';
+                if (iconEl) iconEl.innerHTML = `<svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+            }
+
+            renderGantt();
+            renderCards();
+        }
+
+        // Alternador de vistas Gantt / Tarjetas
+        function switchView(view) {
+            const ganttContainer = document.getElementById('gantt-view-container');
+            const cardsContainer = document.getElementById('cards-view-container');
+            const btnGantt = document.getElementById('toggle-view-gantt');
+            const btnCards = document.getElementById('toggle-view-cards');
+
+            if (view === 'gantt') {
+                ganttContainer.classList.remove('hidden');
+                cardsContainer.classList.add('hidden');
+                btnGantt.classList.add('bg-brandText', 'text-white', 'shadow-sm');
+                btnGantt.classList.remove('text-brandTextMuted');
+                btnCards.classList.remove('bg-brandText', 'text-white', 'shadow-sm');
+                btnCards.classList.add('text-brandTextMuted');
+            } else {
+                ganttContainer.classList.add('hidden');
+                cardsContainer.classList.remove('hidden');
+                btnCards.classList.add('bg-brandText', 'text-white', 'shadow-sm');
+                btnCards.classList.remove('text-brandTextMuted');
+                btnGantt.classList.remove('bg-brandText', 'text-white', 'shadow-sm');
+                btnGantt.classList.add('text-brandTextMuted');
+                renderCards();
+            }
+        }
+
+        // Cierre de menú dropdown al hacer clic fuera
+        document.addEventListener('click', (e) => {
             const wrapper = document.getElementById('status-dropdown-wrapper');
             const menu = document.getElementById('status-dropdown-menu');
             const chevron = document.getElementById('status-chevron');
@@ -684,74 +1214,10 @@
             }
         });
 
-        window.toggleReal = function(taskId, dayIndex) {
-            const key = `${taskId}-${dayIndex}`;
-            if (realTimeState[key]) delete realTimeState[key];
-            else realTimeState[key] = true;
-            renderGantt();
-            renderCards();
-        };
-
-        window.handleSearch = function(val) {
-            currentSearch = val;
-            const clearBtn = document.getElementById('search-clear');
-            if (clearBtn) {
-                if (val && val.trim().length > 0) clearBtn.classList.remove('hidden');
-                else clearBtn.classList.add('hidden');
-            }
-            renderGantt();
-            renderCards();
-        };
-
-        window.clearSearch = function() {
-            const input = document.getElementById('search-input');
-            if (input) input.value = '';
-            handleSearch('');
-        };
-
-        window.filterTasks = function(dev) {
-            currentFilter = dev;
-            ['all', 'V', 'J', 'M', 'A'].forEach(k => {
-                const btn = document.getElementById(`btn-${k}`);
-                if (!btn) return;
-                const countBadge = document.getElementById(`count-${k}`);
-                if (k === dev) {
-                    btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap';
-                    if (countBadge) countBadge.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono font-bold';
-                } else {
-                    btn.className = 'filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5 whitespace-nowrap';
-                    if (countBadge) countBadge.className = 'px-1.5 py-0.5 rounded-full text-[10px] bg-brandBorderDark/30 text-brandText font-mono font-bold';
-                }
-            });
-            renderGantt();
-            renderCards();
-        };
-
-        window.switchView = function(view) {
-            currentView = view;
-            const ganttContainer = document.getElementById('gantt-view-container');
-            const cardsContainer = document.getElementById('cards-view-container');
-            const btnGantt = document.getElementById('toggle-view-gantt');
-            const btnCards = document.getElementById('toggle-view-cards');
-
-            if (view === 'gantt') {
-                ganttContainer.classList.remove('hidden');
-                cardsContainer.classList.add('hidden');
-                btnGantt.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm';
-                btnCards.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5';
-                renderGantt();
-            } else {
-                ganttContainer.classList.add('hidden');
-                cardsContainer.classList.remove('hidden');
-                btnCards.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm';
-                btnGantt.className = 'view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5';
-                renderCards();
-            }
-        };
-
+        // Inicialización
         updateCounts();
-        let currentView = window.innerWidth < 768 ? 'cards' : 'gantt';
-        switchView(currentView);
+        renderGantt();
+        renderCards();
     </script>
 </body>
 </html>

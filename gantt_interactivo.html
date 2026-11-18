@@ -80,16 +80,25 @@
                     <p class="text-brandTextMuted mt-0.5 sm:mt-1 text-xs sm:text-sm font-medium">Plan de Desarrollo e Infraestructura DevOps • 30 Días Laborables • Inicio: Jueves 29 de Octubre, 2026</p>
                 </div>
                 
-                <!-- Selector de Vista: Gantt o Tarjetas -->
-                <div class="flex items-center bg-white p-1 rounded-xl border border-brandBorder shadow-sm self-start sm:self-auto">
-                    <button onclick="switchView('gantt')" id="toggle-view-gantt" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
-                        <span>Gantt</span>
-                    </button>
-                    <button onclick="switchView('cards')" id="toggle-view-cards" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-                        <span>Tarjetas (Móvil)</span>
-                    </button>
+                <!-- Acciones Rápidas: Alternar Vista y Enlace a Fases Funcionales -->
+                <div class="flex items-center gap-2 flex-wrap self-start sm:self-auto">
+                    <!-- Enlace a Fases Funcionales 1 a 5 -->
+                    <a href="gantt_fases.html" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-vane hover:text-brandText border border-vane/40 shadow-sm hover:bg-brandPeach/40 transition-all flex items-center gap-1.5" title="Ver plan de Fases Funcionales 1 a 5">
+                        <svg class="w-3.5 h-3.5 text-vane" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        <span>Ver Fases 1 a 5 (15d)</span>
+                    </a>
+
+                    <!-- Selector de Vista: Gantt o Tarjetas -->
+                    <div class="flex items-center bg-white p-1 rounded-xl border border-brandBorder shadow-sm">
+                        <button onclick="switchView('gantt')" id="toggle-view-gantt" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brandText text-white transition-all flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/></svg>
+                            <span>Gantt</span>
+                        </button>
+                        <button onclick="switchView('cards')" id="toggle-view-cards" class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold text-brandTextMuted hover:bg-brandPeach/60 transition-all flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                            <span>Tarjetas (Móvil)</span>
+                        </button>
+                    </div>
                 </div>
             </div>
             
