@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gantt Integral - Carnet-Can (Módulos Base + Fases 1 a 5 + DevOps)</title>
+    <title>Gantt Integral Extendido - Carnet-Can</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -44,7 +44,7 @@
         .col-p { left: 560px; min-width: 48px; max-width: 48px; text-align: center; }
         .col-r { left: 608px; min-width: 48px; max-width: 48px; text-align: center; border-right: 2px solid var(--tw-colors-brandBorderDark, #D4C4B5); box-shadow: 4px 0 10px -5px rgba(62,42,20,0.15); clip-path: inset(0 -15px 0 0); }
         
-        ::-webkit-scrollbar { height: 10px; width: 10px; }
+        ::-webkit-scrollbar { height: 11px; width: 10px; }
         ::-webkit-scrollbar-track { background: #F8F3ED; border-top: 1px solid #E8DDD1; }
         ::-webkit-scrollbar-thumb { background: #D2734C; border-radius: 8px; border: 2px solid #F8F3ED; }
         ::-webkit-scrollbar-thumb:hover { background: #B35F3C; }
@@ -71,23 +71,24 @@
 </head>
 <body class="bg-brandBg text-brandText font-sans min-h-screen p-3 sm:p-6 overflow-x-hidden">
 
-    <div class="max-w-[1850px] mx-auto">
+    <div class="max-w-[1900px] mx-auto">
         <!-- Encabezado Principal -->
         <header class="mb-4 sm:mb-6 flex flex-col gap-3">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                     <div class="flex items-center gap-2 flex-wrap">
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText tracking-tight">Proyecto <span class="text-vane">Carnet-Can</span></h1>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brandPeach text-brandText border border-brandBorderDark/60">Plan Maestro Integral</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brandPeach text-brandText border border-brandBorderDark/60">Plan Maestro Completo</span>
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-vane/15 text-vane border border-vane/30">Módulos Base + Fases 1 a 5</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-ambos/15 text-ambos border border-ambos/30">Pruebas Conjuntas Extendidas</span>
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-miguel/15 text-miguel border border-miguel/30">DevOps en Paralelo</span>
                     </div>
                     <p class="text-brandTextMuted mt-1 text-xs sm:text-sm font-medium">
-                        35 Días Laborables • Cierre Simultáneo de Desarrollo (Día 33) • 2 Días de Pruebas Conjuntas (Días 34-35) • Inicio: Jueves 29 de Octubre, 2026
+                        Calendario Extendido (42 Días Laborables / 9 Semanas) • Inicio: Jueves 29 de Octubre, 2026 • Cierre Simultáneo de Dev (Día 33) • Pruebas Conjuntas y Validación sin cortes
                     </p>
                 </div>
                 
-                <!-- Acciones Rápidas: Alternar Vista y Enlace -->
+                <!-- Acciones Rápidas: Alternar Vista -->
                 <div class="flex items-center gap-2 flex-wrap self-start sm:self-auto">
                     <!-- Selector de Vista: Gantt o Tarjetas Móvil -->
                     <div class="flex items-center bg-white p-1 rounded-xl border border-brandBorder shadow-sm">
@@ -220,17 +221,17 @@
             </div>
         </header>
 
-        <!-- Contenedor Vista Gantt -->
+        <!-- Contenedor Vista Gantt con Ancho Intrínsico Seguro (Sin cortes) -->
         <div id="gantt-view-container" class="bg-white border border-brandBorderDark rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_12px_40px_-10px_rgba(62,42,20,0.15)] relative">
             <div class="md:hidden flex items-center justify-between px-3 py-2 bg-brandPeach/30 text-brandText text-xs font-medium border-b border-brandBorder">
                 <span class="flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-vane animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
-                    Desliza horizontalmente para ver el cronograma
+                    Desliza horizontalmente para ver todo el cronograma
                 </span>
                 <span class="text-[11px] text-brandTextMuted font-mono">P: Prog • R: Real</span>
             </div>
             <div class="overflow-x-auto -webkit-overflow-scrolling-touch" id="gantt-scroll">
-                <table class="w-full border-collapse text-sm" id="gantt-table">
+                <table class="border-collapse text-sm min-w-max w-full" id="gantt-table">
                     <thead id="gantt-head" class="text-brandText shadow-sm relative z-30"></thead>
                     <tbody id="gantt-body" class="divide-y divide-brandBorder/60 bg-white"></tbody>
                 </table>
@@ -245,7 +246,7 @@
         <!-- Pie de Página Informativo -->
         <footer class="mt-6 text-center text-xs text-brandTextMuted border-t border-brandBorder/60 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
             <div>
-                <span class="font-bold text-brandText">Carnet-Can:</span> Plan Maestro Completo (Módulos Base 20d + Fases 1 a 5 13d + Pruebas Finales 2d = 35 Días).
+                <span class="font-bold text-brandText">Carnet-Can:</span> Plan Maestro Completo (Módulos Base 20d + Fases 1 a 5 13d + Pruebas Conjuntas y Validación = 42 Días Calendario).
             </div>
             <div class="flex items-center gap-4 text-[11px]">
                 <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-vane inline-block"></span> Vane (Dev A)</span>
@@ -572,21 +573,21 @@
             },
 
             // =========================================================================
-            // SECCIÓN 4: INTEGRACIÓN FINAL Y PRUEBAS EN CONJUNTO (AMBOS - DÍAS 34 Y 35)
+            // SECCIÓN 4: INTEGRACIÓN FINAL Y PRUEBAS EN CONJUNTO (AMBOS - DÍAS 34 EN ADELANTE)
             // =========================================================================
             { id: 'C01', name: 'Definición de contratos API y reglas de integración', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 33, endDay: 33 },
             { id: 'C02', name: 'Migraciones y esquema de base de datos', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 33, endDay: 33 },
             { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 33, endDay: 33 },
-            { id: 'C04', name: 'Pruebas integrales de flujos (End-to-End)', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña).', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 33, endDay: 33 },
-            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 33, endDay: 33 },
-            { id: 'C06', name: 'Configuración productiva y variables de entorno', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 34, endDay: 34 },
-            { id: 'C07', name: 'Validación y empaquetado de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 34, endDay: 34 },
-            { id: 'C08', name: 'Compilación y validación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 34, endDay: 34 },
-            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 34, endDay: 34 },
-            { id: 'C10', name: 'Documentación técnica, manuales y entrega de versión', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 34, endDay: 34 },
+            { id: 'C04', name: 'Pruebas integrales de flujos (End-to-End)', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña).', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 33, endDay: 34 },
+            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 33, endDay: 34 },
+            { id: 'C06', name: 'Configuración productiva y variables de entorno', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 34, endDay: 35 },
+            { id: 'C07', name: 'Validación y empaquetado de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 34, endDay: 35 },
+            { id: 'C08', name: 'Compilación y validación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 34, endDay: 35 },
+            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 35, endDay: 36 },
+            { id: 'C10', name: 'Documentación técnica, manuales y entrega de versión', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 2, startDay: 35, endDay: 36 },
 
             // =========================================================================
-            // SECCIÓN 5: INFRAESTRUCTURA Y DEVOPS (MIGUEL - EN PARALELO, 35 DÍAS)
+            // SECCIÓN 5: INFRAESTRUCTURA Y DEVOPS (MIGUEL - EN PARALELO)
             // =========================================================================
             { id: 'INF01', name: 'Diagnóstico de infraestructura y estado actual de QA', desc: 'Evaluación técnica de la infraestructura existente, revisión del estado del ambiente QA, recursos disponibles y requerimientos previos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 0, endDay: 1 },
             { id: 'INF02', name: 'Confirmación de recursos, permisos y accesos', desc: 'Gestión y validación de credenciales, accesos a servidores, proveedores de nube, repositorios y asignación de cuotas de recursos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 1, endDay: 2 },
@@ -597,9 +598,9 @@
             { id: 'INF07', name: 'Configuración de dominios, DNS y HTTPS', desc: 'Configuración de registros DNS, enrutamiento de red, certificados SSL/TLS y terminación HTTPS segura para ambientes y servicios externos (Mapbox).', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 18, endDay: 22 },
             { id: 'INF08', name: 'Configuración de persistencia, respaldos y recuperación', desc: 'Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración ante desastres.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 18, endDay: 22 },
             { id: 'INF09', name: 'Configuración de seguridad y monitoreo', desc: 'Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 6, startDay: 23, endDay: 28 },
-            { id: 'INF10', name: 'Validación integral de infraestructura y soporte a pruebas', desc: 'Soporte técnico directo durante las pruebas de integración cruzada y pruebas conjuntas, verificación de rendimiento de red y estabilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 29, endDay: 33 },
-            { id: 'INF11', name: 'Despliegue de la primera versión aprobada', desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 33, endDay: 34 },
-            { id: 'INF12', name: 'Documentación técnica y entrega de infraestructura', desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.', dev: 'M', group: 'Infraestructura y DevOps', days: 1, startDay: 34, endDay: 34 }
+            { id: 'INF10', name: 'Validación integral de infraestructura y soporte a pruebas', desc: 'Soporte técnico directo durante las pruebas de integración cruzada y pruebas conjuntas, verificación de rendimiento de red y estabilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 6, startDay: 29, endDay: 34 },
+            { id: 'INF11', name: 'Despliegue de la primera versión aprobada', desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 34, endDay: 35 },
+            { id: 'INF12', name: 'Documentación técnica y entrega de infraestructura', desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 35, endDay: 36 }
         ];
 
         // Estado interactivo de celdas reales
@@ -695,15 +696,19 @@
             if (cA) cA.textContent = countA;
         }
 
-        // Configuración de Calendario de 35 Días Laborables
-        // Inicio: Jueves 29 de Octubre, 2026
-        const totalProjectDays = 35;
+        // =========================================================================
+        // CALENDARIO EXTENDIDO COMPLETO: 42 DÍAS LABORABLES (9 SEMANAS COMPLETAS)
+        // Inicio: Jueves 29 de Octubre, 2026 -> Finaliza: Viernes 25 de Diciembre, 2026
+        // Permite que las pruebas conjuntas se muestren con holgura total y sin cortes
+        // =========================================================================
+        const minDaysTarget = 42;
         const calendar = [];
         let currentDate = new Date(2026, 9, 29); // 29 de Octubre de 2026 (Jueves)
         
-        while (calendar.length < totalProjectDays) {
+        // Se completa siempre hasta el viernes de la última semana
+        while (calendar.length < minDaysTarget || (calendar.length > 0 && calendar[calendar.length - 1].getDay() !== 5)) {
             const dayOfWeek = currentDate.getDay();
-            if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Solo lunes a viernes
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Solo días laborales (lunes a viernes)
                 calendar.push(new Date(currentDate));
             }
             currentDate.setDate(currentDate.getDate() + 1);
@@ -745,6 +750,8 @@
             weeks.forEach(w => {
                 headHTML += `<th colspan="${w.days}" class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-3 text-center text-brandText font-black tracking-widest text-xs uppercase bg-[#FDF9F5]">Semana ${w.week}</th>`;
             });
+            // Columna espaciadora final para margen de scroll
+            headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark bg-[#FDF9F5] min-w-[40px] p-0"></th>`;
             headHTML += `</tr><tr class="text-xs">`;
             headHTML += `
                 <th class="sticky-col sticky-header sticky-col-header col-id h-8"></th>
@@ -756,21 +763,30 @@
 
             calendar.forEach((date, idx) => {
                 const dayStr = `${esDays[date.getDay()]} ${date.getDate()} ${esMonths[date.getMonth()]}`;
-                const isMilestoneBase = idx === 19; // Fin desarrollo inicial (Día 20)
-                const isMilestoneDev = idx === 32;  // Fin desarrollo fases (Día 33)
-                const isFinal = idx === 34;         // Fin proyecto (Día 35)
+                const isMilestoneBase = idx === 19; // Fin desarrollo inicial (Día 20: Mié 25 nov)
+                const isMilestoneDev = idx === 32;  // Fin desarrollo fases (Día 33: Lun 14 dic)
+                const isTestingPeriod = idx >= 33 && idx <= 36; // Periodo de Pruebas Conjuntas (Días 34-37: Mar 15 - Vie 18 dic)
 
                 let badgeClass = 'font-semibold text-brandTextMuted';
-                if (isMilestoneBase) badgeClass = 'border-b-2 border-b-amber-600 text-amber-700 font-black';
-                else if (isMilestoneDev) badgeClass = 'border-b-2 border-b-vane text-vane font-black';
-                else if (isFinal) badgeClass = 'border-b-2 border-b-ambos text-ambos font-black';
+                let tagLabel = `Día ${idx + 1}`;
 
-                headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-2 px-1 text-center ${badgeClass} min-w-[55px] whitespace-nowrap bg-[#FDF9F5]">
+                if (isMilestoneBase) {
+                    badgeClass = 'border-b-2 border-b-amber-600 text-amber-700 font-black';
+                    tagLabel = 'Fin Base';
+                } else if (isMilestoneDev) {
+                    badgeClass = 'border-b-2 border-b-vane text-vane font-black';
+                    tagLabel = 'Cierre Dev';
+                } else if (isTestingPeriod) {
+                    badgeClass = 'border-b-2 border-b-ambos text-ambos font-black bg-ambos/10';
+                    tagLabel = idx === 33 ? 'Pruebas E2E' : (idx === 34 ? 'Integración' : (idx === 35 ? 'Despliegue' : 'Cierre'));
+                }
+
+                headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark border-l border-brandBorder/50 py-2 px-1.5 text-center ${badgeClass} min-w-[62px] w-[62px] whitespace-nowrap bg-[#FDF9F5]">
                     <div>${dayStr}</div>
-                    <div class="text-[9px] text-brandTextMuted/70 font-mono">Día ${idx + 1}</div>
+                    <div class="text-[9px] text-brandTextMuted/70 font-mono font-bold">${tagLabel}</div>
                 </th>`;
             });
-            headHTML += `</tr>`;
+            headHTML += `<th class="sticky-header border-b-2 border-brandBorderDark bg-[#FDF9F5] min-w-[40px] p-0"></th></tr>`;
             thead.innerHTML = headHTML;
 
             let bodyHTML = '';
@@ -823,13 +839,14 @@
                         ? `<div class="w-full h-7 rounded-md ${colorClassSolid} cursor-pointer shadow-sm transition-transform hover:scale-105" onclick="toggleReal('${task.id}', ${d})"></div>` 
                         : `<div class="w-full h-7 rounded-md bg-[#E8DDD1]/60 cursor-pointer hover:bg-[#D4C1AF] transition-colors" onclick="toggleReal('${task.id}', ${d})"></div>`;
 
-                    bodyHTML += `<td class="border-b border-l border-brandBorder/50 p-1 min-w-[55px] align-top pt-4"><div class="flex flex-col gap-2 w-full px-1">${pBar}${rBar}</div></td>`;
+                    bodyHTML += `<td class="border-b border-l border-brandBorder/50 p-1 min-w-[62px] w-[62px] align-top pt-4"><div class="flex flex-col gap-2 w-full px-0.5">${pBar}${rBar}</div></td>`;
                 }
-                bodyHTML += `</tr>`;
+                // Columna espaciadora final
+                bodyHTML += `<td class="border-b border-brandBorder/50 min-w-[40px] p-0"></td></tr>`;
             });
 
             if (matchCount === 0) {
-                bodyHTML = `<tr><td colspan="${5 + calendar.length}" class="py-14 text-center text-brandTextMuted font-medium"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</td></tr>`;
+                bodyHTML = `<tr><td colspan="${6 + calendar.length}" class="py-14 text-center text-brandTextMuted font-medium"><div class="text-base font-bold text-brandText mb-1">No se encontraron actividades</div>Intenta ajustar los filtros de responsable, estado o la búsqueda.</td></tr>`;
             }
 
             tbody.innerHTML = bodyHTML;
