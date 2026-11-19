@@ -76,16 +76,8 @@
         <header class="mb-4 sm:mb-6 flex flex-col gap-3">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText tracking-tight">Proyecto <span class="text-vane">Carnet-Can</span></h1>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brandPeach text-brandText border border-brandBorderDark/60">Plan Maestro Completo</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-vane/15 text-vane border border-vane/30">Inicio Hoy: A10 y B11 (19 Nov)</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-ambos/15 text-ambos border border-ambos/30">Actividades C (1 Día c/u)</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-miguel/15 text-miguel border border-miguel/30">DevOps en Paralelo</span>
-                    </div>
-                    <p class="text-brandTextMuted mt-1 text-xs sm:text-sm font-medium">
-                        Inicio: Jueves 19 de Noviembre, 2026 • Cierre de Desarrollo (Día 24: 22 de Diciembre) • Pruebas Conjuntas (Días 25 al 29: 2 por día) • Entrega Final: 29 de Diciembre
-                    </p>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText tracking-tight">Proyecto <span class="text-vane">Carnet-Can</span></h1>
+                    <p class="text-brandTextMuted mt-1 text-xs sm:text-sm font-medium">Inicio: Jueves 19 de Noviembre, 2026</p>
                 </div>
                 
                 <!-- Acciones Rápidas: Alternar Vista -->
@@ -1123,7 +1115,7 @@
                         <td class="sticky-col col-actividad py-3 px-4 border-b border-brandBorder/50 align-top whitespace-normal">
                             ${task.group ? `<div class="text-[10px] font-bold ${groupTagColor} tracking-wider uppercase mb-0.5">${task.group}</div>` : ''}
                             <div class="font-bold text-brandText text-sm leading-tight">${task.name}</div>
-                            ${task.layer ? `<div class="inline-block mt-0.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-brandBg text-brandTextMuted border border-brandBorder">${task.layer}</div>` : ''}
+                            
                             <div class="text-[11px] text-brandTextMuted mt-1 leading-snug font-medium">${task.desc}</div>
                         </td>
                         <td class="sticky-col col-resp py-3 px-2 border-b border-brandBorder/50 align-top pt-3">${avatarHTML}</td>
@@ -1237,7 +1229,7 @@
                             </div>
                             ${task.group ? `<div class="text-[10px] font-bold text-brandTextMuted uppercase tracking-wider mb-1">${task.group}</div>` : ''}
                             <h3 class="font-extrabold text-brandText text-sm leading-tight mb-1">${task.name}</h3>
-                            ${task.layer ? `<div class="inline-block mb-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-brandBg text-brandTextMuted border border-brandBorder">${task.layer}</div>` : ''}
+                            
                             <p class="text-xs text-brandTextMuted leading-relaxed">${task.desc}</p>
                         </div>
 
