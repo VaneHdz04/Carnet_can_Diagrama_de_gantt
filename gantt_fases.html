@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gantt Integral - Carnet-Can (Todas las C con 1 Día)</title>
+    <title>Gantt Actualizado - Carnet-Can (Inicio: 19 de Noviembre)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -79,12 +79,12 @@
                     <div class="flex items-center gap-2 flex-wrap">
                         <h1 class="text-2xl sm:text-3xl font-extrabold text-brandText tracking-tight">Proyecto <span class="text-vane">Carnet-Can</span></h1>
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-brandPeach text-brandText border border-brandBorderDark/60">Plan Maestro Completo</span>
-                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-vane/15 text-vane border border-vane/30">Módulos Base + Fases 1 a 5</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-vane/15 text-vane border border-vane/30">Inicio Hoy: A10 y B11 (19 Nov)</span>
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-ambos/15 text-ambos border border-ambos/30">Actividades C (1 Día c/u)</span>
                         <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-miguel/15 text-miguel border border-miguel/30">DevOps en Paralelo</span>
                     </div>
                     <p class="text-brandTextMuted mt-1 text-xs sm:text-sm font-medium">
-                        Calendario Extendido (47 Días Laborables / 10 Semanas) • Inicio: Jueves 29 de Octubre, 2026 • Cierre Dev (Día 33) • Actividades C: 1 Día Cada Una (Días 34 al 43)
+                        Inicio: Jueves 19 de Noviembre, 2026 • Cierre de Desarrollo (Día 24: 22 de Diciembre) • Pruebas Conjuntas (Días 25 al 29: 2 por día) • Entrega Final: 29 de Diciembre
                     </p>
                 </div>
                 
@@ -213,7 +213,7 @@
                     </div>
 
                     <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
-                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">81</span></div>
+                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">62</span></div>
                         <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Tareas terminadas</div>
                     </div>
                 </div>
@@ -259,358 +259,658 @@
 
     <script>
         const tasksData = [
-            // =========================================================================
-            // SECCIÓN 1: DESARROLLO INICIAL - PROPIETARIO / ADMIN (VANE - 20 días base)
-            // =========================================================================
-            { id: 'A01', name: 'Revisión y corrección funcionales del propietario', desc: 'Revisión funcional y corrección de errores en los módulos existentes del propietario: mascotas, historial médico, vacunas, desparasitación y carnet PDF.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 0, endDay: 0 },
-            { id: 'A02', name: 'Persistencia de sesión y autenticación', desc: 'Implementación de persistencia de sesión, recuperación de contraseña y renovación segura de tokens de autenticación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 1, endDay: 1 },
-            { id: 'A03', name: 'Inicio de sesión con Google y Microsoft', desc: 'Integración del inicio de sesión con Google y Microsoft, incluyendo vinculación de cuentas y validación de acceso.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 2, endDay: 2 },
-            { id: 'A04', name: 'Notificaciones y registro de dispositivos', desc: 'Configuración de Firebase Cloud Messaging, solicitud de permisos y registro de dispositivos para recibir notificaciones.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 3, endDay: 3 },
-            { id: 'A05', name: 'Recordatorios automáticos (vacunas/desparasitación)', desc: 'Implementación de recordatorios automáticos de vacunación y desparasitación, considerando fechas programadas y preferencias de notificación.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 4, endDay: 4 },
-            { id: 'A06', name: 'Integración de pesos de referencia', desc: 'Incorporación de rangos de peso de referencia por especie, raza y etapa de crecimiento, con su visualización en el seguimiento de salud.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 5, endDay: 5 },
-            { id: 'A07', name: 'Módulo de mascotas extraviadas y carteles', desc: 'Desarrollo del módulo de mascotas extraviadas: registro, edición, gestión de alertas y generación y descarga de carteles digitales mediante plantillas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 6, endDay: 6 },
-            { id: 'A08', name: 'Frontend del mapa veterinario y filtros', desc: 'Desarrollo de la interfaz del directorio veterinario con mapa, filtros de búsqueda y fichas informativas utilizando datos simulados.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 7, endDay: 7 },
-            { id: 'A09', name: 'Integración del mapa con datos reales', desc: 'Integración del directorio con ubicaciones, servicios y reseñas reales de veterinarios y clínicas, incluyendo búsqueda por proximidad.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 8, endDay: 8 },
-            { id: 'A10', name: 'Pruebas funcionales del ecosistema propietario', desc: 'Ejecución de pruebas funcionales y de regresión de los módulos del propietario, con corrección de incidencias detectadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 9, endDay: 9 },
-            { id: 'AD01', name: 'Estructura base del panel administrativo', desc: 'Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 10, endDay: 10 },
-            { id: 'AD02', name: 'Dashboard administrativo', desc: 'Implementación del dashboard administrativo con indicadores, estadísticas y gráficas obtenidas de los registros del sistema.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 11, endDay: 11 },
-            { id: 'AD03', name: 'Gestión de propietarios', desc: 'Desarrollo de la gestión de propietarios: listado, búsqueda, filtros, consulta de perfiles y acciones administrativas autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2, startDay: 12, endDay: 13 },
-            { id: 'AD04', name: 'Configuraciones globales', desc: 'Implementación de configuraciones globales para administrar límites de mascotas, documentos y otros parámetros generales de la plataforma.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 14, endDay: 14 },
-            { id: 'AD05', name: 'Catálogo de especies y razas', desc: 'Desarrollo de catálogos de especies y razas, incluyendo registro, edición, consulta, desactivación y relaciones entre ambos.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 15, endDay: 15 },
-            { id: 'AD06', name: 'Catálogos sanitarios', desc: 'Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 16, endDay: 16 },
-            { id: 'AD07', name: 'Gestión de roles y permisos', desc: 'Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 2, startDay: 17, endDay: 18 },
-            { id: 'AD08', name: 'Pruebas del panel administrativo', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.', dev: 'V', group: 'Desarrollo Propietario / Admin', days: 1, startDay: 19, endDay: 19 },
-
-            // =========================================================================
-            // SECCIÓN 2: DESARROLLO INICIAL - VETERINARIOS / CLÍNICAS (JESÚS - 20 días base)
-            // =========================================================================
-            { id: 'B01', name: 'Revisión de código y registros', desc: 'Revisión del código existente de veterinarios y clínicas, identificando formularios, endpoints, modelos y procesos de validación ya implementados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 0, endDay: 0 },
-            { id: 'B02', name: 'Acceso y cambio de contraseña', desc: 'Implementación del acceso para cuentas profesionales aprobadas y del cambio de contraseña, con validación del estado de la cuenta.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 1, endDay: 1 },
-            { id: 'B03', name: 'Perfil veterinario', desc: 'Desarrollo del perfil veterinario, permitiendo consultar y actualizar credenciales profesionales, fotografía, información personal y datos de contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 2, endDay: 2 },
-            { id: 'B04', name: 'Servicios y horarios del veterinario', desc: 'Implementación de especialidades, servicios ofrecidos y horarios de atención del veterinario, con selección desde catálogos y almacenamiento de cambios.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 3, endDay: 3 },
-            { id: 'B05', name: 'Perfil de clínica', desc: 'Desarrollo del perfil de clínica, incluyendo consulta y edición de información del establecimiento, documentación, fotografía y contacto.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 4, endDay: 4 },
-            { id: 'B06', name: 'Servicios y horarios de la clínica', desc: 'Implementación de especialidades, servicios y horarios de la clínica, incluyendo registro, vinculación y administración de médicos asociados.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 5, endDay: 5 },
-            { id: 'B07', name: 'Gestión de ubicación de veterinarios/clínicas', desc: 'Desarrollo de la gestión de ubicación de veterinarios y clínicas, incluyendo dirección, selección en mapa, coordenadas y consulta geográfica mediante API.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 6, endDay: 6 },
-            { id: 'B08', name: 'Reseñas y calificaciones', desc: 'Implementación del módulo de reseñas y calificaciones para veterinarios y clínicas, incluyendo publicación, consulta, reportes y endpoints públicos.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 7, endDay: 7 },
-            { id: 'B09', name: 'Pantallas de inicio (Home)', desc: 'Desarrollo de las pantallas de inicio de veterinarios y clínicas, con resúmenes, indicadores y accesos a sus funcionalidades principales.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 8, endDay: 8 },
-            { id: 'B10', name: 'Notificaciones y ajustes de cuenta', desc: 'Integración de notificaciones y ajustes de cuenta en ambos perfiles, reutilizando los servicios y componentes comunes disponibles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 9, endDay: 9 },
-            { id: 'B11', name: 'Pruebas del ecosistema veterinarios', desc: 'Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos de veterinarios y clínicas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 10, endDay: 10 },
-            { id: 'BD01', name: 'Módulo administrativo de veterinarios', desc: 'Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 11, endDay: 11 },
-            { id: 'BD02', name: 'Verificación documental', desc: 'Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2, startDay: 12, endDay: 13 },
-            { id: 'BD03', name: 'Módulo administrativo de clínicas', desc: 'Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 14, endDay: 14 },
-            { id: 'BD04', name: 'Moderación de reseñas', desc: 'Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 15, endDay: 15 },
-            { id: 'BD05', name: 'Apoyo en permisos profesionales', desc: 'Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 2, startDay: 16, endDay: 17 },
-            { id: 'BD06', name: 'Pruebas módulos administrativos', desc: 'Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 18, endDay: 18 },
-            { id: 'BD07', name: 'Contraseñas de administrador/supervisor', desc: 'Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administrador y supervisor.', dev: 'J', group: 'Desarrollo Veterinario / Clínicas', days: 1, startDay: 19, endDay: 19 },
-
-            // =========================================================================
-            // SECCIÓN 3: NUEVAS FASES FUNCIONALES 1 A 5 (DÍAS 21 A 33)
-            // =========================================================================
-
-            // --- FASE 1: Smart Booking, Agenda y Candado de Reputación (Vane - 6 días) ---
-            { 
-                id: 'F1-01', 
-                name: 'Configuración de Disponibilidad y Horarios Laborales', 
-                desc: 'Crear modelos/endpoints de horarios laborales y bloqueos, y construir la pantalla de Configuración de Disponibilidad (días, duración de consulta y descansos).', 
-                layer: 'Backend + Veterinario (B2B)', 
-                dev: 'V', 
-                group: 'Fase 1: Smart Booking, Agenda y Candado', 
-                days: 1, 
-                startDay: 20, 
-                endDay: 20 
-            },
-            { 
-                id: 'F1-02', 
-                name: 'Red de Confianza (Médicos Favoritos)', 
-                desc: 'Implementar Red de Confianza (Médicos Favoritos) para guardar clínicas de cabecera desde el mapa o perfil.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'V', 
-                group: 'Fase 1: Smart Booking, Agenda y Candado', 
-                days: 1, 
-                startDay: 21, 
-                endDay: 21 
-            },
-            { 
-                id: 'F1-03', 
-                name: 'Motor de Reservaciones (Booking) en Perfil de Clínica', 
-                desc: 'Desarrollar endpoints de reservaciones y el Motor de Reservaciones (Booking) en el perfil de la clínica (selección de mascota, motivo y horario disponible en 3 clics).', 
-                layer: 'Backend + Dueño (B2C)', 
-                dev: 'V', 
-                group: 'Fase 1: Smart Booking, Agenda y Candado', 
-                days: 1, 
-                startDay: 22, 
-                endDay: 22 
-            },
-            { 
-                id: 'F1-04', 
-                name: 'Dashboard Operativo de Agenda y Gestor de Solicitudes', 
-                desc: 'Crear el Dashboard Operativo de Agenda (vistas lista, día, semana, mes) y el Gestor de Solicitudes (Aceptar, Rechazar o Proponer nuevo horario).', 
-                layer: 'Veterinario (B2B)', 
-                dev: 'V', 
-                group: 'Fase 1: Smart Booking, Agenda y Candado', 
-                days: 1, 
-                startDay: 23, 
-                endDay: 23 
-            },
-            { 
-                id: 'F1-05', 
-                name: 'Flujo de Estados y Trazabilidad del Paciente en Tiempo Real', 
-                desc: 'Implementar el flujo de estados (Solicitada ➔ Programada ➔ En Sala ➔ En Consulta ➔ Finalizada) y los controles de Trazabilidad del Paciente en tiempo real.', 
-                layer: 'Backend + Veterinario (B2B)', 
-                dev: 'V', 
-                group: 'Fase 1: Smart Booking, Agenda y Candado', 
-                days: 1, 
-                startDay: 24, 
-                endDay: 24 
-            },
-            { 
-                id: 'F1-06', 
-                name: 'Centro de Control de Citas y Candado de Reputación', 
-                desc: 'Construir el Centro de Control de Citas (Próximas/Pasadas con semáforo de estatus y push FCM) e integrar el Candado de Reputación (Anti-Spam) para habilitar reseñas únicamente al finalizar una cita.', 
-                layer: 'Backend + Dueño (B2C)', 
-                dev: 'V', 
-                group: 'Fase 1: Smart Booking, Agenda y Candado', 
-                days: 1, 
-                startDay: 25, 
-                endDay: 25 
-            },
-
-            // --- FASE 2: Check-In QR, Expediente Clínico (ECE) y Peso (Jesús - 5 días) ---
-            { 
-                id: 'F2-07', 
-                name: 'Credencialización Inteligente (QR Dinámico por Mascota)', 
-                desc: 'Implementar Credencialización Inteligente (QR): generador de código QR dinámico por mascota en la pantalla principal.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'J', 
-                group: 'Fase 2: Check-In QR, Expediente (ECE) y Peso', 
-                days: 1, 
-                startDay: 20, 
-                endDay: 20 
-            },
-            { 
-                id: 'F2-08', 
-                name: 'Escáner QR (Ingreso Cero Fricción)', 
-                desc: 'Integrar el Escáner QR (Ingreso Cero Fricción) para leer el carnet del tutor y abrir el expediente de la mascota al instante.', 
-                layer: 'Veterinario (B2B)', 
-                dev: 'J', 
-                group: 'Fase 2: Check-In QR, Expediente (ECE) y Peso', 
-                days: 1, 
-                startDay: 21, 
-                endDay: 21 
-            },
-            { 
-                id: 'F2-09', 
-                name: 'Consulta SOAP, Sellado Digital Inmutable y Peso Clínico', 
-                desc: 'Desarrollar los endpoints y la pantalla de consulta con Estructura SOAP (Subjetivo, Objetivo, Análisis, Plan), lógica de Sellado Digital Inmutable (bloqueo + cédula) y Peso Clínico con alerta de variación brusca (>10%).', 
-                layer: 'Backend + Veterinario (B2B)', 
-                dev: 'J', 
-                group: 'Fase 2: Check-In QR, Expediente (ECE) y Peso', 
-                days: 2, 
-                startDay: 22, 
-                endDay: 23 
-            },
-            { 
-                id: 'F2-10', 
-                name: 'Visor de Historial Médico Verificado y Gráfica de Peso', 
-                desc: 'Actualizar el Visor de Historial Médico: añadir insignias "Verificado por Profesional" (solo lectura) para diferenciar registros oficiales de los caseros, y distinguir el peso clínico en la gráfica histórica.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'J', 
-                group: 'Fase 2: Check-In QR, Expediente (ECE) y Peso', 
-                days: 1, 
-                startDay: 24, 
-                endDay: 24 
-            },
-
-            // --- FASE 3: Gabinete Digital, Recetas (e-Prescription) y Alarmas (Vane - 4 días) ---
-            { 
-                id: 'F3-11', 
-                name: 'Generación PDF e-Prescription y Endpoints MinIO PACS', 
-                desc: 'Crear el motor de generación de PDF para e-Prescription (membrete, firma, medicamentos y posología estructurada) y endpoints de MinIO para almacenamiento PACS.', 
-                layer: 'Backend', 
-                dev: 'V', 
-                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
-                days: 1, 
-                startDay: 26, 
-                endDay: 26 
-            },
-            { 
-                id: 'F3-12', 
-                name: 'Módulo de Receta Electrónica y Carga de Adjuntos PACS', 
-                desc: 'Integrar el módulo de Receta Electrónica (captura de medicamento, dosis, frecuencia y días) y carga de adjuntos PACS (radiografías, ecografías, laboratorios) dentro de la consulta.', 
-                layer: 'Veterinario (B2B)', 
-                dev: 'V', 
-                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
-                days: 1, 
-                startDay: 27, 
-                endDay: 27 
-            },
-            { 
-                id: 'F3-13', 
-                name: 'Bandeja de Documentos Clínicos y Compartir Estudios', 
-                desc: 'Construir la Bandeja de Documentos Clínicos en el expediente para visualizar, descargar o compartir recetas PDF y estudios por WhatsApp/Correo.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'V', 
-                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
-                days: 1, 
-                startDay: 28, 
-                endDay: 28 
-            },
-            { 
-                id: 'F3-14', 
-                name: 'Alarmas Automáticas de Medicamentos (Notificaciones Locales)', 
-                desc: 'Programar las Alarmas Automáticas de Medicamentos: botón "Activar recordatorios" que lee la posología de la receta y configura notificaciones locales en el dispositivo.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'V', 
-                group: 'Fase 3: Gabinete Digital, Recetas y Alarmas', 
-                days: 1, 
-                startDay: 29, 
-                endDay: 29 
-            },
-
-            // --- FASE 4: Gestión Sanitaria Oficial, CRM y Galería de Instalaciones (Jesús - 5 días) ---
-            { 
-                id: 'F4-15', 
-                name: 'Registro Clínico Validado de Vacunas/Desparasitantes y Cronjob', 
-                desc: 'Actualizar endpoints de vacunas y desparasitantes (exigiendo Laboratorio y Lote), construir el formulario de Registro Clínico Validado con cálculo de próxima dosis y configurar cronjob de Alertas Push.', 
-                layer: 'Backend + Veterinario (B2B)', 
-                dev: 'J', 
-                group: 'Fase 4: Gestión Sanitaria, CRM y Galería', 
-                days: 1, 
-                startDay: 25, 
-                endDay: 25 
-            },
-            { 
-                id: 'F4-16', 
-                name: 'Sincronización del Calendario Sanitario Oficial', 
-                desc: 'Sincronizar el calendario sanitario para mostrar vacunas/desparasitaciones selladas oficialmente por el médico.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'J', 
-                group: 'Fase 4: Gestión Sanitaria, CRM y Galería', 
-                days: 1, 
-                startDay: 26, 
-                endDay: 26 
-            },
-            { 
-                id: 'F4-17', 
-                name: 'CRM Veterinario (Directorio de Pacientes y Ficha de Tutores)', 
-                desc: 'Desarrollar el CRM Veterinario: Directorio de Pacientes (filtrable por especie) y Ficha de Tutores con acceso rápido a datos de contacto.', 
-                layer: 'Veterinario (B2B)', 
-                dev: 'J', 
-                group: 'Fase 4: Gestión Sanitaria, CRM y Galería', 
-                days: 1, 
-                startDay: 27, 
-                endDay: 27 
-            },
-            { 
-                id: 'F4-18', 
-                name: 'Gestión de Galería de Instalaciones y Equipamiento (MinIO)', 
-                desc: 'Crear el apartado de Galería de Instalaciones y Equipamiento para subir fotos del consultorio, quirófano o equipo médico a MinIO.', 
-                layer: 'Veterinario (B2B)', 
-                dev: 'J', 
-                group: 'Fase 4: Gestión Sanitaria, CRM y Galería', 
-                days: 1, 
-                startDay: 28, 
-                endDay: 28 
-            },
-            { 
-                id: 'F4-19', 
-                name: 'Carrusel de Galería de Instalaciones en Perfil Público', 
-                desc: 'Integrar el carrusel de la Galería de Instalaciones dentro del perfil público de cada clínica.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'J', 
-                group: 'Fase 4: Gestión Sanitaria, CRM y Galería', 
-                days: 1, 
-                startDay: 29, 
-                endDay: 29 
-            },
-
-            // --- FASE 5: Radar Comunitario y Clínico de Alertas SOS (Vane - 3 días) ---
-            { 
-                id: 'F5-20', 
-                name: 'PostGIS: Consultas Geoespaciales 5 km y Endpoints SOS', 
-                desc: 'Implementar consultas geoespaciales (PostGIS) para disparar notificaciones push en un radio de 5 km al activar una alerta SOS, más endpoints para registrar avistamientos.', 
-                layer: 'Backend', 
-                dev: 'V', 
-                group: 'Fase 5: Radar Comunitario y Alertas SOS', 
-                days: 1, 
-                startDay: 30, 
-                endDay: 30 
-            },
-            { 
-                id: 'F5-21', 
-                name: 'Red de Avistamientos con Pin en Mapa, Foto y Hora', 
-                desc: 'Agregar la Red de Avistamientos: botón "Reportar avistamiento" en alertas cercanas para colocar un pin en el mapa con foto y hora.', 
-                layer: 'Dueño (B2C)', 
-                dev: 'V', 
-                group: 'Fase 5: Radar Comunitario y Alertas SOS', 
-                days: 1, 
-                startDay: 31, 
-                endDay: 31 
-            },
-            { 
-                id: 'F5-22', 
-                name: 'Tablero de Extraviados ("Mascotas en mi Zona")', 
-                desc: 'Construir el Tablero de Extraviados ("Mascotas Extraviadas en mi Zona") para cotejar animales rescatados que lleguen al consultorio.', 
-                layer: 'Veterinario (B2B)', 
-                dev: 'V', 
-                group: 'Fase 5: Radar Comunitario y Alertas SOS', 
-                days: 1, 
-                startDay: 32, 
-                endDay: 32 
-            },
-
-            // --- SINCRONIZACIÓN JESÚS: Integración y Pruebas Cruzadas (3 días en paralelo a Fase 5 de Vane) ---
-            { 
-                id: 'J-INT', 
-                name: 'Integración y Pruebas Cruzadas (Flujo Completo, RBAC y UI)', 
-                desc: 'Conectar el flujo completo (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña), validar permisos RBAC y pulir UI. Permite que ambos desarrolladores finalicen desarrollo el mismo día (Día 33).', 
-                layer: 'Fullstack + Control de Calidad', 
-                dev: 'J', 
-                group: 'Integración Cruzada y Cierre de Desarrollo', 
-                days: 3, 
-                startDay: 30, 
-                endDay: 32 
-            },
-
-            // =========================================================================
-            // SECCIÓN 4: INTEGRACIÓN FINAL Y PRUEBAS EN CONJUNTO (AMBOS - TODAS CON 1 DÍA)
-            // Cada actividad C cuenta exactamente con 1 DÍA de desarrollo (Días 34 al 43)
-            // =========================================================================
-            { id: 'C01', name: 'Definición de contratos API y reglas de integración', desc: 'Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 33, endDay: 33 },
-            { id: 'C02', name: 'Migraciones y esquema de base de datos', desc: 'Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 34, endDay: 34 },
-            { id: 'C03', name: 'Integración cruzada de módulos', desc: 'Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 35, endDay: 35 },
-            { id: 'C04', name: 'Pruebas integrales de flujos (End-to-End)', desc: 'Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña).', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 36, endDay: 36 },
-            { id: 'C05', name: 'Pruebas de seguridad y rendimiento', desc: 'Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 37, endDay: 37 },
-            { id: 'C06', name: 'Configuración productiva y variables de entorno', desc: 'Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 38, endDay: 38 },
-            { id: 'C07', name: 'Validación y empaquetado de APK/AAB', desc: 'Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 39, endDay: 39 },
-            { id: 'C08', name: 'Compilación y validación Flutter Web', desc: 'Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 40, endDay: 40 },
-            { id: 'C09', name: 'Preparación de iOS (Opcional MVP)', desc: 'Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 41, endDay: 41 },
-            { id: 'C10', name: 'Documentación técnica, manuales y entrega de versión', desc: 'Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.', dev: 'A', group: 'Integración, Pruebas y Despliegue', days: 1, startDay: 42, endDay: 42 },
-
-            // =========================================================================
-            // SECCIÓN 5: INFRAESTRUCTURA Y DEVOPS (MIGUEL - EN PARALELO)
-            // =========================================================================
-            { id: 'INF01', name: 'Diagnóstico de infraestructura y estado actual de QA', desc: 'Evaluación técnica de la infraestructura existente, revisión del estado del ambiente QA, recursos disponibles y requerimientos previos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 0, endDay: 1 },
-            { id: 'INF02', name: 'Confirmación de recursos, permisos y accesos', desc: 'Gestión y validación de credenciales, accesos a servidores, proveedores de nube, repositorios y asignación de cuotas de recursos.', dev: 'M', group: 'Infraestructura y DevOps', days: 2, startDay: 1, endDay: 2 },
-            { id: 'INF03', name: 'Configuración y validación de Docker, PostgreSQL, MinIO y FastAPI', desc: 'Aprovisionamiento de contenedores base (FastAPI backend, PostgreSQL, almacenamiento MinIO) e integración de servicios externos incluyendo Mapbox.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 2, endDay: 4 },
-            { id: 'INF04', name: 'Preparación y validación del ambiente QA', desc: 'Despliegue y verificación funcional del ambiente de aseguramiento de calidad (QA), garantizando disponibilidad antes y durante el desarrollo.', dev: 'M', group: 'Infraestructura y DevOps', days: 3, startDay: 4, endDay: 6 },
-            { id: 'INF05', name: 'Configuración y validación de GitLab CI/CD', desc: 'Diseño e implementación de pipelines automatizados de integración continua, pruebas y despliegue continuo (CI/CD) hacia QA.', dev: 'M', group: 'Infraestructura y DevOps', days: 4, startDay: 6, endDay: 9 },
-            { id: 'INF06', name: 'Preparación de infraestructura productiva', desc: 'Aprovisionamiento y configuración de servidores, base de datos y clúster para el entorno de producción con alta disponibilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 8, startDay: 10, endDay: 17 },
-            { id: 'INF07', name: 'Configuración de dominios, DNS y HTTPS', desc: 'Configuración de registros DNS, enrutamiento de red, certificados SSL/TLS y terminación HTTPS segura para ambientes y servicios externos (Mapbox).', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 18, endDay: 22 },
-            { id: 'INF08', name: 'Configuración de persistencia, respaldos y recuperación', desc: 'Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración ante desastres.', dev: 'M', group: 'Infraestructura y DevOps', days: 5, startDay: 18, endDay: 22 },
-            { id: 'INF09', name: 'Configuración de seguridad y monitoreo', desc: 'Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.', dev: 'M', group: 'Infraestructura y DevOps', days: 6, startDay: 23, endDay: 28 },
-            { id: 'INF10', name: 'Validación integral de infraestructura y soporte a pruebas', desc: 'Soporte técnico directo durante las pruebas de integración cruzada y pruebas conjuntas, verificación de rendimiento de red y estabilidad.', dev: 'M', group: 'Infraestructura y DevOps', days: 9, startDay: 29, endDay: 37 },
-            { id: 'INF11', name: 'Despliegue de la primera versión aprobada', desc: 'Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.', dev: 'M', group: 'Infraestructura y DevOps', days: 4, startDay: 38, endDay: 41 },
-            { id: 'INF12', name: 'Documentación técnica y entrega de infraestructura', desc: 'Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.', dev: 'M', group: 'Infraestructura y DevOps', days: 1, startDay: 42, endDay: 42 }
-        ];
+    {
+        "id": "A10",
+        "name": "Pruebas funcionales del ecosistema propietario",
+        "desc": "Revisión y validación funcional integral de módulos del propietario (mascotas, historial médico, vacunas, desparasitación, carnet PDF y mapa veterinario).",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 0,
+        "endDay": 0
+    },
+    {
+        "id": "AD01",
+        "name": "Estructura base del panel administrativo",
+        "desc": "Desarrollo de la estructura del panel administrativo, incluyendo menú lateral, navegación, rutas protegidas y componentes visuales reutilizables.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 1,
+        "endDay": 1
+    },
+    {
+        "id": "AD02",
+        "name": "Dashboard administrativo",
+        "desc": "Construcción del panel principal con métricas generales: número de usuarios, clínicas registradas, mascotas activas y accesos rápidos.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 2,
+        "endDay": 2
+    },
+    {
+        "id": "AD03",
+        "name": "Gestión de propietarios",
+        "desc": "Desarrollo del módulo de gestión de usuarios propietarios: listado, búsqueda, filtros, visualización de detalles y acciones de moderación.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 2,
+        "startDay": 3,
+        "endDay": 4
+    },
+    {
+        "id": "AD04",
+        "name": "Configuraciones globales",
+        "desc": "Implementación de pantallas de configuración general del sistema: parámetros operativos, políticas, variables del entorno y ajustes de la plataforma.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 5,
+        "endDay": 5
+    },
+    {
+        "id": "AD05",
+        "name": "Catálogo de especies y razas",
+        "desc": "Creación de módulos para administrar los catálogos de especies, razas y rangos de peso sugeridos utilizados en el registro de mascotas.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 6,
+        "endDay": 6
+    },
+    {
+        "id": "AD06",
+        "name": "Catálogos sanitarios",
+        "desc": "Desarrollo de catálogos sanitarios para administrar vacunas, desparasitantes y otros datos de referencia utilizados en los formularios.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 7,
+        "endDay": 7
+    },
+    {
+        "id": "AD07",
+        "name": "Gestión de roles y permisos",
+        "desc": "Implementación de la gestión de roles y permisos: creación de roles, asignación de accesos por módulo y control de operaciones autorizadas.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 2,
+        "startDay": 8,
+        "endDay": 9
+    },
+    {
+        "id": "AD08",
+        "name": "Pruebas del panel administrativo",
+        "desc": "Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias del panel administrativo.",
+        "dev": "V",
+        "group": "Desarrollo Propietario / Admin",
+        "days": 1,
+        "startDay": 10,
+        "endDay": 10
+    },
+    {
+        "id": "B11",
+        "name": "Validación integral de ecosistema profesional",
+        "desc": "Ejecución de pruebas funcionales, validación de permisos y corrección de incidencias en los módulos base de veterinarios y clínicas.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 1,
+        "startDay": 0,
+        "endDay": 0
+    },
+    {
+        "id": "BD01",
+        "name": "Módulo administrativo de veterinarios",
+        "desc": "Desarrollo del módulo administrativo de veterinarios, con listado, búsqueda, filtros, consulta de perfiles y acciones de gestión autorizadas.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 1,
+        "startDay": 1,
+        "endDay": 1
+    },
+    {
+        "id": "BD02",
+        "name": "Verificación documental de profesionales",
+        "desc": "Implementación de la verificación documental de veterinarios y clínicas, incluyendo revisión, aprobación, rechazo y registro de observaciones.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 2,
+        "startDay": 2,
+        "endDay": 3
+    },
+    {
+        "id": "BD03",
+        "name": "Módulo de administración de clínicas",
+        "desc": "Desarrollo del módulo administrativo de clínicas, con listado, búsqueda, consulta de información y control de cuentas.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 1,
+        "startDay": 4,
+        "endDay": 4
+    },
+    {
+        "id": "BD04",
+        "name": "Moderación de reseñas y calificaciones",
+        "desc": "Implementación de la moderación de reseñas, incluyendo consulta de reportes, ocultamiento y acciones administrativas autorizadas.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 1,
+        "startDay": 5,
+        "endDay": 5
+    },
+    {
+        "id": "BD05",
+        "name": "Permisos profesionales y roles de acceso",
+        "desc": "Apoyo en la definición e implementación de permisos para veterinarios, clínicas y módulos profesionales, en coordinación con la gestión de roles.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 2,
+        "startDay": 6,
+        "endDay": 7
+    },
+    {
+        "id": "BD06",
+        "name": "Pruebas de módulos profesionales",
+        "desc": "Ejecución de pruebas funcionales y de autorización de los módulos administrativos de profesionales, clínicas y reseñas.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 1,
+        "startDay": 8,
+        "endDay": 8
+    },
+    {
+        "id": "BD07",
+        "name": "Contraseñas de administrador/supervisor",
+        "desc": "Implementación del cambio, recuperación y restablecimiento seguro de contraseñas para cuentas de administración y supervisión.",
+        "dev": "J",
+        "group": "Desarrollo Veterinario / Clínicas",
+        "days": 1,
+        "startDay": 9,
+        "endDay": 9
+    },
+    {
+        "id": "F1-01",
+        "name": "Configuración de Disponibilidad y Horarios Laborales",
+        "desc": "Crear modelos/endpoints de horarios laborales y bloqueos, y construir la pantalla de Configuración de Disponibilidad (días, duración de consulta y descansos).",
+        "layer": "Backend + Veterinario (B2B)",
+        "dev": "V",
+        "group": "Fase 1: Smart Booking, Agenda y Candado",
+        "days": 1,
+        "startDay": 11,
+        "endDay": 11
+    },
+    {
+        "id": "F1-02",
+        "name": "Red de Confianza (Médicos Favoritos)",
+        "desc": "Implementar Red de Confianza (Médicos Favoritos) para guardar clínicas de cabecera desde el mapa o perfil.",
+        "layer": "Dueño (B2C)",
+        "dev": "V",
+        "group": "Fase 1: Smart Booking, Agenda y Candado",
+        "days": 1,
+        "startDay": 12,
+        "endDay": 12
+    },
+    {
+        "id": "F1-03",
+        "name": "Motor de Reservaciones (Booking) en Perfil de Clínica",
+        "desc": "Desarrollar endpoints de reservaciones y el Motor de Reservaciones (Booking) en el perfil de la clínica (selección de mascota, motivo y horario disponible en 3 clics).",
+        "layer": "Backend + Dueño (B2C)",
+        "dev": "V",
+        "group": "Fase 1: Smart Booking, Agenda y Candado",
+        "days": 1,
+        "startDay": 13,
+        "endDay": 13
+    },
+    {
+        "id": "F1-04",
+        "name": "Dashboard Operativo de Agenda y Gestor de Solicitudes",
+        "desc": "Crear el Dashboard Operativo de Agenda (vistas lista, día, semana, mes) y el Gestor de Solicitudes (Aceptar, Rechazar o Proponer nuevo horario).",
+        "layer": "Veterinario (B2B)",
+        "dev": "V",
+        "group": "Fase 1: Smart Booking, Agenda y Candado",
+        "days": 1,
+        "startDay": 14,
+        "endDay": 14
+    },
+    {
+        "id": "F1-05",
+        "name": "Flujo de Estados y Trazabilidad del Paciente en Tiempo Real",
+        "desc": "Implementar el flujo de estados (Solicitada ➔ Programada ➔ En Sala ➔ En Consulta ➔ Finalizada) y los controles de Trazabilidad del Paciente en tiempo real.",
+        "layer": "Backend + Veterinario (B2B)",
+        "dev": "V",
+        "group": "Fase 1: Smart Booking, Agenda y Candado",
+        "days": 1,
+        "startDay": 15,
+        "endDay": 15
+    },
+    {
+        "id": "F1-06",
+        "name": "Centro de Control de Citas y Candado de Reputación",
+        "desc": "Construir el Centro de Control de Citas (Próximas/Pasadas con semáforo de estatus y push FCM) e integrar el Candado de Reputación (Anti-Spam) para habilitar reseñas únicamente al finalizar una cita.",
+        "layer": "Backend + Dueño (B2C)",
+        "dev": "V",
+        "group": "Fase 1: Smart Booking, Agenda y Candado",
+        "days": 1,
+        "startDay": 16,
+        "endDay": 16
+    },
+    {
+        "id": "F2-07",
+        "name": "Credencialización Inteligente (QR Dinámico por Mascota)",
+        "desc": "Implementar Credencialización Inteligente (QR): generador de código QR dinámico por mascota en la pantalla principal.",
+        "layer": "Dueño (B2C)",
+        "dev": "J",
+        "group": "Fase 2: Check-In QR, Expediente (ECE) y Peso",
+        "days": 1,
+        "startDay": 10,
+        "endDay": 10
+    },
+    {
+        "id": "F2-08",
+        "name": "Escáner QR de Ingreso Cero Fricción para Veterinario",
+        "desc": "Integrar el Escáner QR (Ingreso Cero Fricción) para leer el carnet del tutor y abrir el expediente de la mascota al instante.",
+        "layer": "Veterinario (B2B)",
+        "dev": "J",
+        "group": "Fase 2: Check-In QR, Expediente (ECE) y Peso",
+        "days": 1,
+        "startDay": 11,
+        "endDay": 11
+    },
+    {
+        "id": "F2-09",
+        "name": "Pantalla de Consulta SOAP, Sellado Digital y Peso Clínico",
+        "desc": "Desarrollar los endpoints y la pantalla de consulta con Estructura SOAP (Subjetivo, Objetivo, Análisis, Plan), lógica de Sellado Digital Inmutable (bloqueo + cédula) y Peso Clínico con alerta automática de variación brusca (>10%).",
+        "layer": "Backend + Veterinario (B2B)",
+        "dev": "J",
+        "group": "Fase 2: Check-In QR, Expediente (ECE) y Peso",
+        "days": 2,
+        "startDay": 12,
+        "endDay": 13
+    },
+    {
+        "id": "F2-10",
+        "name": "Visor de Historial Médico con Insignias Verificadas",
+        "desc": "Actualizar el Visor de Historial Médico: añadir insignias \"Verificado por Profesional\" (solo lectura) para diferenciar registros oficiales de los caseros, y distinguir el peso clínico en la gráfica histórica.",
+        "layer": "Dueño (B2C)",
+        "dev": "J",
+        "group": "Fase 2: Check-In QR, Expediente (ECE) y Peso",
+        "days": 1,
+        "startDay": 14,
+        "endDay": 14
+    },
+    {
+        "id": "F3-11",
+        "name": "Motor PDF de e-Prescription y Almacenamiento PACS en MinIO",
+        "desc": "Crear el motor de generación de PDF para e-Prescription (membrete, firma, medicamentos y posología estructurada) y endpoints de MinIO para almacenamiento PACS.",
+        "layer": "Backend",
+        "dev": "V",
+        "group": "Fase 3: Gabinete Digital, Recetas y Alarmas",
+        "days": 1,
+        "startDay": 17,
+        "endDay": 17
+    },
+    {
+        "id": "F3-12",
+        "name": "Módulo de Receta Electrónica y Carga de Adjuntos PACS",
+        "desc": "Integrar el módulo de Receta Electrónica (captura de medicamento, dosis, frecuencia y días) y carga de adjuntos PACS (radiografías, ecografías, laboratorios) dentro de la consulta.",
+        "layer": "Veterinario (B2B)",
+        "dev": "V",
+        "group": "Fase 3: Gabinete Digital, Recetas y Alarmas",
+        "days": 1,
+        "startDay": 18,
+        "endDay": 18
+    },
+    {
+        "id": "F3-13",
+        "name": "Bandeja de Documentos Clínicos y Compartir por WhatsApp/Email",
+        "desc": "Construir la Bandeja de Documentos Clínicos en el expediente para visualizar, descargar o compartir recetas PDF y estudios por WhatsApp/Correo.",
+        "layer": "Dueño (B2C)",
+        "dev": "V",
+        "group": "Fase 3: Gabinete Digital, Recetas y Alarmas",
+        "days": 1,
+        "startDay": 19,
+        "endDay": 19
+    },
+    {
+        "id": "F3-14",
+        "name": "Alarmas Automáticas de Medicamentos con Notificaciones Locales",
+        "desc": "Programar las Alarmas Automáticas de Medicamentos: botón \"Activar recordatorios\" que lee la posología de la receta y configura notificaciones locales en el dispositivo.",
+        "layer": "Dueño (B2C)",
+        "dev": "V",
+        "group": "Fase 3: Gabinete Digital, Recetas y Alarmas",
+        "days": 1,
+        "startDay": 20,
+        "endDay": 20
+    },
+    {
+        "id": "F4-15",
+        "name": "Registro Clínico Validado de Vacunas/Desparasitaciones y Push de Retención",
+        "desc": "Actualizar endpoints de vacunas y desparasitantes (exigiendo Laboratorio y Lote), construir el formulario de Registro Clínico Validado con cálculo de próxima dosis y configurar el cronjob de Alertas Push de Retención.",
+        "layer": "Backend + Veterinario (B2B)",
+        "dev": "J",
+        "group": "Fase 4: Gestión Sanitaria, CRM y Galería",
+        "days": 1,
+        "startDay": 15,
+        "endDay": 15
+    },
+    {
+        "id": "F4-16",
+        "name": "Sincronización del Calendario Sanitario Oficial",
+        "desc": "Sincronizar el calendario sanitario para mostrar vacunas/desparasitaciones selladas oficialmente por el médico.",
+        "layer": "Dueño (B2C)",
+        "dev": "J",
+        "group": "Fase 4: Gestión Sanitaria, CRM y Galería",
+        "days": 1,
+        "startDay": 16,
+        "endDay": 16
+    },
+    {
+        "id": "F4-17",
+        "name": "CRM Veterinario: Directorio de Pacientes y Ficha de Tutores",
+        "desc": "Desarrollar el CRM Veterinario: Directorio de Pacientes (filtrable por especie) y Ficha de Tutores con acceso rápido a datos de contacto.",
+        "layer": "Veterinario (B2B)",
+        "dev": "J",
+        "group": "Fase 4: Gestión Sanitaria, CRM y Galería",
+        "days": 1,
+        "startDay": 17,
+        "endDay": 17
+    },
+    {
+        "id": "F4-18",
+        "name": "Galería de Instalaciones y Equipamiento (Carga a MinIO)",
+        "desc": "Crear el apartado de Galería de Instalaciones y Equipamiento para subir fotos del consultorio, quirófano o equipo médico a MinIO.",
+        "layer": "Veterinario (B2B)",
+        "dev": "J",
+        "group": "Fase 4: Gestión Sanitaria, CRM y Galería",
+        "days": 1,
+        "startDay": 18,
+        "endDay": 18
+    },
+    {
+        "id": "F4-19",
+        "name": "Carrusel de Galería de Instalaciones en Perfil Público",
+        "desc": "Integrar el carrusel de la Galería de Instalaciones dentro del perfil público de cada clínica.",
+        "layer": "Dueño (B2C)",
+        "dev": "J",
+        "group": "Fase 4: Gestión Sanitaria, CRM y Galería",
+        "days": 1,
+        "startDay": 19,
+        "endDay": 19
+    },
+    {
+        "id": "F5-20",
+        "name": "Consultas Geoespaciales PostGIS (5 km) y Endpoints de Avistamientos",
+        "desc": "Implementar consultas geoespaciales (PostGIS) para disparar notificaciones push en un radio de 5 km al activar una alerta SOS, más endpoints para registrar avistamientos.",
+        "layer": "Backend",
+        "dev": "V",
+        "group": "Fase 5: Radar Comunitario y Alertas SOS",
+        "days": 1,
+        "startDay": 21,
+        "endDay": 21
+    },
+    {
+        "id": "F5-21",
+        "name": "Red de Avistamientos Comunitaria con Pin en Mapa",
+        "desc": "Agregar la Red de Avistamientos: botón \"Reportar avistamiento\" en alertas cercanas para colocar un pin en el mapa con foto y hora.",
+        "layer": "Dueño (B2C)",
+        "dev": "V",
+        "group": "Fase 5: Radar Comunitario y Alertas SOS",
+        "days": 1,
+        "startDay": 22,
+        "endDay": 22
+    },
+    {
+        "id": "F5-22",
+        "name": "Tablero de Mascotas Extraviadas para Clínicas y Consultorios",
+        "desc": "Construir el Tablero de Extraviados (\"Mascotas Extraviadas en mi Zona\") para cotejar animales rescatados que lleguen al consultorio.",
+        "layer": "Veterinario (B2B)",
+        "dev": "V",
+        "group": "Fase 5: Radar Comunitario y Alertas SOS",
+        "days": 1,
+        "startDay": 23,
+        "endDay": 23
+    },
+    {
+        "id": "J-INT",
+        "name": "Integración y Pruebas Cruzadas (Flujo Completo, RBAC y UI)",
+        "desc": "Conectar el flujo completo (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña), validar permisos RBAC y pulir UI. Permite que ambos desarrolladores finalicen desarrollo el mismo día (Día 24: 22 de Diciembre).",
+        "layer": "Fullstack + Control de Calidad",
+        "dev": "J",
+        "group": "Integración Cruzada y Cierre de Desarrollo",
+        "days": 4,
+        "startDay": 20,
+        "endDay": 23
+    },
+    {
+        "id": "C01",
+        "name": "Definición de contratos API y reglas de integración",
+        "desc": "Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 24,
+        "endDay": 24
+    },
+    {
+        "id": "C02",
+        "name": "Migraciones y esquema de base de datos",
+        "desc": "Implementación de migraciones versionadas y actualización del esquema de base de datos, verificando compatibilidad con los módulos existentes.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 24,
+        "endDay": 24
+    },
+    {
+        "id": "C03",
+        "name": "Integración cruzada de módulos",
+        "desc": "Integración de los módulos de propietarios, profesionales, directorio y administración, verificando el intercambio correcto de información.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 25,
+        "endDay": 25
+    },
+    {
+        "id": "C04",
+        "name": "Pruebas integrales de flujos (End-to-End)",
+        "desc": "Ejecución de pruebas integrales de los procesos principales, desde el registro y autenticación hasta las operaciones entre perfiles (Cita ➔ QR ➔ SOAP ➔ Receta ➔ Reseña).",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 25,
+        "endDay": 25
+    },
+    {
+        "id": "C05",
+        "name": "Pruebas de seguridad y rendimiento",
+        "desc": "Ejecución de pruebas de seguridad y rendimiento básico, con revisión de permisos, sesiones, protección de datos y corrección de vulnerabilidades críticas.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 26,
+        "endDay": 26
+    },
+    {
+        "id": "C06",
+        "name": "Configuración productiva y variables de entorno",
+        "desc": "Configuración del entorno productivo, HTTPS, respaldos, variables de entorno y verificación de disponibilidad de los servicios.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 26,
+        "endDay": 26
+    },
+    {
+        "id": "C07",
+        "name": "Validación y empaquetado de APK/AAB",
+        "desc": "Generación, firma y validación de los paquetes APK y AAB de Android, incluyendo pruebas de instalación y funcionamiento.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 27,
+        "endDay": 27
+    },
+    {
+        "id": "C08",
+        "name": "Compilación y validación Flutter Web",
+        "desc": "Compilación y validación de la versión web de Flutter, verificando navegación, conexiones y funcionamiento en el entorno de destino.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 27,
+        "endDay": 27
+    },
+    {
+        "id": "C09",
+        "name": "Preparación de iOS (Opcional MVP)",
+        "desc": "Preparación de la versión iOS, incluyendo configuración de compilación, firma y requisitos de publicación, si forma parte de la primera liberación.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 28,
+        "endDay": 28
+    },
+    {
+        "id": "C10",
+        "name": "Documentación técnica, manuales y entrega de versión",
+        "desc": "Elaboración de documentación técnica, manuales de uso, evidencias de pruebas y cierre de la versión candidata a producción.",
+        "dev": "A",
+        "group": "Pruebas Conjuntas (2 por Día)",
+        "days": 1,
+        "startDay": 28,
+        "endDay": 28
+    },
+    {
+        "id": "INF01",
+        "name": "Diagnóstico de infraestructura y estado actual de QA",
+        "desc": "Evaluación técnica de la infraestructura existente, revisión del estado del ambiente QA, recursos disponibles y requerimientos previos.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 2,
+        "startDay": 0,
+        "endDay": 1
+    },
+    {
+        "id": "INF02",
+        "name": "Confirmación de recursos, permisos y accesos",
+        "desc": "Gestión y validación de credenciales, accesos a servidores, proveedores de nube, repositorios y asignación de cuotas de recursos.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 2,
+        "startDay": 1,
+        "endDay": 2
+    },
+    {
+        "id": "INF03",
+        "name": "Configuración y validación de Docker, PostgreSQL, MinIO y FastAPI",
+        "desc": "Aprovisionamiento de contenedores base (FastAPI backend, PostgreSQL, almacenamiento MinIO) e integración de servicios externos incluyendo Mapbox.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 3,
+        "startDay": 2,
+        "endDay": 4
+    },
+    {
+        "id": "INF04",
+        "name": "Preparación y validación del ambiente QA",
+        "desc": "Despliegue y verificación funcional del ambiente de aseguramiento de calidad (QA), garantizando disponibilidad antes y durante el desarrollo.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 3,
+        "startDay": 4,
+        "endDay": 6
+    },
+    {
+        "id": "INF05",
+        "name": "Configuración y validación de GitLab CI/CD",
+        "desc": "Diseño e implementación de pipelines automatizados de integración continua, pruebas y despliegue continuo (CI/CD) hacia QA.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 3,
+        "startDay": 6,
+        "endDay": 8
+    },
+    {
+        "id": "INF06",
+        "name": "Preparación de infraestructura productiva",
+        "desc": "Aprovisionamiento y configuración de servidores, base de datos y clúster para el entorno de producción con alta disponibilidad.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 6,
+        "startDay": 9,
+        "endDay": 14
+    },
+    {
+        "id": "INF07",
+        "name": "Configuración de dominios, DNS y HTTPS",
+        "desc": "Configuración de registros DNS, enrutamiento de red, certificados SSL/TLS y terminación HTTPS segura para ambientes y servicios externos (Mapbox).",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 4,
+        "startDay": 15,
+        "endDay": 18
+    },
+    {
+        "id": "INF08",
+        "name": "Configuración de persistencia, respaldos y recuperación",
+        "desc": "Políticas de almacenamiento persistente, respaldos automáticos de base de datos PostgreSQL/MinIO y pruebas de restauración ante desastres.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 4,
+        "startDay": 15,
+        "endDay": 18
+    },
+    {
+        "id": "INF09",
+        "name": "Configuración de seguridad y monitoreo",
+        "desc": "Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 4,
+        "startDay": 19,
+        "endDay": 22
+    },
+    {
+        "id": "INF10",
+        "name": "Validación integral de infraestructura y soporte a pruebas",
+        "desc": "Soporte técnico directo durante las pruebas de integración cruzada y pruebas conjuntas C01-C10, verificación de rendimiento de red.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 5,
+        "startDay": 23,
+        "endDay": 27
+    },
+    {
+        "id": "INF11",
+        "name": "Despliegue de la primera versión aprobada",
+        "desc": "Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 2,
+        "startDay": 27,
+        "endDay": 28
+    },
+    {
+        "id": "INF12",
+        "name": "Documentación técnica y entrega de infraestructura",
+        "desc": "Elaboración de manuales técnicos de infraestructura, procedimientos de contingencia, entrega formal de credenciales y cierre técnico.",
+        "dev": "M",
+        "group": "Infraestructura y DevOps",
+        "days": 1,
+        "startDay": 28,
+        "endDay": 28
+    }
+];
 
         // =========================================================================
-        // CALENDARIO EXTENDIDO COMPLETO: 47 DÍAS LABORABLES (10 SEMANAS COMPLETAS)
-        // Permite que todas las actividades C (1 día c/u) y DevOps se muestren sin cortes
+        // CALENDARIO: INICIO HOY JUEVES 19 DE NOVIEMBRE DE 2026
+        // Duración: 29 días hábiles (finaliza 29 Dic) con margen extendido a 34 días (Enero 2027)
         // =========================================================================
-        const minDaysTarget = 47;
+        const minDaysTarget = 34;
         const calendar = [];
-        let currentDate = new Date(2026, 9, 29); // 29 de Octubre de 2026 (Jueves)
+        let currentDate = new Date(2026, 10, 19); // 19 de Noviembre de 2026 (Jueves)
         
         while (calendar.length < minDaysTarget || (calendar.length > 0 && calendar[calendar.length - 1].getDay() !== 5)) {
             const dayOfWeek = currentDate.getDay();
@@ -639,7 +939,6 @@
         const esDays = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
         const esMonths = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 
-        
         // Estado interactivo de celdas reales
         const realTimeState = {}; 
         let currentFilter = 'all';
