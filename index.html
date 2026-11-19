@@ -909,11 +909,11 @@
         // =========================================================================
         // CALENDARIO: INICIO HOY JUEVES 19 DE NOVIEMBRE DE 2026
         // =========================================================================
-        const minDaysTarget = 34;
         const calendar = [];
         let currentDate = new Date(2026, 10, 19); // 19 de Noviembre de 2026 (Jueves)
+        const endDate = new Date(2026, 11, 29);   // 29 de Diciembre de 2026 (Martes)
         
-        while (calendar.length < minDaysTarget || (calendar.length > 0 && calendar[calendar.length - 1].getDay() !== 5)) {
+        while (currentDate <= endDate) {
             const dayOfWeek = currentDate.getDay();
             if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Solo días laborales (lunes a viernes)
                 calendar.push(new Date(currentDate));
