@@ -205,7 +205,7 @@
                     </div>
 
                     <div class="text-right text-xs pl-3 border-l border-brandBorder flex flex-col justify-center">
-                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">63</span></div>
+                        <div class="text-brandText font-bold"><span id="metric-completed-tasks" class="font-black text-base text-brandText">0</span> / <span id="metric-total-tasks" class="font-semibold text-brandTextMuted">72</span></div>
                         <div class="text-[10px] text-brandTextMuted uppercase tracking-wider font-semibold">Tareas terminadas</div>
                     </div>
                 </div>
@@ -685,14 +685,104 @@
         "endDay": 23
     },
     {
+        "id": "F6-23",
+        "name": "Alta de Planes y Catálogo en Stripe y Sistema",
+        "desc": "Configurar los planes (Básico, Pro, Clínica) con sus precios y límites de citas, almacenamiento y doctores tanto en el sistema como en Stripe.",
+        "dev": "J",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 24,
+        "endDay": 24
+    },
+    {
+        "id": "F6-24",
+        "name": "Candados de Consumo y Reglas por Plan",
+        "desc": "Activar los controles que restringen funciones según el plan vigente (límite de citas mensuales, espacio para archivos, cupo de doctores y alertas automáticas).",
+        "dev": "J",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 25,
+        "endDay": 25
+    },
+    {
+        "id": "F6-25",
+        "name": "Incorporación de Stripe y Cobros Automáticos",
+        "desc": "Integrar la pasarela de pago seguro, el portal de autogestión (cambio de tarjeta, cancelación e historial de recibos), la actualización automática del plan al pagar y el envío de correo de confirmación.",
+        "dev": "J",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 26,
+        "endDay": 26
+    },
+    {
+        "id": "F6-26",
+        "name": "Pantalla \"Mi Plan y Facturación\" (Médico B2B)",
+        "desc": "Construir la vista para que el médico independiente consulte su plan actual, vea sus barras de consumo, compare planes y gestione su suscripción.",
+        "dev": "V",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 26,
+        "endDay": 26
+    },
+    {
+        "id": "F6-27",
+        "name": "Pantalla \"Suscripción Institucional\" (Clínica B2B)",
+        "desc": "Crear la vista exclusiva para el director de la clínica con el consumo consolidado de su equipo (citas totales, almacenamiento compartido y doctores activos) y gestión de pagos.",
+        "dev": "V",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 27,
+        "endDay": 27
+    },
+    {
+        "id": "F6-28",
+        "name": "Gestor Administrativo de Planes y Cortesías",
+        "desc": "Crear el apartado administrativo para editar los límites de cada plan y asignar o suspender suscripciones manualmente (cuentas piloto o soporte).",
+        "dev": "J",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 27,
+        "endDay": 27
+    },
+    {
+        "id": "F6-29",
+        "name": "Monitor de Suscripciones e Ingresos (MRR)",
+        "desc": "Desarrollar el tablero administrativo para consultar suscripciones activas, ingresos mensuales recurrentes (MRR) y alertas de pagos fallidos.",
+        "dev": "J",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 28,
+        "endDay": 28
+    },
+    {
+        "id": "F6-30",
+        "name": "Avisos de Límite Alcanzado (Paywalls)",
+        "desc": "Integrar alertas amigables cuando un usuario intente superar el límite de su plan (ej. subir archivos sin espacio o agregar un doctor extra) con acceso directo para mejorar su suscripción.",
+        "dev": "V",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 28,
+        "endDay": 28
+    },
+    {
+        "id": "F6-31",
+        "name": "Pruebas de Ciclo Completo de Pagos (QA)",
+        "desc": "Validar en ambiente de pruebas los escenarios clave: compra exitosa, renovación mensual, pago rechazado (periodo de gracia) y baja de plan sin pérdida de datos previos.",
+        "dev": "A",
+        "group": "Fase 6: Suscripciones, Planes y Stripe",
+        "days": 1,
+        "startDay": 29,
+        "endDay": 29
+    },
+    {
         "id": "C01",
         "name": "Definición de contratos API y reglas de integración",
         "desc": "Definición de contratos API, estructuras de datos, estados de cuenta, permisos básicos y reglas de integración entre módulos.",
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 24,
-        "endDay": 24
+        "startDay": 30,
+        "endDay": 30
     },
     {
         "id": "C02",
@@ -701,8 +791,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 24,
-        "endDay": 24
+        "startDay": 30,
+        "endDay": 30
     },
     {
         "id": "C03",
@@ -711,8 +801,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 25,
-        "endDay": 25
+        "startDay": 31,
+        "endDay": 31
     },
     {
         "id": "C04",
@@ -721,8 +811,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 25,
-        "endDay": 25
+        "startDay": 31,
+        "endDay": 31
     },
     {
         "id": "C05",
@@ -731,8 +821,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 26,
-        "endDay": 26
+        "startDay": 32,
+        "endDay": 32
     },
     {
         "id": "C06",
@@ -741,8 +831,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 26,
-        "endDay": 26
+        "startDay": 32,
+        "endDay": 32
     },
     {
         "id": "C07",
@@ -751,8 +841,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 27,
-        "endDay": 27
+        "startDay": 33,
+        "endDay": 33
     },
     {
         "id": "C08",
@@ -761,8 +851,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 27,
-        "endDay": 27
+        "startDay": 33,
+        "endDay": 33
     },
     {
         "id": "C09",
@@ -771,8 +861,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 28,
-        "endDay": 28
+        "startDay": 34,
+        "endDay": 34
     },
     {
         "id": "C10",
@@ -781,8 +871,8 @@
         "dev": "A",
         "group": "Pruebas Conjuntas (2 por Día)",
         "days": 1,
-        "startDay": 28,
-        "endDay": 28
+        "startDay": 34,
+        "endDay": 34
     },
     {
         "id": "INF01",
@@ -840,9 +930,9 @@
         "desc": "Aprovisionamiento y configuración de servidores, base de datos y clúster para el entorno de producción con alta disponibilidad.",
         "dev": "M",
         "group": "Infraestructura y DevOps",
-        "days": 6,
+        "days": 7,
         "startDay": 9,
-        "endDay": 14
+        "endDay": 15
     },
     {
         "id": "INF07",
@@ -851,8 +941,8 @@
         "dev": "M",
         "group": "Infraestructura y DevOps",
         "days": 4,
-        "startDay": 15,
-        "endDay": 18
+        "startDay": 16,
+        "endDay": 19
     },
     {
         "id": "INF08",
@@ -861,8 +951,8 @@
         "dev": "M",
         "group": "Infraestructura y DevOps",
         "days": 4,
-        "startDay": 15,
-        "endDay": 18
+        "startDay": 16,
+        "endDay": 19
     },
     {
         "id": "INF09",
@@ -870,9 +960,9 @@
         "desc": "Implementación de reglas de firewall, monitoreo de métricas, recolección de logs, alertas de salud y endurecimiento de seguridad previo a pruebas.",
         "dev": "M",
         "group": "Infraestructura y DevOps",
-        "days": 4,
-        "startDay": 19,
-        "endDay": 22
+        "days": 5,
+        "startDay": 20,
+        "endDay": 24
     },
     {
         "id": "INF10",
@@ -880,9 +970,9 @@
         "desc": "Soporte técnico directo durante las pruebas de integración cruzada y pruebas conjuntas C01-C10, verificación de rendimiento de red.",
         "dev": "M",
         "group": "Infraestructura y DevOps",
-        "days": 5,
-        "startDay": 23,
-        "endDay": 27
+        "days": 6,
+        "startDay": 25,
+        "endDay": 30
     },
     {
         "id": "INF11",
@@ -890,9 +980,9 @@
         "desc": "Ejecución del despliegue productivo de la versión candidata aprobada, validación de variables de entorno y verificación post-lanzamiento.",
         "dev": "M",
         "group": "Infraestructura y DevOps",
-        "days": 2,
-        "startDay": 27,
-        "endDay": 28
+        "days": 3,
+        "startDay": 31,
+        "endDay": 33
     },
     {
         "id": "INF12",
@@ -901,8 +991,8 @@
         "dev": "M",
         "group": "Infraestructura y DevOps",
         "days": 1,
-        "startDay": 28,
-        "endDay": 28
+        "startDay": 34,
+        "endDay": 34
     }
 ];
 
@@ -911,7 +1001,7 @@
         // =========================================================================
         const calendar = [];
         let currentDate = new Date(2026, 10, 19); // 19 de Noviembre de 2026 (Jueves)
-        const endDate = new Date(2026, 11, 29);   // 29 de Diciembre de 2026 (Martes)
+        const endDate = new Date(2027, 0, 6);   // 6 de Enero de 2027 (Miércoles)   // 29 de Diciembre de 2026 (Martes)
         
         while (currentDate <= endDate) {
             const dayOfWeek = currentDate.getDay();
